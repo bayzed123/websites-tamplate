@@ -1,0 +1,17 @@
+{
+  "name": "veloura-atelier-demo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Veloura Atelier SmartGen e-commerce demo with isolated storefront and admin dashboard.",
+  "workspaces": [
+    "worker",
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace worker",
+    "build": "npm run build --workspace web && npm run typecheck --workspace worker",
+    "typecheck": "npm run typecheck --workspace worker",
+    "test": "node --test tests/*.test.mjs",
+    "deploy": "npm run deploy --workspace worker"
+  }
+}

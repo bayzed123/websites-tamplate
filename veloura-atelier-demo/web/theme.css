@@ -1,0 +1,374 @@
+/* ============================================================
+   VELOURA — PREMIUM THEME LAYER v1
+   Load AFTER styles.css. Overrides only; nothing is deleted.
+   <link rel="stylesheet" href="/theme.css">
+   ============================================================ */
+
+/* ---------- 1. TOKENS ------------------------------------- */
+/* Pink stops being the canvas and becomes the accent. */
+:root{
+  /* surfaces */
+  --paper:#FBF9F7;          /* page canvas — warm off-white */
+  --white:#FFFFFF;
+  --cream:#F6F2EE;          /* alternating section wash */
+  --blush:#F2DCD6;          /* pink, used sparingly */
+  --sage:#EFEAE4;
+
+  /* ink */
+  --ink:#16130F;
+  --ink-soft:#2A2520;
+  --muted:#6B635C;
+
+  /* accent */
+  --accent:#C4776B;
+  --accent-strong:#A75C50;
+  --accent-wash:#FAF0ED;
+
+  /* structure */
+  --line:#EAE4DF;
+  --line-strong:#D9D1CA;
+  --shadow:0 1px 2px rgba(22,19,15,.04), 0 8px 24px rgba(22,19,15,.05);
+  --shadow-lift:0 2px 4px rgba(22,19,15,.05), 0 16px 40px rgba(22,19,15,.08);
+
+  /* rhythm — 8pt grid */
+  --s1:8px;  --s2:16px; --s3:24px; --s4:32px;
+  --s5:48px; --s6:64px; --s7:96px; --s8:128px;
+
+  --r-sm:10px; --r-md:16px; --r-lg:24px; --r-pill:999px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+
+html{ scrollbar-gutter:stable; }
+body{ background:var(--paper); -webkit-font-smoothing:antialiased; }
+
+/* ---------- 2. TYPE --------------------------------------- */
+h1,h2,h3,.brand span,.media-viewer-title{
+  font-family:'Playfair Display',Georgia,serif;
+  letter-spacing:-.02em;
+  line-height:1.06;
+  font-weight:500;
+}
+h1{ font-size:clamp(38px,5.2vw,68px); }
+h2{ font-size:clamp(28px,3.4vw,44px); }
+h3{ font-size:clamp(19px,1.9vw,24px); }
+p{ line-height:1.65; color:var(--muted); max-width:65ch; }
+
+/* ---------- 3. BREATHING ROOM ------------------------------ */
+/* The single biggest lever: sections were under-spaced. */
+section,
+.section,
+.home-section,
+.page-section{ padding-block:clamp(var(--s6),9vw,var(--s8)); }
+
+/* ---------- 4. BUTTONS ------------------------------------- */
+/* Pill, near-black, icon-ready. No emoji, no gradients. */
+.button,
+.product-add,
+.search-form button{
+  height:52px;
+  padding:0 28px;
+  gap:10px;
+  border-radius:var(--r-pill);
+  border:1px solid transparent;
+  font:500 14px/1 'DM Sans',system-ui,sans-serif;
+  letter-spacing:.01em;
+  text-transform:none;
+  transition:background-color .18s ease, color .18s ease,
+             border-color .18s ease, transform .18s var(--ease);
+}
+.button-dark,
+.product-add,
+.search-form button{ background:var(--ink); color:var(--paper); }
+.button-dark:hover,
+.product-add:hover,
+.search-form button:hover{ background:var(--ink-soft); transform:translateY(-1px); }
+.button-dark:active,
+.product-add:active{ transform:translateY(0); }
+
+.button-ghost,
+.button-light{
+  background:transparent;
+  color:var(--ink);
+  border-color:var(--line-strong);
+}
+.button-ghost:hover,
+.button-light:hover{ border-color:var(--ink); background:var(--white); }
+
+.button-accent{ background:var(--accent); color:#fff; }
+.button-accent:hover{ background:var(--accent-strong); }
+
+.button:disabled,
+.product-add:disabled{ opacity:.4; cursor:not-allowed; transform:none; }
+
+.button:focus-visible,
+.product-add:focus-visible,
+.icon-button:focus-visible{
+  outline:2px solid var(--ink);
+  outline-offset:3px;
+}
+
+/* Secondary product actions — quiet, not competing */
+.product-actions button{
+  min-height:46px;
+  border-radius:var(--r-pill);
+  border-color:var(--line-strong);
+  background:transparent;
+  font:500 13px 'DM Sans',sans-serif;
+  letter-spacing:0;
+  text-transform:none;
+}
+.product-actions button:hover{ border-color:var(--ink); background:var(--white); }
+
+/* ---------- 5. ICONS --------------------------------------- */
+/* Monochrome, currentColor, 1.5px stroke. Replaces emoji glyphs. */
+.icon-button{ font-size:0; width:40px; height:40px; border-radius:var(--r-pill); }
+.icon-button:hover{ background:var(--white); }
+.veloura-icon{
+  width:20px; height:20px;
+  stroke:currentColor; stroke-width:1.5;
+  stroke-linecap:round; stroke-linejoin:round;
+  fill:none;
+}
+.button .veloura-icon,
+.product-add .veloura-icon{ width:18px; height:18px; }
+
+/* ---------- 6. HEADER + NAV -------------------------------- */
+.announcement{
+  background:var(--ink); color:#F3EFEA;
+  font-size:11px; letter-spacing:.09em; padding:11px 16px;
+}
+.announcement a{ color:#fff; }
+
+.site-header{
+  height:80px;
+  background:rgba(251,249,247,.86);
+  backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid transparent;
+  transition:background-color .25s ease, border-color .25s ease;
+}
+/* add .is-scrolled via JS after 40px of scroll */
+.site-header.is-scrolled{
+  background:var(--paper);
+  border-bottom-color:var(--line);
+}
+.brand span{ font-size:26px; letter-spacing:-.045em; }
+.brand small{ letter-spacing:.2em; color:var(--muted); }
+
+.nav-links{ gap:36px; margin-left:56px; }
+.nav-links a{
+  position:relative;
+  font-size:14px;
+  color:var(--ink);
+  padding-block:6px;
+}
+.nav-links a::after{
+  content:'';
+  position:absolute; left:0; right:0; bottom:0;
+  height:1px; background:var(--ink);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .22s var(--ease);
+}
+.nav-links a:hover{ color:var(--ink); }
+.nav-links a:hover::after,
+.nav-links a[aria-current="page"]::after{ transform:scaleX(1); }
+
+.header-actions{ gap:6px; }
+.bag-button{
+  height:40px; padding:0 14px;
+  border-radius:var(--r-pill);
+  font-size:13px; letter-spacing:0; text-transform:none;
+}
+.bag-button:hover{ background:var(--white); }
+.bag-button span{
+  background:var(--ink); color:var(--paper);
+  width:20px; height:20px; font-size:11px;
+}
+
+/* Mobile: full-screen overlay, not a cramped drawer */
+@media (max-width:860px){
+  .mobile-nav{ background:var(--paper); }
+  .mobile-nav a{ font-size:20px; padding-block:14px; }
+}
+
+/* ---------- 7. CARDS + SURFACES ---------------------------- */
+/* Hairlines instead of shadows. Shadow only on hover. */
+.product-card,
+.card,
+.blog-card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  box-shadow:none;
+  overflow:hidden;
+  transition:box-shadow .22s ease, transform .22s var(--ease),
+             border-color .22s ease;
+}
+.product-card:hover,
+.card:hover,
+.blog-card:hover{
+  border-color:var(--line-strong);
+  box-shadow:var(--shadow-lift);
+  transform:translateY(-2px);
+}
+.product-card img{ background:var(--cream); }
+
+/* Pink appears here — a wash, never the whole page */
+.section-blush,
+.newsletter,
+.editor-note{ background:var(--blush); }
+.section-cream{ background:var(--cream); }
+
+/* ---------- 8. BADGES -------------------------------------- */
+.badge,
+.product-badge{
+  display:inline-flex; align-items:center;
+  height:24px; padding:0 10px;
+  border-radius:var(--r-pill);
+  background:var(--accent-wash);
+  color:var(--accent-strong);
+  font:500 11px 'DM Sans',sans-serif;
+  letter-spacing:.04em;
+}
+
+/* ---------- 9. FORMS --------------------------------------- */
+input[type=text],input[type=email],input[type=tel],
+input[type=search],input[type=password],select,textarea{
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-sm);
+  background:var(--white);
+  padding:14px 16px;
+  font:400 15px 'DM Sans',sans-serif;
+  color:var(--ink);
+  transition:border-color .18s ease, box-shadow .18s ease;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;
+  border-color:var(--ink);
+  box-shadow:0 0 0 3px rgba(22,19,15,.06);
+}
+
+/* ---------- 10. MEDIA VIEWER ------------------------------- */
+/* Paired with the rewritten media-viewer.js scroll lock. */
+body.media-viewer-open,
+html.media-viewer-open{
+  overflow:hidden;
+  /* width/top are set inline by JS so the page cannot shift */
+}
+.media-viewer-backdrop{ background:rgba(22,19,15,.86); }
+.media-viewer-dialog{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:0 40px 120px rgba(22,19,15,.45);
+}
+.media-viewer-stage{ background:var(--cream); }
+.media-viewer-close,
+.media-viewer-tools button{
+  border-radius:var(--r-pill);
+  border-color:var(--line-strong);
+  background:var(--white);
+}
+.media-viewer-close:hover,
+.media-viewer-tools button:hover{
+  background:var(--ink); color:var(--paper); border-color:var(--ink);
+}
+.media-viewer-arrow{
+  border-radius:var(--r-pill);
+  width:48px; height:48px;
+  border-color:rgba(255,255,255,.28);
+  background:rgba(22,19,15,.5);
+  backdrop-filter:blur(6px);
+}
+.media-viewer-arrow:hover{ background:var(--ink); }
+/* cross-fade instead of a src-swap flash */
+.media-viewer-slide img{ transition:transform .18s ease, opacity .16s ease; }
+.media-viewer-slide.is-loading img{ opacity:0; }
+.media-viewer-close:focus-visible,
+.media-viewer-arrow:focus-visible,
+.media-viewer-tools button:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+/* ---------- 11. FOOTER ------------------------------------- */
+.site-footer{ background:var(--ink); color:#EDE8E2; }
+.site-footer a{ color:#EDE8E2; }
+.site-footer a:hover{ color:#fff; }
+
+/* ---------- 12. MOTION SAFETY ------------------------------ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+
+
+/* ---------- VELOURA ATELIER PREMIUM EDIT -------------------------- */
+:root{
+  --veloura-pink:#E85D8D;
+  --veloura-pink-deep:#B83D6B;
+  --veloura-pink-wash:#FFF0F5;
+}
+.button-dark,
+.product-add,
+.search-form button{
+  background:var(--veloura-pink);
+  color:#fff;
+  box-shadow:0 10px 24px rgba(232,93,141,.20);
+}
+.button-dark:hover,
+.product-add:hover,
+.search-form button:hover{
+  background:var(--veloura-pink-deep);
+  color:#fff;
+  box-shadow:0 14px 30px rgba(184,61,107,.24);
+}
+.product-shop-now:hover,
+.button-ghost:hover,
+.button-light:hover{
+  border-color:var(--veloura-pink);
+  color:var(--veloura-pink-deep);
+  background:var(--veloura-pink-wash);
+}
+.hero-copy .eyebrow,
+.product-category,
+.eyebrow{ color:var(--veloura-pink-deep); }
+.hero-visual{ isolation:isolate; }
+.hero-visual .hero-carousel{ border-radius:32px 32px 32px 150px; overflow:hidden; box-shadow:0 26px 70px rgba(184,61,107,.18); }
+.hero-visual .hero-slide img{ border-radius:0; filter:none; object-position:72% center; }
+.hero-visual .hero-carousel-control{ border-color:rgba(255,255,255,.55); background:rgba(255,255,255,.78); color:var(--veloura-pink-deep); backdrop-filter:blur(12px); }
+.hero-visual .hero-carousel-control:hover{ background:var(--veloura-pink); color:#fff; }
+.floating-card{ border:1px solid rgba(232,93,141,.18); border-radius:20px; }
+.seal{ background:var(--veloura-pink); color:#fff; }
+.media-viewer-track{ overflow-x:auto; overflow-y:hidden; scrollbar-width:thin; scrollbar-color:var(--veloura-pink) rgba(232,93,141,.14); }
+.media-viewer-track::-webkit-scrollbar{ display:block; height:7px; }
+.media-viewer-track::-webkit-scrollbar-track{ background:rgba(232,93,141,.14); border-radius:99px; }
+.media-viewer-track::-webkit-scrollbar-thumb{ background:var(--veloura-pink); border-radius:99px; }
+.media-viewer-arrow:hover,
+.media-viewer-close:hover,
+.media-viewer-tools button:hover{ background:var(--veloura-pink); color:#fff; border-color:var(--veloura-pink); }
+.related-section{ padding-block:clamp(56px,8vw,96px); }
+.related-heading{ display:flex; align-items:end; justify-content:space-between; gap:24px; margin-bottom:24px; }
+.related-heading h2{ margin:0; }
+.related-controls{ display:flex; gap:8px; }
+.related-control{ width:42px; height:42px; border:1px solid var(--line-strong); border-radius:50%; background:var(--white); color:var(--ink); cursor:pointer; transition:all .18s var(--ease); }
+.related-control:hover{ background:var(--veloura-pink); color:#fff; border-color:var(--veloura-pink); transform:translateY(-1px); }
+.related-row{ display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x proximity; scroll-behavior:smooth; overscroll-behavior-inline:contain; padding:4px 2px 16px; scrollbar-width:thin; scrollbar-color:var(--veloura-pink) rgba(232,93,141,.14); }
+.related-row::-webkit-scrollbar{ height:7px; }
+.related-row::-webkit-scrollbar-track{ background:rgba(232,93,141,.14); border-radius:99px; }
+.related-row::-webkit-scrollbar-thumb{ background:var(--veloura-pink); border-radius:99px; }
+.related-card{ flex:0 0 clamp(190px,22vw,250px); scroll-snap-align:start; background:var(--white); border:1px solid var(--line); border-radius:16px; overflow:hidden; color:inherit; text-decoration:none; transition:transform .22s var(--ease), box-shadow .22s ease; }
+.related-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lift); }
+.related-card img{ display:block; width:100%; aspect-ratio:1/1.08; object-fit:cover; background:var(--cream); }
+.related-card-copy{ display:grid; gap:5px; padding:14px; }
+.related-card-copy small{ color:var(--veloura-pink-deep); text-transform:uppercase; letter-spacing:.12em; font-size:9px; }
+.related-card-copy strong{ font:500 18px/1.12 'Playfair Display',Georgia,serif; }
+.related-card-copy span{ font-size:13px; color:var(--muted); }
+@media(max-width:600px){
+  .hero-visual .hero-carousel{ border-radius:24px 24px 24px 90px; }
+  .related-heading{ align-items:start; }
+  .related-controls{ flex-shrink:0; }
+}
+@media(prefers-reduced-motion:reduce){ .related-row{ scroll-behavior:auto; } }

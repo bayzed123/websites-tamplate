@@ -1,0 +1,1 @@
+-- Veloura Atelier demo catalogue. Ratings and reviews are intentionally empty; no user-generated content is fabricated.

@@ -1,0 +1,44 @@
+name = "veloura-atelier-demo-worker"
+main = "src/index.ts"
+compatibility_date = "2026-08-24"
+workers_dev = true
+
+[vars]
+SHOP_NAME = "Veloura Atelier"
+SHOP_PHONE = "+880 1700-000000"
+AI_MODEL = "@cf/openai/gpt-oss-20b"
+WHATSAPP_NUMBER = "8801700000000"
+GA4_PROPERTY_ID = "999999999"
+GOOGLE_ACCOUNT_LEADS_SHEET_ID = ""
+GOOGLE_ACTIVITY_LEADS_SHEET_ID = ""
+R2_ACCOUNT_ID = "DEMO_ONLY_NO_PRODUCTION_ACCOUNT"
+R2_BUCKET_NAME = ""
+R2_PUBLIC_URL = ""
+SHOP_ADDRESS = "Demo studio, Dhaka, Bangladesh"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "veloura-atelier-demo-db"
+database_id = "REPLACE_WITH_DEMO_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+# Demo-only R2 binding remains optional; never attach a production bucket.
+# [[r2_buckets]]
+# binding = "PRODUCT_IMAGES"
+# bucket_name = "veloura-atelier-demo-product-images"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "REPLACE_WITH_DEMO_KV_NAMESPACE_ID"
+
+[ai]
+binding = "AI"
+
+[assets]
+directory = "../web"
+binding = "ASSETS"
+run_worker_first = ["/api/*", "/media/*", "/products/*", "/product.html", "/sitemap.xml", "/robots.txt"]
+not_found_handling = "single-page-application"
+
+[observability]
+enabled = true
