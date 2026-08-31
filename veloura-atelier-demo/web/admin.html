@@ -1,107 +1,208 @@
 <!doctype html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Veloura Atelier Ops · Courier console</title>
-  
-  <!-- Path fixed for GitHub Pages -->
-  <link rel="stylesheet" href="./styles.css" />
+  <title>Veloura Atelier · Admin Login</title>
   
   <style>
-    body{background:#f3eee9}.ops{padding:50px 0 90px}.ops-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:30px}.ops-card{background:var(--paper);border:1px solid var(--line);padding:25px;border-radius:8px}.ops-card h2{font-family:'Playfair Display',serif;font-size:29px;letter-spacing:-.04em;margin:0 0 18px}.ops-form{display:grid;gap:12px}.ops-form label{font-size:11px;letter-spacing:.11em;text-transform:uppercase}.ops-form input{display:block;width:100%;border:1px solid var(--line);padding:13px;background:white;margin-top:7px;font:inherit}.ops-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}.ops-actions button{flex:1;min-width:150px}.ops-result{background:var(--sage);padding:18px;margin-top:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow:auto}.risk{display:inline-block;padding:5px 9px;background:var(--blush);font-size:10px;letter-spacing:.08em;text-transform:uppercase}.back{display:flex;justify-content:space-between;align-items:center}.logout{font-size:11px;color:var(--muted);background:transparent;border:0;text-decoration:underline;cursor:pointer}@media(max-width:760px){.ops-grid{grid-template-columns:1fr}}
+    /* Premium Login Page Styles */
+    :root {
+      --bg-color: #F4F7FE;
+      --surface: #FFFFFF;
+      --primary: #4318FF;
+      --primary-hover: #3311DB;
+      --text-main: #2B3674;
+      --text-muted: #A3AED0;
+      --border: #E0E5F2;
+      --line: #E0E5F2;
+    }
+
+    body {
+      background: var(--bg-color);
+      font-family: 'Inter', -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text-main);
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+    }
+
+    .login-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0px 4px 24px rgba(112, 144, 176, 0.08);
+      border: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .stack-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .stack-form label {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .stack-form input {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-color);
+      font-size: 15px;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .stack-form input:focus {
+      border-color: var(--primary);
+      background: #FFFFFF;
+    }
+
+    .button-dark {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .button-dark:hover {
+      background: var(--primary-hover);
+    }
+
+    .demo-notice {
+      background: #EEF2FF;
+      border: 1px solid #C7D2FE;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: -4px;
+      margin-bottom: 8px;
+    }
+
+    .demo-notice p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--primary);
+      line-height: 1.5;
+    }
+
+    .demo-notice strong {
+      color: #312E81;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 24px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--text-main);
+    }
+
   </style>
 </head>
 <body>
-  <div class="announcement">Veloura Atelier · Demo Operations</div>
-  <main class="section-wrap ops">
-    <div class="back">
-      <!-- Storefront back link fixed -->
-      <a class="text-link" href="../index.html">← Storefront</a>
-      <button class="logout" id="clear">Clear saved token</button>
-    </div>
-    
-    <p class="eyebrow" style="margin-top:48px">COURIER CONTROL CENTER</p>
-    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(46px,7vw,76px);line-height:.95;letter-spacing:-.06em;margin:0">Ship with<br><em style="color:var(--accent);font-weight:500">confidence.</em></h1>
-    
-    <div class="ops-grid">
-      <section class="ops-card">
-        <h2>Steadfast action</h2>
-        <form class="ops-form" id="courier-form">
-          <label>Admin API token<input type="password" id="token" placeholder="Bearer token" required /></label>
-          <label>Order code<input id="order" placeholder="RNV-ABC123" required /></label>
-          <div class="ops-actions">
-            <button class="button button-dark" type="submit" data-action="book">Book parcel <span>→</span></button>
-            <button class="button" style="background:var(--cream)" type="button" data-action="refresh">Refresh status <span>↻</span></button>
-          </div>
-        </form>
-        <div id="courier-result" class="ops-result">Protected actions will appear here.</div>
-      </section>
-      
-      <section class="ops-card">
-        <h2>Customer trust</h2>
-        <form class="ops-form" id="trust-form">
-          <label>Customer mobile<input id="customer-phone" placeholder="01XXXXXXXXX" required /></label>
-          <button class="button button-dark" type="submit">View profile <span>→</span></button>
-        </form>
-        <div id="trust-result" class="ops-result">Search a customer to review success, cancellation and recent-order history.</div>
-      </section>
-    </div>
-  </main>
 
-  <!-- Script path fixed -->
-  <script src="../runtime-config.js"></script>
-  
-  <script>
-    const $ = s => document.querySelector(s);
-    const token = $('#token');
-    token.value = sessionStorage.getItem('rinova-admin-token') || '';
-    
-    $('#clear').onclick = () => {
-      sessionStorage.removeItem('rinova-admin-token');
-      token.value = '';
-    };
-    
-    async function action(kind) {
-      const order = $('#order').value.trim(), auth = token.value.trim();
-      if (!order || !auth) return alert('Admin token and order code are required.');
+  <div class="login-container">
+    <div class="login-card">
+      <span class="eyebrow">VELOURA ATELIER · ADMIN</span>
+      <h1>Welcome back</h1>
+      <p class="subtitle">Sign in to manage your premium store, inventory, and operations.</p>
       
-      sessionStorage.setItem('rinova-admin-token', auth);
-      
-      const url = kind === 'book' 
-        ? `/api/admin/orders/${encodeURIComponent(order)}/steadfast/book` 
-        : `/api/admin/orders/${encodeURIComponent(order)}/steadfast/status`;
+      <form class="stack-form" id="login-form">
+        <label>
+          ইউজারনেম (Username)
+          <input id="login-username" autocomplete="username" placeholder="Enter username" required />
+        </label>
         
-      const response = await fetch(url, {
-        method: kind === 'book' ? 'POST' : 'GET',
-        headers: { Authorization: `Bearer ${auth}` }
-      });
-      
-      const data = await response.json();
-      $('#courier-result').textContent = JSON.stringify(data, null, 2);
-    }
+        <label>
+          পাসওয়ার্ড (Password)
+          <input id="login-password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+        </label>
+
+        <div class="demo-notice">
+          <p>👉 ডেমো দেখার জন্য Username: <strong>admin</strong> এবং Password: <strong>demo123</strong> টাইপ করুন।</p>
+        </div>
+
+        <button class="button-dark" type="submit">Sign in <span>→</span></button>
+      </form>
+    </div>
     
-    $('#courier-form').addEventListener('submit', e => {
+    <div style="text-align: center;">
+      <a href="../index.html" class="back-link">← Back to Storefront</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      action('book');
-    });
-    
-    document.querySelector('[data-action="refresh"]').onclick = () => action('refresh');
-    
-    $('#trust-form').addEventListener('submit', async e => {
-      e.preventDefault();
-      const phone = $('#customer-phone').value.trim();
+      const user = document.getElementById('login-username').value;
+      const pass = document.getElementById('login-password').value;
       
-      // Fallback API base for demo if window.RINOVA_API_BASE is missing
-      const apiBase = window.RINOVA_API_BASE || '';
-      
-      const response = await fetch(`${apiBase}/customers/${encodeURIComponent(phone)}/trust`);
-      const data = await response.json();
-      const t = data.trust;
-      
-      // FIXED: JS syntax error (removed the rogue backtick)
-      $('#trust-result').innerHTML = `<span class="risk">${t.rating}</span><br><br>Total orders: ${t.totalPlaced}<br>Success rate: ${t.successRate === null ? 'No history' : t.successRate + '%'}<br>Cancel rate: ${t.cancelRate}%<br>Failed/returned: ${t.failedOrReturnedOrders}`;
+      if(user === 'admin' && pass === 'demo123') {
+        // ডেমো ক্রেডেনশিয়াল ঠিক থাকলে অ্যাডমিন ড্যাশবোর্ডে নিয়ে যাবে
+        window.location.href = './index.html'; 
+      } else {
+        alert('ভুল ইউজারনেম বা পাসওয়ার্ড! ডেমোর জন্য admin এবং demo123 ব্যবহার করুন।');
+      }
     });
   </script>
+
 </body>
 </html>
