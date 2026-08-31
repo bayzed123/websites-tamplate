@@ -63,14 +63,20 @@ function resolveLocalTarget(demo, pathname) {
   return candidates.find((candidate) => exists(candidate));
 }
 
+function pageLabel(page, entryFile) {
+  const clean = page.replace(/^web\//, '');
+  if (page === entryFile || clean === 'index.html') return 'Home';
+  const labels = { '404.html': 'Page Not Found', 'account.html': 'Customer Account', 'admin.html': 'Admin Login', 'admin/index.html': 'Admin Dashboard', 'admin/guide/index.html': 'Admin Guide', 'blog.html': 'Journal', 'checkout.html': 'Checkout', 'invoice.html': 'Invoice', 'product.html': 'Product Details', 'sitemap.html': 'Site Map', 'track.html': 'Order Tracking' };
+  return labels[clean] || titleize(clean.split('/').pop().replace(/\.html?$/i, ''));
+}
+
 function renderDemoNav(demo, pages, current) {
   const links = pages.map((page) => {
     const target = relative(dirname(join(demo.sourceDir, current)), join(demo.sourceDir, page)).replaceAll('\\', '/');
     const href = target.startsWith('.') ? target : `./${target}`;
-    const label = page === demo.entryFile ? 'Home' : titleize(page.replace(/\\/g, '/').replace(/\.html?$/i, '').split('/').join(' · '));
-    return `<a href="${href}">${htmlEscape(label)}</a>`;
+    return `<a href="${href}">${htmlEscape(pageLabel(page, demo.entryFile))}</a>`;
   }).join('');
-  return `<nav class="demo-auto-nav" data-demo-auto-nav><strong>Demo pages</strong>${links}</nav>`;
+  return `<button class="demo-nav-trigger" type="button" data-demo-nav-trigger aria-expanded="false" aria-controls="demo-page-links">☰ <span>Pages</span></button><nav class="demo-auto-nav" data-demo-auto-nav><div class="demo-nav-title">Demo pages</div><div id="demo-page-links" class="demo-page-links">${links}</div></nav><script>(function(){const b=document.querySelector('[data-demo-nav-trigger]'),n=document.querySelector('[data-demo-auto-nav]');b?.addEventListener('click',()=>{const open=n.classList.toggle('is-open');b.setAttribute('aria-expanded',String(open));});})();</script>`;
 }
 
 async function injectDemoNav(demo) {
@@ -79,7 +85,7 @@ async function injectDemoNav(demo) {
     const filePath = join(demo.sourceDir, page);
     let content = await readFile(filePath, 'utf8');
     if (content.includes('data-demo-auto-nav')) continue;
-    const style = '<style>.demo-auto-nav{position:fixed;z-index:9999;left:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;max-width:calc(100vw - 24px);padding:8px 10px;border:1px solid rgba(40,30,40,.18);border-radius:999px;background:rgba(255,250,247,.94);box-shadow:0 8px 30px rgba(40,20,30,.16);font:600 11px/1.2 system-ui,sans-serif}.demo-auto-nav strong{padding:6px 8px;color:#76525c}.demo-auto-nav a{padding:6px 8px;border-radius:999px;color:#523743;background:#f5e7e4;text-decoration:none}.demo-auto-nav a:hover{background:#eab5bd}@media(max-width:600px){.demo-auto-nav{border-radius:16px;bottom:8px;font-size:10px}.demo-auto-nav strong{display:none}}</style>';
+    const style = '<style>.demo-nav-trigger{position:fixed;z-index:10000;left:12px;bottom:12px;border:1px solid rgba(40,30,40,.18);border-radius:999px;padding:9px 13px;background:#fffaf7;color:#523743;box-shadow:0 8px 30px rgba(40,20,30,.16);font:700 12px/1 system-ui,sans-serif;cursor:pointer}.demo-auto-nav{position:fixed;z-index:9999;left:12px;bottom:56px;display:none;width:min(220px,calc(100vw - 24px));padding:10px;border:1px solid rgba(40,30,40,.18);border-radius:16px;background:rgba(255,250,247,.97);box-shadow:0 8px 30px rgba(40,20,30,.16);font:600 12px/1.2 system-ui,sans-serif}.demo-auto-nav.is-open{display:block}.demo-nav-title{padding:4px 8px 8px;color:#76525c;font-size:10px;letter-spacing:.12em;text-transform:uppercase}.demo-page-links{display:grid;gap:3px;max-height:50vh;overflow:auto}.demo-auto-nav a{padding:8px 9px;border-radius:9px;color:#523743;background:#f5e7e4;text-decoration:none}.demo-auto-nav a:hover{background:#eab5bd}@media(max-width:600px){.demo-nav-trigger{left:10px;bottom:10px}.demo-auto-nav{left:10px;bottom:52px}}</style>';
     const nav = renderDemoNav(demo, pages, page);
     content = content.replace('</head>', `${style}</head>`).replace('</body>', `${nav}</body>`);
     await writeFile(filePath, content);
@@ -88,7 +94,7 @@ async function injectDemoNav(demo) {
 
 async function rewriteDemoUrls(demo) {
   const queue = [''];
-  const absoluteUrl = /(["'(])\/(?!\/)([^"')\s#]*)/g;
+  const absoluteUrl = /(["'])\/(?!\/)([A-Za-z0-9_./?=&%\-]*)/g;
   while (queue.length) {
     const current = queue.shift();
     const currentDir = join(demo.sourceDir, current);
@@ -99,7 +105,9 @@ async function rewriteDemoUrls(demo) {
       if (!/\.(html?|css|js|mjs|ts|json)$/i.test(entry.name)) continue;
       const filePath = join(demo.sourceDir, child);
       let content = await readFile(filePath, 'utf8');
-      content = content.replace(absoluteUrl, (match, opener, rawPath) => {
+      const fallbackAsset = relative(currentDir, join(demo.sourceDir, 'web/assets/asset-fallback.svg')).replaceAll('\\\\', '/');
+      content = content.replace(/(["'])\/manus-storage\/[^"']+/g, (match, opener) => `${opener}${fallbackAsset.startsWith('.') ? fallbackAsset : `./${fallbackAsset}`}`);
+      if (/\.(html?|css)$/i.test(entry.name)) content = content.replace(absoluteUrl, (match, opener, rawPath) => {
         const [pathname, query = ''] = rawPath.split('?');
         let localTarget = resolveLocalTarget(demo, pathname);
         if (!localTarget && pathname.startsWith('manus-storage/')) localTarget = join(demo.sourceDir, 'web/assets/asset-fallback.svg');
@@ -108,7 +116,7 @@ async function rewriteDemoUrls(demo) {
         if (!replacement.startsWith('.')) replacement = `./${replacement}`;
         return `${opener}${replacement}${query ? `?${query}` : ''}`;
       });
-      content = content.replace(/(href|src)="((?:\.\.\/)+[^"#]+)"/g, (match, attribute, rawPath) => {
+      if (/\.html?$/i.test(entry.name)) content = content.replace(/(href|src)="((?:\.\.\/)+[^"#]+)"/g, (match, attribute, rawPath) => {
         const direct = join(currentDir, rawPath);
         const fallback = join(demo.sourceDir, 'web', rawPath.replace(/^(\.\.\/)+/, ''));
         const localTarget = exists(direct) ? direct : exists(fallback) ? fallback : null;

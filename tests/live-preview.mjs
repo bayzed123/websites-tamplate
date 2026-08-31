@@ -30,7 +30,16 @@ try {
     const unexpectedFailures = failures.filter((url) => !url.includes('127.0.0.1:8787/api/') && !url.includes('googletagmanager.com'));
     if (unexpectedFailures.length) throw new Error(`${testCase.name}: failed requests: ${unexpectedFailures.join(', ')}`);
     await page.screenshot({ path: `${screenshotDir}/${testCase.name}.png`, fullPage: true });
-    console.log(JSON.stringify({ ...testCase, ...result, failedRequests: failures.length }));
+    const admin = await browser.newPage({ viewport: { width: testCase.width, height: testCase.height }, deviceScaleFactor: 1 });
+    await admin.goto(`http://127.0.0.1:${port}/demos/veloura-atelier-demo/web/admin.html`, { waitUntil: 'networkidle' });
+    await admin.fill('#login-username', 'Admin');
+    await admin.fill('#login-password', 'demo123');
+    await admin.click('#login-form button[type="submit"]');
+    await admin.waitForURL('**/admin/index.html');
+    if (!await admin.locator('#login-screen').isHidden()) throw new Error(`${testCase.name}: admin login did not reach dashboard`);
+    await admin.screenshot({ path: `${screenshotDir}/${testCase.name}-admin.png`, fullPage: true });
+    await admin.close();
+    console.log(JSON.stringify({ ...testCase, ...result, adminLogin: 'passed', failedRequests: failures.length }));
     await page.close();
   }
 } finally {

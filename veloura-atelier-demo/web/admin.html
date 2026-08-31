@@ -192,12 +192,14 @@
   <script>
     document.getElementById('login-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      const user = document.getElementById('login-username').value;
-      const pass = document.getElementById('login-password').value;
+      const user = document.getElementById('login-username').value.trim().toLowerCase();
+      const pass = document.getElementById('login-password').value.trim();
       
       if(user === 'admin' && pass === 'demo123') {
-        // ডেমো ক্রেডেনশিয়াল ঠিক থাকলে অ্যাডমিন ড্যাশবোর্ডে নিয়ে যাবে
-        window.location.href = './index.html'; 
+        // ডেমো ক্রেডেনশিয়াল ঠিক থাকলে static demo session রেখে dashboard-এ যাবে
+        sessionStorage.setItem('veloura-admin-token', 'static-demo-token');
+        sessionStorage.setItem('veloura-admin-demo-mode', '1');
+        window.location.href = './admin/index.html'; 
       } else {
         alert('ভুল ইউজারনেম বা পাসওয়ার্ড! ডেমোর জন্য admin এবং demo123 ব্যবহার করুন।');
       }

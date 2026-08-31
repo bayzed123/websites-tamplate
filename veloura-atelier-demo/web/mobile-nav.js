@@ -3,6 +3,8 @@
   if (excluded || window.top !== window.self && document.body?.dataset?.adminPreview !== 'true') return;
   if (document.getElementById('global-mobile-nav')) return;
 
+  const demoRoot = `${window.location.pathname.split('/web/')[0]}/web/`;
+
   const icons = {
     home: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10Z"/></svg>',
     category: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>',
@@ -16,11 +18,11 @@
   nav.className = 'global-mobile-nav';
   nav.setAttribute('aria-label', 'Mobile storefront navigation');
   nav.innerHTML = `
-    <a href="/" data-mobile-route="home">${icons.home}<span>Home</span></a>
-    <a href="/#categories" data-mobile-route="category">${icons.category}<span>Category</span></a>
-    <a href="/#shop" data-mobile-route="brand">${icons.brand}<span>Brand</span></a>
-    <a href="/checkout.html" data-mobile-route="cart" class="mobile-nav-cart">${icons.cart}<span>Cart</span><b class="mobile-nav-badge" aria-label="0 items">0</b></a>
-    <a href="/account.html" data-mobile-route="account">${icons.account}<span>My Account</span></a>`;
+    <a href="${demoRoot}index.html" data-mobile-route="home">${icons.home}<span>Home</span></a>
+    <a href="${demoRoot}index.html#categories" data-mobile-route="category">${icons.category}<span>Category</span></a>
+    <a href="${demoRoot}index.html#shop" data-mobile-route="brand">${icons.brand}<span>Brand</span></a>
+    <a href="${demoRoot}checkout.html" data-mobile-route="cart" class="mobile-nav-cart">${icons.cart}<span>Cart</span><b class="mobile-nav-badge" aria-label="0 items">0</b></a>
+    <a href="${demoRoot}account.html" data-mobile-route="account">${icons.account}<span>My Account</span></a>`;
   document.body.appendChild(nav);
 
   const getCount = () => {
