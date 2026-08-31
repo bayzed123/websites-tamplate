@@ -29,23 +29,45 @@ theme:
     - navigation.tabs
     - navigation.sections
     - header.autohide
+  
+  # সকল CSS এবং JS ফাইল পাইপলাইনে যুক্ত করার জন্য
+  extra_css:
+    - styles.css
+    - theme.css
+    - admin/styles.css
 
-# স্ক্রিনশট অনুযায়ী আপনার ফোল্ডার স্ট্রাকচার এবং HTML ফাইলের পাথ
+  extra_javascript:
+    - app.js
+    - checkout.js
+    - account.js
+    - blog.js
+    - invoice.js
+    - product.js
+    - mobile-nav.js
+    - site-chat.js
+    - theme-init.js
+    - hero-carousel.js
+    - icons.js
+    - media-viewer.js
+    - admin/app.js
+    - admin/premium-ui.js
+    - admin/steadfast.js
+
+# ফোল্ডার ও ফাইল পাথ অনুযায়ী সম্পূর্ণ নেভিগেশন ম্যাপ
 nav:
   - Storefront:
       - Home: index.html
       - Product Page: product.html
-      - Checkout: checkout.html
-  - Customer Portal:
-      - My Account: account.html
+      - Checkout Page: checkout.html
+  - Customer Hub:
+      - Account: account.html
       - Invoice: invoice.html
       - Order Tracking: track.html
-  - Discover:
+  - Content & Support:
       - Blog: blog.html
       - Sitemap: sitemap.html
-      - Error Page (404): 404.html
+      - Error Page: 404.html
   - Admin Studio:
-      - Admin Login: admin.html
       - Admin Dashboard: admin/index.html
 
 extra:
