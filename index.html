@@ -1,261 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Web Solutions & UI Demos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #F4F7FE;
-            --surface-color: #FFFFFF;
-            --primary: #4318FF;
-            --primary-hover: #3311DB;
-            --text-main: #2B3674;
-            --text-muted: #A3AED0;
-            --border: #E0E5F2;
-        }
+site_name: Veloura Atelier Demo
+site_url: https://bayzed123.github.io/websites-tamplate/veloura-atelier-demo/web/
+site_author: Sayad Md Bayezid Hosan & SmartGen Platform
+site_description: Veloura Atelier E-commerce Storefront and Admin Dashboard Demo
+repo_name: GitHub
+edit_uri: edit/main/
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+theme:
+  name: apiplay
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  font:
+    text: Plus Jakarta Sans
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - header.autohide
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
+# স্ক্রিনশট অনুযায়ী আপনার ফোল্ডার স্ট্রাকচার এবং HTML ফাইলের পাথ
+nav:
+  - Storefront:
+      - Home: index.html
+      - Product Page: product.html
+      - Checkout: checkout.html
+  - Customer Portal:
+      - My Account: account.html
+      - Invoice: invoice.html
+      - Order Tracking: track.html
+  - Discover:
+      - Blog: blog.html
+      - Sitemap: sitemap.html
+      - Error Page (404): 404.html
+  - Admin Studio:
+      - Admin Login: admin.html
+      - Admin Dashboard: admin/index.html
 
-        /* Navigation */
-        .navbar {
-            background-color: var(--surface-color);
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar-brand {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-main);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .navbar-brand span {
-            color: var(--primary);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 500;
-            margin-left: 24px;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: clamp(32px, 5vw, 48px);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 16px;
-            letter-spacing: -0.03em;
-        }
-
-        .hero p {
-            font-size: 18px;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-        }
-
-        /* Projects Grid */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px 80px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        /* Project Card */
-        .card {
-            background: var(--surface-color);
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0px 4px 24px rgba(112, 144, 176, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid var(--border);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 12px 30px rgba(112, 144, 176, 0.12);
-        }
-
-        .badge {
-            display: inline-block;
-            background: #E4F8F0;
-            color: #16A34A;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            align-self: flex-start;
-        }
-
-        .card h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
-            color: var(--text-main);
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 24px;
-            flex-grow: 1;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            text-align: center;
-            transition: background-color 0.2s;
-            flex: 1;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--bg-color);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: var(--text-muted);
-            font-size: 14px;
-            border-top: 1px solid var(--border);
-        }
-
-        @media (max-width: 600px) {
-            .nav-links { display: none; }
-        }
-    </style>
-</head>
-<body>
-
-    <nav class="navbar">
-        <a href="#" class="navbar-brand">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            Client <span>Demo Portal</span>
-        </a>
-        <div class="nav-links">
-            <a href="#templates">Templates</a>
-            <a href="#admin">Admin Panels</a>
-        </div>
-    </nav>
-
-    <header class="hero">
-        <h1>Premium E-commerce & Admin Templates</h1>
-        <p>Explore high-performance storefronts, interactive admin dashboards, and custom UI components built for scale. Select a project below to view the live demo.</p>
-    </header>
-
-    <main class="container" id="templates">
-        <div class="grid">
-            
-            <!-- Project 1: Veloura Atelier -->
-            <article class="card">
-                <span class="badge">E-commerce + Admin</span>
-                <h3>Veloura Atelier</h3>
-                <p>A full-stack e-commerce demo featuring a premium storefront, intelligent shopping cart, and a fully functional management dashboard with order processing capabilities.</p>
-                <div class="card-actions">
-                    <a href="./veloura-atelier-demo/web/" class="btn btn-primary">View Storefront</a>
-                    <a href="./veloura-atelier-demo/web/admin" class="btn btn-outline">Admin Panel</a>
-                </div>
-            </article>
-
-            <!-- Project 2: Skincare E-commerce (Dynamic Path based on your repo) -->
-            <article class="card">
-                <span class="badge" style="background:#FFFBEB; color:#D97706;">Demo Version</span>
-                <h3>Skincare Brand Template</h3>
-                <p>A clean, minimalist e-commerce template optimized for beauty and skincare brands. Features smooth animations and high-conversion landing pages.</p>
-                <div class="card-actions">
-                    <!-- Note: Adjust the folder name if it differs slightly in your repo -->
-                    <a href="./demu-skincare-e-comm/web/" class="btn btn-primary">Explore Demo</a>
-                </div>
-            </article>
-
-            <!-- Project 3: Material Docs -->
-            <article class="card">
-                <span class="badge" style="background:#EFF6FF; color:#1D4ED8;">Documentation UI</span>
-                <h3>Material Docs UI</h3>
-                <p>A structured, easy-to-navigate documentation template for technical guides, API references, or internal team knowledge bases.</p>
-                <div class="card-actions">
-                    <!-- Note: Adjust the folder name if it differs slightly in your repo -->
-                    <a href="./demu-material-docs-ta/web/" class="btn btn-primary">View Documentation</a>
-                </div>
-            </article>
-
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Premium Web Solutions. Syad bayezid .</p>
-    </footer>
-
-</body>
-</html>
+extra:
+  powered_by_name: SmartGen Platform
+  product_url: https://smartgentools.com
+  dashboard_url: https://leads.sayadbayezid.com/
+  founder_url: https://sayadbayezid.com
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/bayzed123
+    - icon: fontawesome/solid/globe
+      link: https://smartgentools.com
