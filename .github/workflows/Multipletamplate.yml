@@ -1,0 +1,62 @@
+name: Build and deploy websites tamplate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'assets/**'
+      - 'smartgen.yml'
+      - '.github/workflows/deploy-docs.yml'
+  workflow_dispatch:
+
+# GitHub Pages-এ সরাসরি ডেপ্লয় করার জন্য প্রয়োজনীয় পারমিশন
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    
+    # এনভায়রনমেন্ট সেটআপ
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install SmartGen Docs
+        run: python -m pip install --upgrade pip smartgen-docs
+
+      # আপনার smartgen.yml অনুযায়ী সাইট বিল্ড করা
+      - name: Build documentation
+        run: smartgen-docs build
+
+      # GitHub Pages কনফিগার করা
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # বিল্ড হওয়া ফোল্ডারটি (site) পেজেসের জন্য আপলোড করা
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './site'
+
+      # সরাসরি GitHub Pages-এ ডেপ্লয় করা (কোনো gh-pages ব্রাঞ্চ ছাড়া)
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
