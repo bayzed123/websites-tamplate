@@ -1,0 +1,61 @@
+name: Doctor - Audit Every Demo Page
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_number:
+        description: Optional report number; leave blank to auto-increment
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pages: read
+
+jobs:
+  doctor:
+    name: Crawl every page and internal link
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Build demo hub
+        run: npm run build:demo-hub
+
+      - name: Run Doctor audit
+        env:
+          DOCTOR_RUN: ${{ inputs.run_number }}
+        run: node scripts/doctor.mjs site doctor-report
+
+      - name: Run page screenshots
+        run: npm run test:preview
+
+      - name: Commit numbered Doctor report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add doctor-report
+          git diff --cached --quiet || git commit -m "docs: add doctor audit report"
+          git push
+
+      - name: Upload Doctor report and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: doctor-report-${{ github.run_number }}
+          path: |
+            doctor-report/
+            artifacts/playwright/
+          if-no-files-found: ignore

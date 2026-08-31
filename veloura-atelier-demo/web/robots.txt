@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# This is a client demo preview. Production indexing rules belong to the live application.

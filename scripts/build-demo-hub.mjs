@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import { join, relative, resolve } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
 
 const root = resolve(new URL('..', import.meta.url).pathname);
 const outputDir = resolve(process.argv[2] || join(root, 'site'));
@@ -36,9 +36,59 @@ async function discoverDemos() {
   return demos.sort((a, b) => a.title.localeCompare(b.title));
 }
 
+async function collectHtmlPages(rootDir) {
+  const pages = [];
+  const queue = [''];
+  while (queue.length) {
+    const current = queue.shift();
+    for (const entry of await readdir(join(rootDir, current), { withFileTypes: true })) {
+      if (entry.name.startsWith('.') || entry.name === 'node_modules') continue;
+      const child = join(current, entry.name);
+      if (entry.isDirectory()) queue.push(child);
+      else if (/\.html?$/i.test(entry.name)) pages.push(child.replaceAll('\\', '/'));
+    }
+  }
+  return pages.sort();
+}
+
+function resolveLocalTarget(demo, pathname) {
+  const normalized = pathname.replace(/^\/+/, '');
+  const aliases = new Map([
+    ['', demo.entryFile],
+    ['products', 'web/product.html'],
+    ['admin/guide', 'web/admin/guide/index.html'],
+  ]);
+  const alias = [...aliases.entries()].find(([prefix]) => normalized === prefix || normalized.startsWith(`${prefix}/`));
+  const candidates = alias ? [join(demo.sourceDir, alias[1])] : [join(demo.sourceDir, normalized), join(demo.sourceDir, 'web', normalized)];
+  return candidates.find((candidate) => exists(candidate));
+}
+
+function renderDemoNav(demo, pages, current) {
+  const links = pages.map((page) => {
+    const target = relative(dirname(join(demo.sourceDir, current)), join(demo.sourceDir, page)).replaceAll('\\', '/');
+    const href = target.startsWith('.') ? target : `./${target}`;
+    const label = page === demo.entryFile ? 'Home' : titleize(page.replace(/\\/g, '/').replace(/\.html?$/i, '').split('/').join(' · '));
+    return `<a href="${href}">${htmlEscape(label)}</a>`;
+  }).join('');
+  return `<nav class="demo-auto-nav" data-demo-auto-nav><strong>Demo pages</strong>${links}</nav>`;
+}
+
+async function injectDemoNav(demo) {
+  const pages = await collectHtmlPages(demo.sourceDir);
+  for (const page of pages) {
+    const filePath = join(demo.sourceDir, page);
+    let content = await readFile(filePath, 'utf8');
+    if (content.includes('data-demo-auto-nav')) continue;
+    const style = '<style>.demo-auto-nav{position:fixed;z-index:9999;left:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;max-width:calc(100vw - 24px);padding:8px 10px;border:1px solid rgba(40,30,40,.18);border-radius:999px;background:rgba(255,250,247,.94);box-shadow:0 8px 30px rgba(40,20,30,.16);font:600 11px/1.2 system-ui,sans-serif}.demo-auto-nav strong{padding:6px 8px;color:#76525c}.demo-auto-nav a{padding:6px 8px;border-radius:999px;color:#523743;background:#f5e7e4;text-decoration:none}.demo-auto-nav a:hover{background:#eab5bd}@media(max-width:600px){.demo-auto-nav{border-radius:16px;bottom:8px;font-size:10px}.demo-auto-nav strong{display:none}}</style>';
+    const nav = renderDemoNav(demo, pages, page);
+    content = content.replace('</head>', `${style}</head>`).replace('</body>', `${nav}</body>`);
+    await writeFile(filePath, content);
+  }
+}
+
 async function rewriteDemoUrls(demo) {
   const queue = [''];
-  const absoluteUrl = /(["'(])\/(?!\/)([^"')\s#]+)/g;
+  const absoluteUrl = /(["'(])\/(?!\/)([^"')\s#]*)/g;
   while (queue.length) {
     const current = queue.shift();
     const currentDir = join(demo.sourceDir, current);
@@ -51,18 +101,21 @@ async function rewriteDemoUrls(demo) {
       let content = await readFile(filePath, 'utf8');
       content = content.replace(absoluteUrl, (match, opener, rawPath) => {
         const [pathname, query = ''] = rawPath.split('?');
-        const candidates = [join(demo.sourceDir, pathname), join(demo.sourceDir, 'web', pathname)];
-        const localTarget = candidates.find((candidate) => exists(candidate));
-        let replacement;
-        if (localTarget) {
-          replacement = relative(currentDir, localTarget).replaceAll('\\', '/');
-        } else if (pathname.startsWith('manus-storage/')) {
-          replacement = relative(currentDir, join(demo.sourceDir, 'web/assets/asset-fallback.svg')).replaceAll('\\', '/');
-        } else {
-          return match;
-        }
+        let localTarget = resolveLocalTarget(demo, pathname);
+        if (!localTarget && pathname.startsWith('manus-storage/')) localTarget = join(demo.sourceDir, 'web/assets/asset-fallback.svg');
+        if (!localTarget) return match;
+        let replacement = relative(currentDir, localTarget).replaceAll('\\', '/');
         if (!replacement.startsWith('.')) replacement = `./${replacement}`;
         return `${opener}${replacement}${query ? `?${query}` : ''}`;
+      });
+      content = content.replace(/(href|src)="((?:\.\.\/)+[^"#]+)"/g, (match, attribute, rawPath) => {
+        const direct = join(currentDir, rawPath);
+        const fallback = join(demo.sourceDir, 'web', rawPath.replace(/^(\.\.\/)+/, ''));
+        const localTarget = exists(direct) ? direct : exists(fallback) ? fallback : null;
+        if (!localTarget) return match;
+        let replacement = relative(currentDir, localTarget).replaceAll('\\\\', '/');
+        if (!replacement.startsWith('.')) replacement = `./${replacement}`;
+        return `${attribute}="${replacement}"`;
       });
       await writeFile(filePath, content);
     }
@@ -93,14 +146,16 @@ await rm(outputDir, { recursive: true, force: true });
 await mkdir(join(outputDir, 'demos'), { recursive: true });
 const catalog = renderCatalog(demos);
 await writeFile(join(outputDir, 'index.html'), catalog);
-await writeFile(join(outputDir, 'demos', 'index.html'), catalog);
+await writeFile(join(outputDir, 'demos', 'index.html'), catalog.replaceAll('./demos/', './'));
 for (const demo of demos) {
   const destination = join(outputDir, 'demos', demo.slug);
   await cp(demo.sourceDir, destination, { recursive: true, filter: (source) => {
     const name = source.split('/').pop();
     return !ignoredFiles.has(name) && !source.includes('/node_modules/');
   }});
-  await rewriteDemoUrls({ ...demo, sourceDir: destination });
+  const builtDemo = { ...demo, sourceDir: destination };
+  await rewriteDemoUrls(builtDemo);
+  await injectDemoNav(builtDemo);
 }
 await writeFile(join(outputDir, 'demos', 'manifest.json'), JSON.stringify(demos.map(({ slug, title, entryFile }) => ({ slug, title, entryFile })), null, 2) + '\n');
 console.log(`Discovered ${demos.length} demo project(s):`);

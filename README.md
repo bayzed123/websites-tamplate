@@ -57,9 +57,38 @@ The client Pages workflow does not depend on SmartGen's Markdown output. It depl
 
 GitHub Pages is a static host. It can publish the frontend of a full-stack or ecommerce demo, but it cannot run the project's API, database, authentication, payments, uploads, or server-side worker. Deploy those services separately and point the frontend at their public API URL. Never place credentials in a demo folder or commit `.env` files.
 
+## Universal page navigation and route repair
+
+Every generated HTML page receives a responsive **Demo pages** sidebar. It includes Home, every discovered HTML page, and admin pages, so a client can move through the complete frontend without relying on fragile hard-coded navigation. The build also rewrites root links such as `/`, `/blog.html`, `/account.html`, `/styles.css`, and `/app.js` to the correct nested path under GitHub Pages. Product URL aliases resolve to `product.html`, and `/admin/guide` resolves to the available admin guide or dashboard entry when present.
+
 ## Deployment workflow
 
 The workflow in [`.github/workflows/multipletamplate.yml`](.github/workflows/multipletamplate.yml) runs on every change to `main` and can also be started manually from the Actions tab. It first builds the root catalog, runs desktop and mobile Playwright checks, uploads screenshots for review, and then deploys the verified artifact. It uses GitHub Pages artifact deployment, so the repository's Pages source should be set to **GitHub Actions** under **Settings → Pages**.
+
+## Doctor and Medicine workflows
+
+The normal Pages workflow deploys automatically. The separate [`doctor.yml`](.github/workflows/doctor.yml) workflow is **manual only**; it is intentionally not triggered by pushes. Run it from **Actions → Doctor - Audit Every Demo Page → Run workflow** whenever you want a full link audit. Doctor builds the site, crawls every generated HTML page, checks every same-site anchor, records HTTP status and source location, runs the desktop/mobile screenshots, commits the report, and uploads it as an artifact.
+
+Reports are stored in this structure:
+
+```text
+doctor-report/
+└── run-1/
+    ├── audit.md
+    ├── medicine.md
+    └── medicine-fixed.md
+```
+
+The audit table identifies the failing page, exact link, HTTP status, and source-mirror location. The optional [`medicine.yml`](.github/workflows/medicine.yml) workflow is also **manual only**. It reads the latest `doctor-report/run-N/audit.md`, runs `scripts/medicine.mjs`, and writes `medicine-fixed.md` describing the universal route-normalization and sidebar injection points to apply. Run Doctor again after Medicine to confirm that every route is healthy.
+
+To run the same checks locally:
+
+```bash
+npm run build:demo-hub
+npx playwright install chromium
+node scripts/doctor.mjs site doctor-report
+npm run test:preview
+```
 
 ## Project-specific documentation
 
