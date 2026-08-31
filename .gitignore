@@ -1,6 +1,9 @@
 # Generated static deployment artifact
 /site/
 
+# Local preview test output
+/artifacts/
+
 # Local environment files
 .env
 .env.*

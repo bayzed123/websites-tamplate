@@ -28,8 +28,25 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install preview test dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
       - name: Build root demo hub
         run: node scripts/build-demo-hub.mjs site
+
+      - name: Run desktop and mobile preview checks
+        run: node tests/live-preview.mjs
+
+      - name: Upload preview screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-demo-preview-screenshots
+          path: artifacts/playwright/
+          if-no-files-found: ignore
 
       - name: Validate generated artifact
         shell: bash

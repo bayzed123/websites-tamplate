@@ -12,7 +12,7 @@ The repository does not hard-code every project in the deployment workflow. On e
 | `my-store/web/index.html` | `/demos/my-store/web/index.html` |
 | `admin-dashboard/admin/index.html` | `/demos/admin-dashboard/admin/index.html` |
 
-The copy step preserves HTML, CSS, JavaScript, TypeScript, JSON, SVG, images, fonts, Markdown, SQL, configuration files, and other assets. Secret environment files named `.env` or `.env.local` are excluded from the public artifact.
+The copy step preserves HTML, CSS, JavaScript, TypeScript, JSON, SVG, images, fonts, Markdown, SQL, configuration files, and other assets. Secret environment files named `.env` or `.env.local` are excluded from the public artifact. During the build, root-absolute local URLs such as `/styles.css` and `/app.js` are rewritten to the correct relative URL for the nested GitHub Pages path. Missing external `manus-storage` image URLs use the local `assets/asset-fallback.svg` so the UI never renders with broken image boxes.
 
 ## Add a new client project
 
@@ -30,6 +30,16 @@ python3 -m http.server 4173 --directory site
 ```
 
 Visit `http://localhost:4173/` and open every generated card. The build output lists all discovered folders and their entry files. The generated `site/` directory is ignored by Git and should not be committed.
+
+For automated desktop and mobile validation, install the repository dependencies and run the Playwright smoke test:
+
+```bash
+npm ci
+npx playwright install chromium
+node tests/live-preview.mjs
+```
+
+The test serves the generated artifact, verifies that the local stylesheet is loaded, confirms that the hero UI renders, checks for broken images, and writes full-page screenshots to `artifacts/playwright/desktop.png` and `artifacts/playwright/mobile.png`. GitHub Actions uploads the same screenshots as the `client-demo-preview-screenshots` artifact.
 
 ## SmartGen source documentation
 
@@ -49,7 +59,7 @@ GitHub Pages is a static host. It can publish the frontend of a full-stack or ec
 
 ## Deployment workflow
 
-The workflow in [`.github/workflows/multipletamplate.yml`](.github/workflows/multipletamplate.yml) runs on every change to `main` and can also be started manually from the Actions tab. It uses GitHub Pages artifact deployment, so the repository's Pages source should be set to **GitHub Actions** under **Settings → Pages**.
+The workflow in [`.github/workflows/multipletamplate.yml`](.github/workflows/multipletamplate.yml) runs on every change to `main` and can also be started manually from the Actions tab. It first builds the root catalog, runs desktop and mobile Playwright checks, uploads screenshots for review, and then deploys the verified artifact. It uses GitHub Pages artifact deployment, so the repository's Pages source should be set to **GitHub Actions** under **Settings → Pages**.
 
 ## Project-specific documentation
 
