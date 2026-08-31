@@ -1,7 +1,7 @@
 # Doctor audit — run 1
 
-Generated: 2026-08-31T21:48:14.862Z
-Pages crawled: 14
+Generated: 2026-08-31T22:39:29.744Z
+Pages crawled: 19
 Broken internal links: 0
 
 ## Result
