@@ -1,11 +1,11 @@
-name: Build and deploy websites tamplate
+name: Build and deploy multipale websites tamplate
 
 on:
   push:
     branches: [main]
     paths:
-      - 'docs/**'
-      - 'assets/**'
+      - 'veloura-atelier-demo/**'
+      - 'veloura-atelier-demo/web/**'
       - 'smartgen.yml'
       - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
