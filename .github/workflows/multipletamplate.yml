@@ -7,7 +7,7 @@ on:
       - 'veloura-atelier-demo/**'
       - 'veloura-atelier-demo/web/**'
       - 'smartgen.yml'
-      - '.github/workflows/deploy-docs.yml'
+      - '.'
   workflow_dispatch:
 
 # GitHub Pages-এ সরাসরি ডেপ্লয় করার জন্য প্রয়োজনীয় পারমিশন
@@ -54,7 +54,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './site'
+          path: './veloura-atelier-demo/web'
 
       # সরাসরি GitHub Pages-এ ডেপ্লয় করা (কোনো gh-pages ব্রাঞ্চ ছাড়া)
       - name: Deploy to GitHub Pages
