@@ -1,62 +1,68 @@
-name: Build and deploy multipale websites tamplate
+name: Build and Deploy Client Demo Hub
 
 on:
   push:
-    branches: [main]
-    paths:
-      - 'veloura-atelier-demo/**'
-      - 'veloura-atelier-demo/web/**'
-      - 'smartgen.yml'
-      - '.'
+    branches:
+      - main
   workflow_dispatch:
 
-# GitHub Pages-এ সরাসরি ডেপ্লয় করার জন্য প্রয়োজনীয় পারমিশন
 permissions:
   contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: pages
+  group: github-pages
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
-    name: Build and Deploy to GitHub Pages
+  build:
+    name: Discover and build demos
     runs-on: ubuntu-latest
-    
-    # এনভায়রনমেন্ট সেটআপ
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build root demo hub
+        run: node scripts/build-demo-hub.mjs site
+
+      - name: Validate generated artifact
+        shell: bash
+        run: |
+          test -s site/index.html
+          test -s site/demos/index.html
+          test -s site/demos/manifest.json
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const manifest = JSON.parse(await readFile('site/demos/manifest.json', 'utf8'));
+          if (!Array.isArray(manifest)) throw new Error('Demo manifest is not an array');
+          for (const demo of manifest) {
+            if (!demo.slug || !demo.entryFile) throw new Error(`Invalid demo entry: ${JSON.stringify(demo)}`);
+          }
+          console.log(`Validated ${manifest.length} demo project(s).`);
+          NODE
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      
     steps:
-      - name: Check out source
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install SmartGen Docs
-        run: python -m pip install --upgrade pip smartgen-docs
-
-      # আপনার smartgen.yml অনুযায়ী সাইট বিল্ড করা
-      - name: Build documentation
-        run: smartgen-docs build
-
-      # GitHub Pages কনফিগার করা
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      # বিল্ড হওয়া ফোল্ডারটি (site) পেজেসের জন্য আপলোড করা
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './veloura-atelier-demo/web'
-
-      # সরাসরি GitHub Pages-এ ডেপ্লয় করা (কোনো gh-pages ব্রাঞ্চ ছাড়া)
-      - name: Deploy to GitHub Pages
+      - name: Deploy Pages artifact
         id: deployment
         uses: actions/deploy-pages@v4

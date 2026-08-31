@@ -1,0 +1,7 @@
+# Generated static deployment artifact
+/site/
+
+# Local environment files
+.env
+.env.*
+!.env.example
