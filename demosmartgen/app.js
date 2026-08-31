@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-action="export"]').forEach(b=>b.addEventListener('click',()=>{b.textContent='✓ Export ready';setTimeout(()=>b.textContent='Export report ↗',1800)}));document.querySelectorAll('[data-toggle]').forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('on');b.textContent=b.classList.contains('on')?'Active':'Inactive'}));

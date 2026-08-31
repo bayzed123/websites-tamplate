@@ -115,6 +115,16 @@ Doctor must report `Broken internal links: 0`. Playwright must pass the storefro
 
 No existing root YAML file needs to change when adding a normal static demo. Only change the demo folder and its own files. Change [`scripts/build-demo-hub.mjs`](scripts/build-demo-hub.mjs) only when a new routing convention is intentionally introduced; change [`tests/live-preview.mjs`](tests/live-preview.mjs) only when a reusable smoke check is added. GitHub Pages serves static frontend files, so backend APIs, databases, authentication, payments, uploads, and server-side workers must remain separately deployed.
 
+## Demosmartgen premium admin theme
+
+[`demosmartgen/`](demosmartgen/) is a premium, demo-only commerce operations dashboard. It includes a clear slim sidebar, motion-style area/revenue chart, conversion funnel, investment allocation chart, profit margin KPI, ecommerce launch checklist, invoice/customer/SKU tracking destinations, campaign controls, product preview destination, analytics settings notice, and a Pro Features page marked Coming Soon.
+
+The demo intentionally contains **no secret keys, payment credentials, real login credentials, Google Tag Manager ID, Meta Pixel ID, or production tracking tag**. The Settings page shows where a private production deployment may connect a GA4 property ID and measurement ID, but those values must never be committed to this public repository.
+
+The dashboard also includes a reusable developer contact CTA injected by the root build into every page. It links to the [contact page](https://sayadbayezid.com/contact.html), [WhatsApp](https://wa.me/message/TDYG575YENF6F1), `Support@sayadbayezid.com`, and `cwb.agency@outlook.com`. Replace `assets/developer.jpg` with the desired profile photo while keeping the same filename.
+
+The feature page links are generated as real local pages. Future product upload, invoice search, customer tracking, campaign activation, and analytics connections are represented as safe UI previews until a private backend is intentionally connected. The public Pages build only serves static demo content.
+
 ## Project-specific documentation
 
 The existing Veloura project includes its own [`README.md`](veloura-atelier-demo/README.md), admin guide, route verification notes, and tests. Keep project-specific instructions inside each project folder; keep only repository-wide conventions in this file.
