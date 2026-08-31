@@ -1,0 +1,1 @@
+document.querySelector('[data-action="export"]')?.addEventListener('click',()=>{const toast=document.querySelector('#toast');toast.textContent='Report prepared for download.';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2200)});

@@ -90,6 +90,31 @@ node scripts/doctor.mjs site doctor-report
 npm run test:preview
 ```
 
+## New demo example: `demu-admin`
+
+The repository now includes [`demu-admin`](demu-admin/), a separate Northstar Admin command-center demo with a navy/lilac theme, responsive sidebar, performance chart, customer segments, recent orders, Settings, Orders, Customers, and Help Center pages. Its entry point is `demu-admin/index.html`. The root generator discovers it automatically; no change to `smartgen.yml` or the GitHub Actions workflow is required.
+
+The demo can be opened locally after building at `http://localhost:4173/demos/demu-admin/index.html`. Its valid navigation pages are Overview, Customers, Orders, Settings, and Help center. The generated universal Pages button is added separately by the root build and uses named labels rather than folder names.
+
+## Manual recipe for any future demo
+
+Create a new root folder with a unique slug, place a frontend entry at `new-demo/index.html` or `new-demo/web/index.html`, and keep all CSS, JavaScript, images, fonts, JSON, SVG, video, and other public assets inside that folder. Use relative URLs such as `./styles.css`, `./assets/logo.svg`, and `./pages/about.html`; do not use a domain-root URL such as `/styles.css`. Add real pages for every sidebar link. The generator will preserve supported file types, discover the project, copy the folder, generate the catalog card, repair nested local routes, and inject the compact Pages control into every HTML page.
+
+Run this exact verification sequence before sharing a demo:
+
+```bash
+npm ci
+npx playwright install chromium
+npm run build:demo-hub
+node scripts/doctor.mjs site doctor-report
+npm run test:preview
+python3 -m http.server 4173 --directory site
+```
+
+Doctor must report `Broken internal links: 0`. Playwright must pass the storefront, admin login, desktop and mobile screenshots. If a new demo has custom login or routes, add a dedicated test in `tests/` and include it in `package.json` or the workflow. For manual GitHub checks, open **Actions → Doctor - Audit Every Demo Page → Run workflow**. It writes `doctor-report/run-N/audit.md`, `medicine.md`, and `medicine-fixed.md`; then run the manual Medicine workflow and rerun Doctor.
+
+No existing root YAML file needs to change when adding a normal static demo. Only change the demo folder and its own files. Change [`scripts/build-demo-hub.mjs`](scripts/build-demo-hub.mjs) only when a new routing convention is intentionally introduced; change [`tests/live-preview.mjs`](tests/live-preview.mjs) only when a reusable smoke check is added. GitHub Pages serves static frontend files, so backend APIs, databases, authentication, payments, uploads, and server-side workers must remain separately deployed.
+
 ## Project-specific documentation
 
 The existing Veloura project includes its own [`README.md`](veloura-atelier-demo/README.md), admin guide, route verification notes, and tests. Keep project-specific instructions inside each project folder; keep only repository-wide conventions in this file.
