@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============================================================
+     EDIT THESE THREE LINES to personalize the tab title / description
+     ============================================================ -->
+<title>Live Demo Library — [Demu Sayad bayezid)</title>
+<meta name="description" content="Browse every live client demo in one place — real, working previews, updated automatically as new demos ship.">
+<meta name="theme-color" content="#12151C">
+
+<!-- These demos are for client review, not public search results — remove this line if you want the page indexed -->
+<meta name="robots" content="noindex, nofollow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Live Demo Library">
+<meta property="og:description" content="Browse every live client demo in one place — real, working previews, updated automatically as new demos ship.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2312151C'/%3E%3Crect x='18' y='18' width='28' height='28' rx='5' fill='%232FA35A'/%3E%3Crect x='54' y='18' width='28' height='28' rx='5' fill='%232E6E7E'/%3E%3Crect x='18' y='54' width='28' height='28' rx='5' fill='%232E6E7E'/%3E%3Crect x='54' y='54' width='28' height='28' rx='5' fill='%232FA35A'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#F5F6F8;
+    --card:#FFFFFF;
+    --ink:#14181F;
+    --ink-soft:#5B6472;
+    --line:#E3E5EA;
+
+    --side-bg:#12151C;
+    --side-line:#232833;
+    --side-text:#D3D7E0;
+    --side-text-dim:#7A8296;
+    --side-active:#1B2029;
+
+    --accent:#1F5C6B;
+    --accent-strong:#164451;
+    --live:#2FA35A;
+    --live-bg:rgba(47,163,90,.13);
+    --warn:#B4762B;
+    --warn-bg:rgba(180,118,43,.13);
+
+    --radius:10px;
+    --font:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font);
+    background:var(--bg);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  .app{
+    display:flex;
+    min-height:100vh;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width:280px;
+    flex:0 0 280px;
+    background:var(--side-bg);
+    color:var(--side-text);
+    border-right:1px solid var(--side-line);
+    display:flex;
+    flex-direction:column;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .sidebar-head{
+    padding:22px 20px 16px;
+    border-bottom:1px solid var(--side-line);
+  }
+  .sidebar-head .brand{
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:.01em;
+    margin:0 0 12px;
+  }
+  .status-line{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    color:var(--side-text-dim);
+  }
+  .pulse-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--live);
+    box-shadow:0 0 0 0 rgba(47,163,90,.6);
+    animation:pulse 2.2s infinite;
+    flex:0 0 auto;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(47,163,90,.5);}
+    70%{box-shadow:0 0 0 6px rgba(47,163,90,0);}
+    100%{box-shadow:0 0 0 0 rgba(47,163,90,0);}
+  }
+
+  .sidebar-search{
+    padding:14px 16px;
+    border-bottom:1px solid var(--side-line);
+  }
+  .sidebar-search input{
+    width:100%;
+    background:var(--side-active);
+    border:1px solid var(--side-line);
+    color:var(--side-text);
+    border-radius:8px;
+    padding:8px 10px;
+    font-size:13px;
+    font-family:inherit;
+  }
+  .sidebar-search input::placeholder{color:var(--side-text-dim);}
+
+  .sidebar-list{
+    list-style:none;
+    margin:0;
+    padding:8px 8px 8px;
+    flex:1;
+  }
+  .sidebar-list li{margin:0;}
+  .sidebar-list a{
+    display:flex;
+    flex-direction:column;
+    gap:1px;
+    padding:8px 12px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:13px;
+  }
+  .sidebar-list a:hover,
+  .sidebar-list a.is-active{background:var(--side-active);}
+  .sidebar-list .name{color:var(--side-text);font-weight:500;}
+  .sidebar-list .path{color:var(--side-text-dim);font-family:var(--mono);font-size:11.5px;}
+
+  .sidebar-empty{
+    padding:14px 16px;
+    color:var(--side-text-dim);
+    font-size:13px;
+    line-height:1.5;
+  }
+
+  .sidebar-foot{
+    padding:14px 18px 18px;
+    border-top:1px solid var(--side-line);
+    font-size:12px;
+    color:var(--side-text-dim);
+    line-height:1.6;
+  }
+  .sidebar-foot strong{color:var(--side-text);}
+  .sidebar-foot code{
+    font-family:var(--mono);
+    background:var(--side-active);
+    padding:1px 5px;
+    border-radius:4px;
+    font-size:11px;
+  }
+
+  .sidebar-toggle{
+    display:none;
+    position:fixed;
+    top:14px;left:14px;
+    z-index:20;
+    width:38px;height:38px;
+    border-radius:8px;
+    border:1px solid var(--side-line);
+    background:var(--side-bg);
+    color:var(--side-text);
+    font-size:16px;
+    cursor:pointer;
+  }
+
+  /* ---------- Canvas ---------- */
+  .canvas{
+    flex:1;
+    min-width:0;
+    padding:36px 40px 60px;
+  }
+  .canvas-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+  }
+  .canvas-head h1{
+    font-size:22px;
+    font-weight:600;
+    margin:0 0 6px;
+  }
+  .canvas-head p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:14px;
+    max-width:52ch;
+  }
+  .canvas-search{
+    flex:0 0 auto;
+  }
+  .canvas-search input{
+    width:240px;
+    max-width:60vw;
+    padding:9px 12px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    font-size:13px;
+    background:var(--card);
+  }
+
+  .banner{
+    display:none;
+    background:var(--warn-bg);
+    border:1px solid rgba(180,118,43,.35);
+    color:#7A4E1B;
+    padding:12px 16px;
+    border-radius:var(--radius);
+    font-size:13px;
+    margin-bottom:24px;
+  }
+  .banner button{
+    margin-left:10px;
+    border:1px solid rgba(180,118,43,.5);
+    background:transparent;
+    color:inherit;
+    border-radius:6px;
+    padding:4px 10px;
+    font-size:12px;
+    cursor:pointer;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:22px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .card:hover{border-color:#C9CDD5;}
+
+  .preview-frame{
+    position:relative;
+    aspect-ratio:16/10;
+    background:var(--line);
+    overflow:hidden;
+  }
+  .preview-frame iframe{
+    position:absolute;
+    top:0;left:0;
+    width:400%;
+    height:400%;
+    border:0;
+    transform:scale(.25);
+    transform-origin:top left;
+    pointer-events:none;
+  }
+  .preview-frame .no-preview{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink-soft);
+    font-size:12.5px;
+    text-align:center;
+    padding:12px;
+  }
+
+  .card-body{
+    padding:16px 16px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    flex:1;
+  }
+  .card-title{
+    margin:0;
+    font-size:15px;
+    font-weight:600;
+  }
+  .card-desc{
+    margin:0;
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.5;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .tags{
+    display:flex;flex-wrap:wrap;gap:6px;
+  }
+  .tag{
+    font-size:11px;
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:2px 7px;
+  }
+  .card-meta{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    margin-top:2px;
+  }
+  .status{
+    display:inline-flex;align-items:center;gap:5px;
+    padding:2px 8px 2px 6px;
+    border-radius:999px;
+    font-weight:500;
+  }
+  .status.live{background:var(--live-bg);color:#1E7A44;}
+  .status.warn{background:var(--warn-bg);color:#8A5A22;}
+  .status .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .card-path{
+    font-family:var(--mono);
+    color:var(--ink-soft);
+    font-size:11.5px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .card-actions{
+    display:flex;gap:8px;margin-top:auto;padding-top:10px;
+  }
+  .btn{
+    flex:1;
+    text-align:center;
+    font-size:13px;
+    font-weight:500;
+    padding:8px 10px;
+    border-radius:7px;
+    border:1px solid var(--line);
+    background:var(--card);
+    cursor:pointer;
+    text-decoration:none;
+    color:var(--ink);
+  }
+  .btn-primary{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+  .btn-primary:hover{background:var(--accent-strong);}
+  .btn-ghost:hover{border-color:#C9CDD5;}
+  .btn.copied{background:var(--live-bg);border-color:transparent;color:#1E7A44;}
+
+  /* skeletons */
+  .skel{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .skel .sk-frame{aspect-ratio:16/10;background:linear-gradient(90deg,#ECEDF1 25%,#F4F5F7 37%,#ECEDF1 63%);background-size:400% 100%;animation:shimmer 1.4s ease infinite;}
+  .skel .sk-line{height:11px;border-radius:4px;background:#ECEDF1;margin:14px 16px;}
+  .skel .sk-line.w60{width:60%;}
+  .skel .sk-line.w90{width:90%;}
+  @keyframes shimmer{0%{background-position:100% 0;}100%{background-position:0 0;}}
+
+  .empty-state{
+    grid-column:1/-1;
+    text-align:center;
+    padding:60px 20px;
+    color:var(--ink-soft);
+    font-size:14px;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+
+  @media (max-width:900px){
+    .sidebar{
+      position:fixed;
+      left:0;top:0;
+      transform:translateX(-100%);
+      transition:transform .2s ease;
+      z-index:15;
+      width:82vw;
+      max-width:300px;
+    }
+    body.sidebar-open .sidebar{transform:translateX(0);}
+    .sidebar-toggle{display:block;}
+    .canvas{padding:70px 20px 40px;}
+    .canvas-head{align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle demo list">☰</button>
+
+<div class="app">
+  <aside class="sidebar" aria-label="Demo navigation">
+    <div class="sidebar-head">
+      <p class="brand">Live Demo Library</p>
+      <div class="status-line">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span id="sideCount">Loading demos…</span>
+      </div>
+    </div>
+
+    <div class="sidebar-search">
+      <input type="search" id="sideSearch" placeholder="Filter demos…" aria-label="Filter demos">
+    </div>
+
+    <ul class="sidebar-list" id="sideList"></ul>
+
+    <div class="sidebar-foot">
+      <strong>New demo checklist</strong><br>
+      1. Add a folder with an <code>index.html</code><br>
+      2. Optional: add a <code>demo.json</code> inside it for a custom title/description<br>
+      3. Push — it appears here automatically, no edits needed.
+    </div>
+  </aside>
+
+  <main class="canvas">
+    <div class="canvas-head">
+      <div>
+        <h1>Live Demo Library</h1>
+        <p>Every folder in this repository that has an <code>index.html</code> is a live, working demo. This page finds them automatically — nothing to update by hand.</p>
+      </div>
+      <div class="canvas-search">
+        <input type="search" id="gridSearch" placeholder="Search demos…" aria-label="Search demos">
+      </div>
+    </div>
+
+    <div class="banner" id="errorBanner">
+      Couldn't load the demo list from GitHub right now.
+      <button id="retryBtn">Retry</button>
+    </div>
+
+    <section class="grid" id="grid" aria-live="polite">
+      <!-- skeletons + cards are injected here -->
+    </section>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — change these if you fork or rename the repository
+   ============================================================ */
+const CONFIG = {
+  owner: 'bayzed123',
+  repo: 'websites-tamplate',
+  branch: 'main',
+  // top-level folders that are NOT demos (support files, config, etc.)
+  exclude: ['assets','css','js','img','images','fonts','docs','wiki','node_modules','.github','.vscode'],
+  cacheMinutes: 5,
+};
+
+const grid = document.getElementById('grid');
+const sideList = document.getElementById('sideList');
+const sideCount = document.getElementById('sideCount');
+const errorBanner = document.getElementById('errorBanner');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function prettify(slug){
+  return slug.replace(/[-_]+/g,' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function renderSkeletons(n){
+  grid.innerHTML = '';
+  for(let i=0;i<n;i++){
+    const el = document.createElement('div');
+    el.className = 'skel';
+    el.innerHTML = `<div class="sk-frame"></div><div class="sk-line w60"></div><div class="sk-line w90"></div>`;
+    grid.appendChild(el);
+  }
+}
+
+async function fetchFolderList(){
+  const cacheKey = `demo-hub-folders:${CONFIG.owner}/${CONFIG.repo}`;
+  try{
+    const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+    if(cached && (Date.now() - cached.ts) < CONFIG.cacheMinutes*60*1000){
+      return cached.folders;
+    }
+  }catch(e){/* ignore bad cache */}
+
+  const url = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/?ref=${CONFIG.branch}`;
+  const res = await fetch(url, { headers:{ 'Accept':'application/vnd.github+json' } });
+  if(!res.ok) throw new Error('GitHub API ' + res.status);
+  const items = await res.json();
+
+  const folders = items
+    .filter(it => it.type === 'dir')
+    .filter(it => !CONFIG.exclude.includes(it.name))
+    .filter(it => !it.name.startsWith('.') && !it.name.startsWith('_'))
+    .map(it => it.name)
+    .sort((a,b) => a.localeCompare(b));
+
+  try{ localStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), folders })); }catch(e){}
+  return folders;
+}
+
+async function loadDemoMeta(folder){
+  // 1) optional manual override
+  try{
+    const r = await fetch(`./${folder}/demo.json`, { cache:'no-store' });
+    if(r.ok){
+      const data = await r.json();
+      return {
+        path: folder,
+        title: data.title || prettify(folder),
+        description: data.description || 'Live client demo.',
+        tags: Array.isArray(data.tags) ? data.tags : [],
+        ok: true,
+      };
+    }
+  }catch(e){/* fall through */}
+
+  // 2) scrape the demo's own <title> / meta description
+  try{
+    const r = await fetch(`./${folder}/index.html`, { cache:'no-store' });
+    if(!r.ok) throw new Error('no index.html');
+    const html = await r.text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const title = doc.querySelector('title')?.textContent?.trim();
+    const desc = doc.querySelector('meta[name="description"]')?.getAttribute('content')?.trim();
+    return {
+      path: folder,
+      title: title || prettify(folder),
+      description: desc || 'Live client demo.',
+      tags: [],
+      ok: true,
+    };
+  }catch(e){
+    return {
+      path: folder,
+      title: prettify(folder),
+      description: 'Preview unavailable — this folder needs an index.html.',
+      tags: [],
+      ok: false,
+    };
+  }
+}
+
+function cardHTML(demo){
+  const url = new URL(`./${demo.path}/`, location.href).href;
+  const statusClass = demo.ok ? 'live' : 'warn';
+  const statusLabel = demo.ok ? 'Live' : 'Check folder';
+  const preview = demo.ok
+    ? `<iframe src="./${demo.path}/" loading="lazy" tabindex="-1" title="Live preview of ${demo.title}"></iframe>`
+    : `<div class="no-preview">No index.html found in /${demo.path}/</div>`;
+  const tags = demo.tags.length
+    ? `<div class="tags">${demo.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
+    : '';
+
+  return `
+    <article class="card" data-path="${demo.path}" data-search="${(demo.title+' '+demo.path+' '+demo.description).toLowerCase()}">
+      <a class="preview-frame" href="${url}" target="_blank" rel="noopener" aria-label="Open live preview of ${demo.title}">${preview}</a>
+      <div class="card-body">
+        <h3 class="card-title">${demo.title}</h3>
+        <p class="card-desc">${demo.description}</p>
+        ${tags}
+        <div class="card-meta">
+          <span class="status ${statusClass}"><span class="dot"></span>${statusLabel}</span>
+          <span class="card-path">/${demo.path}/</span>
+        </div>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="${url}" target="_blank" rel="noopener">Open demo</a>
+          <button class="btn btn-ghost" data-copy-url="${url}">Copy link</button>
+        </div>
+      </div>
+    </article>`;
+}
+
+function sideItemHTML(demo){
+  return `<li><a href="#" data-path="${demo.path}" data-search="${(demo.title+' '+demo.path).toLowerCase()}">
+    <span class="name">${demo.title}</span>
+    <span class="path">/${demo.path}/</span>
+  </a></li>`;
+}
+
+function wireCardActions(){
+  grid.querySelectorAll('[data-copy-url]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const url = btn.getAttribute('data-copy-url');
+      try{
+        await navigator.clipboard.writeText(url);
+        const old = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = old; btn.classList.remove('copied'); }, 1400);
+      }catch(e){
+        prompt('Copy this link:', url);
+      }
+    });
+  });
+}
+
+function wireSidebarNav(){
+  sideList.querySelectorAll('a[data-path]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const path = a.getAttribute('data-path');
+      const card = grid.querySelector(`.card[data-path="${CSS.escape(path)}"]`);
+      if(card){
+        card.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        card.style.borderColor = 'var(--accent)';
+        setTimeout(() => { card.style.borderColor = ''; }, 1200);
+      }
+      document.body.classList.remove('sidebar-open');
+    });
+  });
+}
+
+function wireFilters(){
+  function applyFilter(term){
+    term = term.trim().toLowerCase();
+    grid.querySelectorAll('.card').forEach(card => {
+      card.style.display = card.dataset.search.includes(term) ? '' : 'none';
+    });
+    sideList.querySelectorAll('li').forEach(li => {
+      const a = li.querySelector('a');
+      li.style.display = a.dataset.search.includes(term) ? '' : 'none';
+    });
+  }
+  document.getElementById('gridSearch').addEventListener('input', e => applyFilter(e.target.value));
+  document.getElementById('sideSearch').addEventListener('input', e => applyFilter(e.target.value));
+}
+
+document.getElementById('sidebarToggle').addEventListener('click', () => {
+  document.body.classList.toggle('sidebar-open');
+});
+
+async function init(){
+  errorBanner.style.display = 'none';
+  renderSkeletons(6);
+
+  let folders;
+  try{
+    folders = await fetchFolderList();
+  }catch(e){
+    errorBanner.style.display = 'block';
+    grid.innerHTML = '<p class="empty-state">Couldn\'t reach GitHub to list demos. Check your connection and retry.</p>';
+    sideCount.textContent = 'Unavailable';
+    return;
+  }
+
+  if(folders.length === 0){
+    grid.innerHTML = '<p class="empty-state">No demo folders yet. Add a folder with an index.html and push — it will show up here automatically.</p>';
+    sideCount.textContent = '0 live demos';
+    return;
+  }
+
+  const demos = await Promise.all(folders.map(loadDemoMeta));
+
+  grid.innerHTML = demos.map(cardHTML).join('');
+  sideList.innerHTML = demos.map(sideItemHTML).join('');
+  sideCount.textContent = `${demos.length} live demo${demos.length === 1 ? '' : 's'}`;
+
+  wireCardActions();
+  wireSidebarNav();
+  wireFilters();
+}
+
+document.getElementById('retryBtn').addEventListener('click', init);
+init();
+</script>
+</body>
+</html>
