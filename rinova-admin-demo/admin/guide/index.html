@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Rinova BD · Admin ব্যবহারিক বাংলা গাইড</title>
+  <link rel="stylesheet" href="../styles.css?v=20260902-premium-2" />
+  <link rel="stylesheet" href="../premium-theme.css?v=20260902-premium-2" />
+  <style>
+    .guide{max-width:940px;margin:0 auto;padding:34px 20px 100px}
+    .guide header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:10px}
+    .guide h1,.guide h2,.guide h3{font-family:'Playfair Display',Georgia,serif;letter-spacing:-.035em;color:var(--ink)}
+    .guide h1{font-size:clamp(32px,5.5vw,54px);margin:6px 0 12px;line-height:1.05}
+    .guide h2{font-size:27px;margin:46px 0 14px;padding-top:26px;border-top:1px solid var(--line);scroll-margin-top:20px}
+    .guide h3{font-size:19px;margin:26px 0 8px}
+    .guide p,.guide li,.guide td{color:var(--muted);line-height:1.85;font-size:14.5px}
+    .guide ol,.guide ul{padding-left:22px;margin:10px 0}
+    .guide li{margin:8px 0}
+    .guide strong{color:var(--ink-soft)}
+    .guide a{color:var(--accent);font-weight:600}
+    .guide .lead{font-size:16px;line-height:1.8}
+
+    .guide-toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin:24px 0 6px;padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--white)}
+    .guide-toc a{display:block;padding:9px 12px;border-radius:9px;background:var(--paper);font-size:13px;font-weight:600;text-decoration:none;transition:background .15s ease}
+    .guide-toc a:hover{background:var(--accent-soft)}
+
+    .guide-card{border:1px solid var(--line);border-radius:16px;padding:22px;margin:18px 0;background:var(--white);box-shadow:var(--shadow-xs)}
+    .guide-card h2,.guide-card h3{border:0;padding:0;margin:0 0 10px}
+    .guide-card.important{border-color:#e7c6d8;background:linear-gradient(140deg,#fffafc,var(--accent-soft))}
+    .guide-card.warning{border-color:#e8cfa8;background:linear-gradient(140deg,#fffcf6,var(--warn-soft))}
+    .guide-card.good{border-color:#bfe0cd;background:linear-gradient(140deg,#f9fdfb,var(--ok-soft))}
+
+    .guide-steps{counter-reset:step;list-style:none;padding:0;margin:14px 0}
+    .guide-steps li{counter-increment:step;position:relative;padding:0 0 0 44px;margin:14px 0}
+    .guide-steps li::before{content:counter(step);position:absolute;left:0;top:-1px;display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:var(--accent);color:#fff;font:700 13px/1 'DM Sans',system-ui,sans-serif}
+
+    .guide table{border-collapse:collapse;width:100%;margin:16px 0;background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .guide th,.guide td{text-align:left;padding:13px;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.65;vertical-align:top}
+    .guide th{background:var(--cream);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+    .guide tr:last-child td{border-bottom:0}
+    .guide-pill{display:inline-block;padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent-strong);font-size:11px;font-weight:700;white-space:nowrap}
+    .guide-key{display:inline-block;padding:2px 8px;border-radius:6px;border:1px solid var(--line-strong);background:var(--cream);color:var(--ink-soft);font-size:12.5px;font-weight:600;white-space:nowrap}
+    .guide-back{position:sticky;top:14px}
+
+    @media(max-width:650px){
+      .guide{padding:24px 15px 70px}
+      .guide header{flex-direction:column}
+      .guide h2{font-size:24px}
+      .guide table{display:block;overflow-x:auto}
+      .guide th,.guide td{min-width:140px}
+      .guide-back{position:static}
+    }
+  </style>
+</head>
+<body>
+  <main class="guide">
+    <header>
+      <div>
+        <p class="eyebrow">RINOVA BD · OWNER HELP</p>
+        <h1>অ্যাডমিন ড্যাশবোর্ড বাংলা গাইড</h1>
+        <p class="lead">এই গাইড ডেভেলপারের জন্য নয়। আপনি দোকানের মালিক হিসেবে কোথায় ক্লিক করবেন, কী লিখবেন এবং কাস্টমার কী দেখবে — সব সহজ বাংলায় ধাপে ধাপে দেওয়া আছে। কোনো কোড লিখতে হবে না।</p>
+      </div>
+      <a class="button guide-back" href="../">← ড্যাশবোর্ডে ফিরুন</a>
+    </header>
+
+    <nav class="guide-toc" aria-label="গাইডের সূচিপত্র">
+      <a href="#start">১ · শুরু করা</a>
+      <a href="#menu">২ · মেনু পরিচিতি</a>
+      <a href="#daily">৩ · প্রতিদিনের কাজ</a>
+      <a href="#product">৪ · নতুন প্রোডাক্ট</a>
+      <a href="#clothing">৫ · জামাকাপড়ের সাইজ ও রঙ</a>
+      <a href="#gallery">৬ · ছবি ও ভিডিও</a>
+      <a href="#stock">৭ · স্টক</a>
+      <a href="#orders">৮ · অর্ডার ও ইনভয়েস</a>
+      <a href="#payment">৯ · পেমেন্ট ও ডেলিভারি</a>
+      <a href="#campaign">১০ · অ্যাড ক্যাম্পেইন পেজ</a>
+      <a href="#content">১১ · কনটেন্ট ও ব্যানার</a>
+      <a href="#problems">১২ · সমস্যা হলে</a>
+    </nav>
+
+    <!-- ================================================================= -->
+    <h2 id="start">১. শুরু করা</h2>
+    <div class="guide-card important">
+      <h3>লগইন</h3>
+      <ol class="guide-steps">
+        <li><a href="../"><strong>rinovabd.com/admin</strong></a> লিংকে যান।</li>
+        <li>আপনার <strong>ইউজারনেম</strong> ও <strong>পাসওয়ার্ড</strong> দিয়ে <span class="guide-key">Sign in</span> চাপুন।</li>
+        <li>কাজ শেষ হলে বাম পাশের নিচে <span class="guide-key">Sign out</span> চাপুন — বিশেষ করে অন্যের কম্পিউটার বা মোবাইলে।</li>
+      </ol>
+      <p><strong>কখনোই</strong> পাসওয়ার্ড হোয়াটসঅ্যাপ, স্ক্রিনশট বা প্রোডাক্টের বর্ণনায় লিখবেন না।</p>
+    </div>
+
+    <h3>View Mode আর Edit Mode</h3>
+    <p>উপরে ডান পাশে দুইটি বাটন আছে।</p>
+    <table>
+      <thead><tr><th>বাটন</th><th>কী হয়</th><th>কখন ব্যবহার করবেন</th></tr></thead>
+      <tbody>
+        <tr><td><span class="guide-pill">View Mode</span></td><td>কেবল দেখা যায়, ভুলে কিছু বদলে যাওয়ার ভয় নেই।</td><td>রিপোর্ট দেখা, অর্ডার চেক করা।</td></tr>
+        <tr><td><span class="guide-pill">Edit Mode</span></td><td>প্রোডাক্ট ও সেটিংস বদলানো যায়।</td><td>নতুন প্রোডাক্ট, দাম বা স্টক বদলানো।</td></tr>
+      </tbody>
+    </table>
+    <p class="muted-note">মোবাইলে বাম পাশের মেনু দেখতে উপরের <span class="guide-key">☰</span> চিহ্নে চাপুন।</p>
+
+    <!-- ================================================================= -->
+    <h2 id="menu">২. বাম পাশের মেনু কী কাজে লাগে</h2>
+    <table>
+      <thead><tr><th>মেনু</th><th>কাজ</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Dashboard</strong></td><td>আজকের বিক্রি, লাভ, অর্ডার সংখ্যা ও কোন কাজটি বাকি আছে তার সারাংশ।</td></tr>
+        <tr><td><strong>Admin Assistant</strong></td><td>দোকানের হিসাব বাংলায় জিজ্ঞাসা করার সহকারী।</td></tr>
+        <tr><td><strong>Products</strong></td><td>নতুন প্রোডাক্ট যোগ করা, দাম ও ছবি বদলানো।</td></tr>
+        <tr><td><strong>Categories</strong></td><td>Face Care, Clothing-এর মতো ভাগ তৈরি ও সাজানো।</td></tr>
+        <tr><td><strong>Inventory</strong></td><td>স্টক বাড়ানো-কমানো, কারণসহ হিসাব রাখা।</td></tr>
+        <tr><td><strong>POS &amp; Barcodes</strong></td><td>দোকানে সামনাসামনি বিক্রি ও লেবেল প্রিন্ট।</td></tr>
+        <tr><td><strong>Orders</strong></td><td>অনলাইন অর্ডার দেখা, ঠিক করা, ইনভয়েস প্রিন্ট, কুরিয়ারে পাঠানো।</td></tr>
+        <tr><td><strong>Returns</strong></td><td>ফেরত আসা পণ্যের হিসাব।</td></tr>
+        <tr><td><strong>Reviews</strong></td><td>কাস্টমারের রিভিউ অনুমোদন করা।</td></tr>
+        <tr><td><strong>Content CMS</strong></td><td>হোমপেজ লেখা, ব্লগ ও পেজ।</td></tr>
+        <tr><td><strong>Marketing &amp; banners</strong></td><td>হোমপেজের ব্যানার ও অফার।</td></tr>
+        <tr><td><strong>Campaign Studio</strong> <span class="guide-pill">ADS</span></td><td>ফেসবুক/ইনস্টাগ্রাম অ্যাডের জন্য আলাদা ল্যান্ডিং পেজ।</td></tr>
+        <tr><td><strong>Traffic &amp; SEO</strong></td><td>ভিজিটর ও ট্র্যাকিং সেটআপ।</td></tr>
+        <tr><td><strong>Settings</strong></td><td>দোকানের নাম, ডেলিভারি চার্জ, পেমেন্ট মাধ্যম, কুরিয়ার।</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ================================================================= -->
+    <h2 id="daily">৩. প্রতিদিন সকালে ৫ মিনিটের কাজ</h2>
+    <ol class="guide-steps">
+      <li><strong>Dashboard</strong> খুলুন। উপরের কার্ডগুলোতে আজকের বিক্রি ও অর্ডার দেখুন।</li>
+      <li>“What needs attention?” অংশে লাল/হলুদ কিছু থাকলে সেটিতে চাপুন।</li>
+      <li><strong>Orders</strong>-এ গিয়ে নতুন <span class="guide-pill">pending</span> অর্ডারগুলো দেখুন ও কনফার্ম করুন।</li>
+      <li><strong>Inventory</strong>-তে কম স্টকের প্রোডাক্ট থাকলে স্টক বাড়ান।</li>
+      <li><strong>Reviews</strong>-এ নতুন রিভিউ থাকলে অনুমোদন দিন।</li>
+    </ol>
+
+    <!-- ================================================================= -->
+    <h2 id="product">৪. নতুন প্রোডাক্ট যোগ করা</h2>
+    <ol class="guide-steps">
+      <li><strong>Products</strong> মেনুতে যান, ডান পাশের <span class="guide-key">+ New product</span> চাপুন।</li>
+      <li><strong>প্রোডাক্টের নাম</strong> লিখুন। SKU খালি রাখলে নিজে থেকেই তৈরি হবে।</li>
+      <li><strong>ক্যাটাগরি</strong> বাছুন — এটি খুব জরুরি, কারণ ক্যাটাগরি অনুযায়ী নিচে মানানসই অপশন দেখাবে।</li>
+      <li><strong>কেনার দাম</strong> ও <strong>বিক্রয় মূল্য</strong> দিন। আগের মূল্য দিলে সাইটে কাটা দাগ দেখাবে।</li>
+      <li><strong>শুরুর স্টক</strong> কত পিস আছে লিখুন।</li>
+      <li>ছবি যোগ করুন (নিচের ৬ নম্বর অংশ দেখুন)।</li>
+      <li><strong>স্ট্যাটাস</strong> <span class="guide-pill">Active</span> করুন — তবেই কাস্টমার দেখতে পাবে। <span class="guide-pill">Draft</span> রাখলে শুধু আপনি দেখবেন।</li>
+      <li>নিচে <span class="guide-key">Create product</span> চাপুন।</li>
+    </ol>
+
+    <div class="guide-card">
+      <h3>পরিমাণভিত্তিক ছাড় (Bulk discount)</h3>
+      <p>বেশি কিনলে কম দাম দিতে চাইলে <span class="guide-key">+ Add a bulk price</span> চাপুন এবং লিখুন: “কমপক্ষে <strong>৩</strong> টি কিনলে প্রতিটি <strong>২৫০</strong> ৳”। একাধিক ধাপ যোগ করা যায়। দরকার না হলে খালি রাখুন — তখন সবসময় একই দাম থাকবে।</p>
+    </div>
+
+    <!-- ================================================================= -->
+    <h2 id="clothing">৫. জামাকাপড়ের সাইজ ও রঙ যোগ করা</h2>
+    <div class="guide-card important">
+      <p><strong>নতুন সুবিধা।</strong> আগে জামাকাপড়ে শুধু গ্রাম দেখাতো, সাইজ বা রঙ দেওয়ার জায়গা ছিল না। এখন ক্যাটাগরিতে <strong>Clothing</strong> বাছলেই নিচে <strong>প্রোডাক্ট অপশন</strong> অংশে সাইজ ও রঙের বাটন চলে আসে।</p>
+    </div>
+    <ol class="guide-steps">
+      <li>প্রোডাক্ট ফর্মে <strong>ক্যাটাগরি</strong> থেকে <strong>Clothing</strong> বাছুন।</li>
+      <li><strong>সাইজ (Size)</strong> অংশে যে সাইজগুলো আপনার কাছে আছে সেগুলোর বাটনে চাপুন — <span class="guide-key">S</span> <span class="guide-key">M</span> <span class="guide-key">L</span> <span class="guide-key">XL</span> <span class="guide-key">XXL</span> ইত্যাদি। বাটন গোলাপি হয়ে গেলে বুঝবেন সেটি বাছাই হয়েছে।</li>
+      <li>তালিকায় না থাকলে নিচের ঘরে নিজের সাইজ লিখে <span class="guide-key">যোগ করুন</span> চাপুন (যেমন “৩৮ ইঞ্চি”)।</li>
+      <li><strong>রঙ (Colour)</strong> অংশেও একইভাবে রঙ বাছুন বা নিজের রঙ লিখুন।</li>
+      <li>চাইলে <strong>কাপড়, ফিটিং, হাতা, উপলক্ষ, ধোয়ার নিয়ম</strong> লিখে দিন — এগুলো প্রোডাক্ট পেজে কাস্টমার দেখতে পাবে।</li>
+      <li><strong>কুরিয়ার ওজন</strong> ঘরে শুধু কুরিয়ারের জন্য আনুমানিক ওজন দিন। এটি জামার মাপ নয়।</li>
+      <li>Save করুন।</li>
+    </ol>
+    <div class="guide-card good">
+      <p><strong>কাস্টমার কী দেখবে:</strong> প্রোডাক্ট পেজে “Dress size” ও “Colour” নামে দুইটি ঘর আসবে। সাইজ ও রঙ না বেছে কাস্টমার ব্যাগে যোগ করতে পারবে না, তাই ভুল অর্ডার আসবে না। অর্ডার ও ইনভয়েসে সাইজ-রঙ লেখা থাকবে।</p>
+    </div>
+    <p class="muted-note">অন্য ক্যাটাগরিতে (যেমন Face Care) একই জায়গায় “সাইজ / পরিমাণ” লেখা আসবে — সেখানে 50ml, 150ml, 100g এভাবে লিখতে পারবেন। দরকার না হলে খালি রাখুন।</p>
+
+    <!-- ================================================================= -->
+    <h2 id="gallery">৬. ছবি ও ভিডিও যোগ করা</h2>
+    <div class="guide-card important">
+      <p><strong>নতুন সুবিধা।</strong> আগে এখানে কোডের মতো লেখা দেখাতো। এখন আর কোনো কোড নেই — শুধু ছবি বাছাই করে আপলোড করবেন।</p>
+    </div>
+    <h3>প্রধান ছবি</h3>
+    <ol class="guide-steps">
+      <li><strong>প্রধান ছবির লিংক</strong> অংশে <span class="guide-key">Choose file</span> দিয়ে ছবি বাছুন।</li>
+      <li><span class="guide-key">Upload primary image</span> চাপুন। নিচে ছোট প্রিভিউ আসবে।</li>
+    </ol>
+    <h3>আরও ছবি ও ভিডিও</h3>
+    <ol class="guide-steps">
+      <li><strong>আরও ছবি ও ভিডিও</strong> অংশে <span class="guide-key">ছবি আপলোড করুন</span> দিয়ে একসাথে অনেক ছবি দিতে পারবেন।</li>
+      <li>প্রতিটি ছবি একটি ছোট কার্ড হিসেবে দেখাবে।</li>
+      <li>ক্রম বদলাতে কার্ডের নিচের <span class="guide-key">←</span> <span class="guide-key">→</span> তীর চাপুন। প্রথমটিই প্রধান ছবি।</li>
+      <li>কোনো ছবি বাদ দিতে <span class="guide-key">✕</span> চাপুন।</li>
+      <li>ভিডিও দিতে চাইলে <strong>ভিডিও লিংক</strong> ঘরে <code>https://</code> দিয়ে শুরু হওয়া লিংক দিয়ে <span class="guide-key">ভিডিও যোগ করুন</span> চাপুন।</li>
+      <li>শেষে অবশ্যই <span class="guide-key">Save changes</span> চাপুন — নাহলে পরিবর্তন সংরক্ষণ হবে না।</li>
+    </ol>
+    <div class="guide-card warning">
+      <p><strong>ছবির সঠিক মাপ:</strong> স্কয়ার (১০৮০×১০৮০ পিক্সেল), সাইজ ৫০০ KB-এর নিচে, ফরম্যাট WebP বা JPG। বড় ছবি দিলে সাইট ধীর হয়ে যায়।</p>
+    </div>
+
+    <!-- ================================================================= -->
+    <h2 id="stock">৭. স্টক বাড়ানো ও কমানো</h2>
+    <ol class="guide-steps">
+      <li><strong>Inventory</strong> মেনুতে যান।</li>
+      <li>প্রোডাক্টের পাশে স্টক বদলানোর বাটনে চাপুন।</li>
+      <li>বাড়াতে <strong>10</strong>, কমাতে <strong>-10</strong> এভাবে লিখুন।</li>
+      <li>কারণ লিখুন (যেমন “নতুন মাল এসেছে”, “ভাঙা মাল বাদ”)। প্রতিটি পরিবর্তনের হিসাব থেকে যায়।</li>
+    </ol>
+    <p>স্টক শেষ হলে প্রোডাক্ট এডিটরে <strong>স্টক শেষ (Stock Out)</strong> টিক দিন — কাস্টমার কার্ডে “Stock Out” লেখা দেখবে।</p>
+
+    <!-- ================================================================= -->
+    <h2 id="orders">৮. অর্ডার, ঠিকানা সংশোধন ও ইনভয়েস</h2>
+    <ol class="guide-steps">
+      <li><strong>Orders</strong> মেনুতে যান। নতুন অর্ডার সবার উপরে থাকে।</li>
+      <li>যে অর্ডারে কাজ করবেন তার <span class="guide-key">Edit / details</span> চাপুন।</li>
+      <li><strong>Edit customer information</strong>-এ নাম, নম্বর বা ঠিকানার ভুল ঠিক করে <span class="guide-key">Save customer details</span> চাপুন।</li>
+      <li><strong>Courier copy block</strong>-এ <span class="guide-key">Copy to Clipboard</span> চাপলে নাম-নম্বর-ঠিকানা একসাথে কপি হয় — কুরিয়ারের ওয়েবসাইটে সরাসরি পেস্ট করতে পারবেন।</li>
+      <li>পণ্য বদলাতে <strong>Modify order items</strong>-এ পরিমাণ বাড়ান/কমান, নতুন পণ্য দিতে <span class="guide-key">Add product</span> চাপুন, বাদ দিতে <span class="guide-key">Remove</span>।</li>
+      <li><span class="guide-key">Save items &amp; recalculate</span> চাপুন — মোট টাকা নিজে থেকেই ঠিক হয়ে যাবে।</li>
+    </ol>
+    <div class="guide-card good">
+      <p><strong>মনে রাখবেন:</strong> জেলা বদলালে ডেলিভারি চার্জও নিজে থেকেই ঠিক হয়ে যায় (ঢাকার ভিতরে/বাইরে অনুযায়ী)। আপনাকে হাতে হিসাব করতে হবে না।</p>
+    </div>
+
+    <h3>ইনভয়েস নম্বর</h3>
+    <p>ইনভয়েস নম্বর এখন <strong>INV-000001</strong> এভাবে শুরু হয় (আগে RNV ছিল)। অর্ডার নম্বর আলাদা — সেটি <strong>RNV-</strong> দিয়ে শুরু হয়। দুইটি মিলিয়ে ফেলবেন না:</p>
+    <table>
+      <thead><tr><th>নম্বর</th><th>উদাহরণ</th><th>কী বোঝায়</th></tr></thead>
+      <tbody>
+        <tr><td>ইনভয়েস নম্বর</td><td><strong>INV-000012</strong></td><td>বিলের নম্বর। কাস্টমারকে এটি বলবেন।</td></tr>
+        <tr><td>অর্ডার নম্বর</td><td><strong>RNV-MTKI0NQQ</strong></td><td>সিস্টেমের ভিতরের অর্ডার আইডি।</td></tr>
+      </tbody>
+    </table>
+    <p>ইনভয়েস প্রিন্ট করতে অর্ডারের পাশে <span class="guide-key">Print invoice</span> চাপুন। ইনভয়েসের উপরে <strong>Ship From</strong>-এ আপনার দোকানের নাম, নম্বর ও ঠিকানা এবং নিচে <strong>Ship To</strong>-তে কাস্টমারের তথ্য থাকে। একদম নিচে ডেলিভারির সময় পণ্য দেখার নিয়ম লেখা থাকে।</p>
+
+    <!-- ================================================================= -->
+    <h2 id="payment">৯. পেমেন্ট মাধ্যম ও ডেলিভারি পার্টনার</h2>
+    <p>সব কিছু <strong>Settings</strong> মেনুতে। এখানে বদলালে চেকআউট পেজে সাথে সাথে পরিবর্তন আসে।</p>
+
+    <h3>পেমেন্ট মাধ্যম</h3>
+    <ol class="guide-steps">
+      <li><strong>Settings → Payment methods</strong> অংশে যান।</li>
+      <li><strong>Cash on delivery</strong> ও <strong>bKash advance</strong> — প্রতিটির জন্য <span class="guide-pill">Active · চালু</span> বা <span class="guide-pill">Hidden · বন্ধ</span> বাছুন। যেটি বন্ধ, সেটি কাস্টমার চেকআউটে দেখবেই না।</li>
+      <li><strong>bKash Send Money number</strong> ঘরে আপনার বিকাশ নম্বর দিন — কাস্টমার এই নম্বরেই টাকা পাঠাবে।</li>
+      <li>চাইলে <strong>bKash instructions</strong> ঘরে নিজের ভাষায় নির্দেশনা লিখুন।</li>
+      <li>নিচে <span class="guide-key">Save settings</span> চাপুন।</li>
+    </ol>
+    <div class="guide-card">
+      <p><strong>অ্যাডভান্স পেমেন্ট কীভাবে কাজ করে:</strong> কাস্টমার বিকাশে <em>Send Money</em> করে ট্রানজেকশন আইডি লিখে অর্ডার দেয়। আইডি না দিলে অর্ডার হবে না। আপনি Orders → <span class="guide-key">Edit / details</span> → <strong>Payment</strong> কার্ডে সেই আইডি দেখতে পাবেন এবং <span class="guide-key">Copy transaction ID</span> দিয়ে কপি করে বিকাশ স্টেটমেন্টে মিলিয়ে নিতে পারবেন। মিলে যাওয়ার পরই মাল পাঠাবেন।</p>
+    </div>
+
+    <h3>ডেলিভারি পার্টনার ও চার্জ</h3>
+    <ol class="guide-steps">
+      <li><strong>Settings → Delivery &amp; courier</strong> অংশে যান।</li>
+      <li><strong>Delivery partner</strong> থেকে কুরিয়ার বাছুন — Steadfast, Pathao, RedX, Paperfly, Sundarban বা নিজের ডেলিভারি।</li>
+      <li>ঢাকার ভিতরে ও বাইরের চার্জ লিখুন।</li>
+      <li>Save করুন।</li>
+    </ol>
+    <p>কাস্টমার চেকআউট পেজে <strong>Place order</strong> বাটনের ঠিক উপরে ছোট করে দেখবে: <em>🔒 Delivery Partner: Steadfast — Fixed by the shop</em>। এটি তালাবদ্ধ, কাস্টমার বদলাতে পারবে না। আপনি Settings-এ বদলালে ওখানেও নতুন নাম দেখাবে।</p>
+
+    <!-- ================================================================= -->
+    <h2 id="campaign">১০. অ্যাড ক্যাম্পেইন পেজ তৈরি করা</h2>
+    <div class="guide-card important">
+      <p>ফেসবুক বা ইনস্টাগ্রাম অ্যাডের জন্য আলাদা একটি পেজ বানানো যায়। এর নিজস্ব লিংক থাকে এবং এটি আপনার মূল দোকানের কোনো কিছু বদলায় না।</p>
+      <p><strong>পেজটি দেখতে কেমন হবে:</strong> Silky Beauty Combo-এর ল্যান্ডিং পেজের মতোই — উপরে ছবি ও দাম, বারবার “অর্ডার করতে ক্লিক করুন” বাটন, কল ও হোয়াটসঅ্যাপ, আর একদম নিচে <strong>অর্ডার ফর্ম</strong>। কাস্টমার এই পেজেই নাম, ফোন ও ঠিকানা দিয়ে অর্ডার করতে পারবে — অন্য পেজে যেতে হবে না। দাম ও ডেলিভারি চার্জ সার্ভার থেকে আসে, তাই পেজে যে দাম দেখাবে অর্ডারেও ঠিক সেই দামই যাবে।</p>
+    </div>
+    <ol class="guide-steps">
+      <li>বাম মেনু থেকে <strong>Campaign Studio</strong>-তে যান।</li>
+      <li><strong>Campaign name</strong> ঘরে নাম লিখুন (যেমন “Winter Glow Edit”)।</li>
+      <li>নিচে <strong>Page link</strong> নিজে থেকেই তৈরি হয়ে যাবে এবং পুরো লিংকটি গোলাপি ঘরে দেখাবে। এটিই আপনার অ্যাডের লিংক। চাইলে ছোট করতে পারেন।</li>
+      <li><strong>Small headline</strong> লিখুন, আর <strong>Selling points</strong> ঘরে প্রতিটি লাইনে একটি করে কারণ লিখুন (কেন কিনবে)। প্রতিটি লাইন পেজে আলাদা প্যারাগ্রাফ হয়ে দেখাবে।</li>
+      <li><strong>Main picture</strong>-এ <span class="guide-key">Upload picture</span> দিয়ে ছবি দিন (স্কয়ার ১০৮০×১০৮০)।</li>
+      <li><strong>Products on this page</strong> অংশে যে পণ্যগুলো এই অ্যাডে বিক্রি করতে চান সেগুলোতে টিক দিন — অর্ডার ফর্ম এগুলোই বিক্রি করবে। একটিতে টিক দিলে একক পণ্যের অ্যাড; কয়েকটিতে টিক দিলে কাস্টমার বেছে নিতে পারবে। কোনো টিক না দিলে কয়েকটি ফিচার্ড পণ্য দেখাবে।</li>
+      <li>চাইলে <strong>Start date</strong> ও <strong>End date</strong> দিন।</li>
+      <li><strong>Status</strong> এখন <span class="guide-pill">Paused</span> রাখুন এবং <span class="guide-key">Create campaign</span> চাপুন।</li>
+      <li>ডান পাশের তালিকায় নতুন ক্যাম্পেইন আসবে। <span class="guide-key">Open page</span> চেপে দেখে নিন সব ঠিক আছে কি না।</li>
+      <li>সব ঠিক থাকলে <span class="guide-key">Activate</span> চাপুন। এখন কাস্টমার লিংকটি খুলতে পারবে।</li>
+      <li><span class="guide-key">Copy link</span> চেপে লিংকটি কপি করে Meta Ads Manager-এ পেস্ট করুন।</li>
+    </ol>
+    <table>
+      <thead><tr><th>বাটন</th><th>কাজ</th></tr></thead>
+      <tbody>
+        <tr><td><span class="guide-key">Copy link</span></td><td>অ্যাডের লিংক কপি হয়।</td></tr>
+        <tr><td><span class="guide-key">Open page</span></td><td>পেজটি নতুন ট্যাবে খোলে।</td></tr>
+        <tr><td><span class="guide-key">Edit</span></td><td>নাম, ছবি, লেখা বা পণ্য বদলানো যায়। তারপর <strong>Save changes</strong>।</td></tr>
+        <tr><td><span class="guide-key">Pause</span> / <span class="guide-key">Activate</span></td><td>অ্যাড বন্ধ বা চালু করা। বন্ধ থাকলে কাস্টমার পেজটি খুলতে পারবে না।</td></tr>
+        <tr><td><span class="guide-key">Delete</span></td><td>ক্যাম্পেইন মুছে ফেলা। লিংকটি আর কাজ করবে না।</td></tr>
+      </tbody>
+    </table>
+    <div class="guide-card good">
+      <p><strong>Paused অবস্থায় পেজ দেখা:</strong> বন্ধ ক্যাম্পেইনের পেজ কাস্টমার খুলতে পারে না, কিন্তু আপনি ড্যাশবোর্ড থেকে <span class="guide-key">Open page</span> চাপলে দেখতে পাবেন। উপরে কালো একটি লাইনে লেখা থাকবে যে এটি এখনো বন্ধ আছে।</p>
+    </div>
+    <div class="guide-card warning">
+      <p><strong>ফেসবুকে লিংক শেয়ার করলে ছবি না এলে:</strong> ক্যাম্পেইন <strong>Activate</strong> করা আছে কি না দেখুন, এবং <strong>Main picture</strong> দেওয়া আছে কি না দেখুন। চাইলে <em>Facebook / Instagram share card</em> অংশ খুলে আলাদা শিরোনাম ও বর্ণনা দিতে পারেন।</p>
+    </div>
+
+    <div class="guide-card good">
+      <p><strong>Silky Beauty Combo-এর তৈরি ল্যান্ডিং পেজ:</strong> কম্বোটির জন্য একটি সম্পূর্ণ বাংলা ল্যান্ডিং পেজ আগে থেকেই বানানো আছে — অর্ডার ফর্ম, ফ্রি ডেলিভারি ও ট্র্যাকিং সহ। অ্যাডের লিংক:<br>
+      <span class="guide-key">https://ads.rinovabd.com/lp/silky-beauty-combo</span></p>
+      <p>দাম বা স্টক বদলাতে <strong>Products</strong>-এ গিয়ে <strong>RNV-LP-COMBO-01</strong> পণ্যটি এডিট করুন — পেজের দাম নিজে থেকেই বদলে যাবে। স্টক শূন্য হলে পেজে অর্ডার ফর্মের বদলে “স্টক শেষ” লেখা দেখাবে, তাই বন্ধ পণ্যের জন্য অ্যাডের টাকা নষ্ট হবে না। GA4, Google Tag ও Meta Pixel-এর আইডি <strong>Settings → Tracking</strong>-এ যা দেওয়া আছে, এই পেজ সেগুলোই ব্যবহার করে।</p>
+    </div>
+
+    <!-- ================================================================= -->
+    <h2 id="content">১১. হোমপেজ, ব্যানার ও রিভিউ</h2>
+    <ul>
+      <li><strong>Marketing &amp; banners</strong> — হোমপেজের ব্যানার ও অফার যোগ বা বন্ধ করা।</li>
+      <li><strong>Content CMS</strong> — পেজের লেখা, ব্লগ ও জার্নাল।</li>
+      <li><strong>Reviews</strong> — নতুন রিভিউ <span class="guide-pill">approved</span> করলে তবেই সাইটে দেখাবে। অশোভন হলে <span class="guide-pill">rejected</span> করুন।</li>
+      <li><strong>Returns</strong> — ফেরত অনুরোধ এলে অবস্থা বদলে দিন; স্টকের হিসাব নিজে থেকেই ঠিক থাকে।</li>
+    </ul>
+
+    <!-- ================================================================= -->
+    <h2 id="problems">১২. সমস্যা হলে কী করবেন</h2>
+    <table>
+      <thead><tr><th>সমস্যা</th><th>সমাধান</th></tr></thead>
+      <tbody>
+        <tr><td>পরিবর্তন সাইটে দেখা যাচ্ছে না</td><td>Save চেপেছেন কি না দেখুন। তারপর পেজ রিফ্রেশ করুন (<span class="guide-key">Ctrl</span>+<span class="guide-key">Shift</span>+<span class="guide-key">R</span>)।</td></tr>
+        <tr><td>প্রোডাক্ট কাস্টমার দেখছে না</td><td>স্ট্যাটাস <strong>Active</strong> আছে কি না দেখুন। Draft হলে কেউ দেখবে না।</td></tr>
+        <tr><td>ক্যাম্পেইনের লিংক খুলছে না</td><td>ক্যাম্পেইনটি <strong>Activate</strong> করা আছে কি না দেখুন। তারিখ দিলে সেই সময়ের মধ্যে আছে কি না দেখুন।</td></tr>
+        <tr><td>Clothing ক্যাটাগরি সাইটে দেখা যাচ্ছে না</td><td><strong>Categories</strong> মেনুতে গিয়ে দেখুন সেটিতে <span class="guide-pill">Archived</span> লেখা আছে কি না। থাকলে পাশের <span class="guide-key">Restore</span> চাপুন — তখনই কাস্টমার দেখতে পাবে।</td></tr><tr><td>সাইজ/রঙের ঘর আসছে না</td><td>প্রোডাক্টের ক্যাটাগরি <strong>Clothing</strong> আছে কি না এবং অন্তত একটি সাইজ ও রঙ বাছাই করা আছে কি না দেখুন।</td></tr>
+        <tr><td>অর্ডার সেভ হচ্ছে না, স্টকের কথা লিখছে</td><td>যত পিস আছে তার বেশি দেওয়া যাবে না। Inventory-তে আগে স্টক বাড়িয়ে নিন।</td></tr>
+        <tr><td>ভুল করে কিছু মুছে ফেলেছেন</td><td>নিজে ঠিক করার চেষ্টা করার আগে ডেভেলপারকে জানান। প্রতিটি পরিবর্তনের হিসাব রাখা থাকে।</td></tr>
+      </tbody>
+    </table>
+
+    <div class="guide-card important">
+      <h3>নিরাপত্তার শেষ কথা</h3>
+      <ul>
+        <li>পাসওয়ার্ড কারও সাথে শেয়ার করবেন না।</li>
+        <li>কাজ শেষে সবসময় <strong>Sign out</strong> করুন।</li>
+        <li>API key, টোকেন বা সিক্রেট কোথাও লিখে রাখবেন না — এগুলো Owner Bakend নিরাপদে সংরক্ষণ করেন।</li>
+        <li>নিশ্চিত না হলে <strong>View Mode</strong>-এ থেকে দেখুন, বদলাবেন না।</li>
+      </ul>
+    </div>
+
+    <p style="margin-top:34px"><a class="button button-dark" href="../">← ড্যাশবোর্ডে ফিরুন</a></p>
+  </main>
+</body>
+</html>
