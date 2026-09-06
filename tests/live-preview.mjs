@@ -78,7 +78,21 @@ async function visit(context, url, label) {
       title: document.title,
       textLength: (document.body?.innerText || '').trim().length,
       stylesheets: document.styleSheets.length,
-      brokenImages: [...document.images].filter((i) => i.complete && i.naturalWidth === 0).map((i) => i.currentSrc || i.src),
+      // A broken image is one that was given a source and failed to load it.
+      // An <img> with no src is a template placeholder waiting to be filled —
+      // upload previews, avatar slots — and dashboards are full of them. The
+      // Rinova admin has four, all carrying class "hidden"; counting those as
+      // breakage failed a deploy over elements no visitor can see. Hidden
+      // images are skipped for the same reason: invisible cannot look broken.
+      brokenImages: [...document.images]
+        .filter((i) => {
+          if (!i.complete || i.naturalWidth !== 0) return false;
+          const source = (i.currentSrc || i.getAttribute('src') || '').trim();
+          if (!source) return false;
+          const shown = Boolean(i.offsetWidth || i.offsetHeight || i.getClientRects().length);
+          return shown;
+        })
+        .map((i) => i.currentSrc || i.getAttribute('src')),
     }));
     if (state.textLength < 30) problems.push(`${label}: page rendered almost no text (${state.textLength} chars) — likely broken`);
     if (state.stylesheets === 0) problems.push(`${label}: no stylesheet applied`);
