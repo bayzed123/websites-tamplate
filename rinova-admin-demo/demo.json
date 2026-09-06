@@ -1,0 +1,21 @@
+{
+  "title": "Rinova BD — Admin Dashboard",
+  "tagline": "The back office of a working beauty shop",
+  "description": "The admin dashboard behind Rinova BD: orders and their delivery pipeline, catalogue and stock, customers, returns and reviews, offers, staff roles, POS and barcode printing, and the analytics panel — the screens the owner actually runs the shop from.",
+  "category": "Admin dashboard",
+  "featured": true,
+  "tags": ["Commerce ops", "Orders", "Inventory", "POS & barcode", "Analytics"],
+  "highlights": [
+    "Opens straight into the dashboard — no sign-in for reviewers",
+    "Order pipeline across every status, with courier state",
+    "Catalogue with cost, margin and restock thresholds",
+    "POS, barcode labels, offers, staff roles and returns",
+    "All figures are fictional demo data, not a live shop"
+  ],
+  "credentials": {
+    "label": "No password needed",
+    "username": "—",
+    "password": "—",
+    "note": "This copy runs on static demo data with its backend disconnected. Nothing you click changes anything, and no real customer information is present."
+  }
+}
