@@ -1,130 +1,131 @@
-# Client Demo Hub
+# Demu — Client Demo Hub
 
-This repository contains reusable website templates and client demos, including storefronts, skincare and gadget concepts, admin dashboards, and frontend tools. A single root workflow publishes a client-friendly catalog to GitHub Pages.
+Live at **[demu.sayadbayezid.com](https://demu.sayadbayezid.com)**.
 
-## How the live demo works
+A folder-based hub for client-facing demos. Every top-level folder that contains
+an `index.html` becomes a demo automatically — there is no list to maintain and
+no workflow to edit when you add one.
 
-The repository does not hard-code every project in the deployment workflow. On every push to `main`, the workflow runs `scripts/build-demo-hub.mjs`. That script discovers every first-level project folder containing an `index.html`, generates the root home page, creates one **Open demo** button per project, and copies the complete project folder into the static artifact.
+## How a client experiences it
 
-| Source folder | Published URL pattern |
+| Surface | What it is |
 |---|---|
-| `my-store/index.html` | `/demos/my-store/index.html` |
-| `my-store/web/index.html` | `/demos/my-store/web/index.html` |
-| `admin-dashboard/admin/index.html` | `/demos/admin-dashboard/admin/index.html` |
+| `/` | The hub: one card per demo with a real screenshot, what it demonstrates, and any demo sign-in |
+| `/d/<slug>/` | The **review** view — a slim bar (back, page switcher, desktop/mobile toggle, sign-in reminder) with the demo running in a frame beneath it |
+| `/demos/<slug>/…` | The **raw** demo, byte-for-byte as built, with nothing of ours added |
 
-The copy step preserves HTML, CSS, JavaScript, TypeScript, JSON, SVG, images, fonts, Markdown, SQL, configuration files, and other assets. Secret environment files named `.env` or `.env.local` are excluded from the public artifact. During the build, root-absolute local URLs such as `/styles.css` and `/app.js` are rewritten to the correct relative URL for the nested GitHub Pages path. Missing external `manus-storage` image URLs use the local `assets/asset-fallback.svg` so the UI never renders with broken image boxes.
+The two views matter. `/d/<slug>/` is for a client working through the build —
+they can jump between screens and flip to a phone-width preview without losing
+their way back. "Open raw" hands over the genuine article for the moment they
+want to judge it as a real product.
 
-## Add a new client project
+Chrome is never injected into demo HTML. An earlier version rewrote every demo
+page to add floating widgets; they collided with demos that position their own
+headers (Veloura alone has 26 fixed/sticky rules), and a client "reviewing the
+real thing" was looking at a page we had modified. The wrapper solves both.
 
-Create one folder at the repository root. Give it a URL-safe name, place the frontend entry point in `index.html`, `web/index.html`, `dist/index.html`, `build/index.html`, or `admin/index.html`, and commit the project. No change to `smartgen.yml` or the GitHub Actions workflow is required.
+## Add a demo
 
-For an admin-only demo, use either `admin-dashboard/index.html` or `admin-dashboard/admin/index.html`. The generated catalog will include it exactly like a storefront. If the dashboard has a separate entry point, add a visible link back to `../../index.html` or `../../../index.html` according to its depth.
+1. Create a folder at the repository root with a URL-safe name.
+2. Put the frontend entry at `index.html`, `web/index.html`, `dist/index.html`,
+   `build/index.html`, or `admin/index.html`.
+3. *(Optional but worth it)* add `demo.json` beside it.
+4. Push to `main`.
 
-## Local build and verification
+Nothing else. The build discovers the folder, screenshots it, checks it loads on
+desktop and mobile, and publishes it.
 
-The following commands reproduce the Pages artifact locally:
+### `demo.json`
 
-```bash
-node scripts/build-demo-hub.mjs site
-python3 -m http.server 4173 --directory site
+Every field is optional. Without the file, the card falls back to the demo's own
+`<title>` and meta description, then to the folder name.
+
+```json
+{
+  "title": "Veloura Atelier",
+  "tagline": "A full beauty storefront with its own admin",
+  "description": "One or two sentences a client reads before clicking.",
+  "category": "E-commerce",
+  "featured": true,
+  "tags": ["Storefront", "Admin dashboard"],
+  "highlights": ["Shown as a short bulleted list on the card"],
+  "credentials": {
+    "label": "Admin dashboard sign-in",
+    "username": "admin",
+    "password": "demo123",
+    "note": "Explain that the data is fictional."
+  }
+}
 ```
 
-Visit `http://localhost:4173/` and open every generated card. The build output lists all discovered folders and their entry files. The generated `site/` directory is ignored by Git and should not be committed.
+`featured: true` gives the demo the full-width card at the top of the grid.
+`category` populates the filter chips automatically.
 
-For automated desktop and mobile validation, install the repository dependencies and run the Playwright smoke test:
+A folder with no `index.html` is skipped and logged — a client never sees a
+broken card. `demu-material-docs-tamplate` and `demu-skincare-e-commerce` are
+currently empty placeholders and are skipped for that reason.
 
-```bash
-npm ci
-npx playwright install chromium
-node tests/live-preview.mjs
-```
+## What never reaches the public site
 
-The test serves the generated artifact, verifies that the local stylesheet is loaded, confirms that the hero UI renders, checks for broken images, and writes full-page screenshots to `artifacts/playwright/desktop.png` and `artifacts/playwright/mobile.png`. GitHub Actions uploads the same screenshots as the `client-demo-preview-screenshots` artifact.
+The hub is public and indexed, so everything published is world-readable. The
+build strips, and CI then re-checks for, anything that is not part of the demo a
+client is reviewing:
 
-## SmartGen source documentation
+- `worker/`, `migrations/`, `*.sql` — backend source and database schema
+- `tests/`, `node_modules/`, `package*.json`, lockfiles, `wrangler.toml`, `tsconfig.json`
+- `*.md` internal notes (`todo.md`, verification notes, admin guides)
+- `.env*` and every dotfile
 
-The root [`smartgen.yml`](smartgen.yml) is now valid and intentionally stable. It describes the SmartGen documentation pages in [`docs/`](docs/), while the live client demo catalog is generated by the JavaScript build script. This separation matters because SmartGen navigation is explicit, whereas client project folders can be added without editing a navigation list.
+That is 27 files that used to ship with the site. The build prints how many it
+held back; the `Validate generated artifact` step fails the deploy if any of
+them reach the artifact anyway, so this cannot regress quietly.
 
-To build the SmartGen documentation locally, install the SmartGen CLI and run:
+Demo credentials like `admin` / `demo123` are deliberate and safe — they are
+published on the card on purpose so a client can sign in. Keep it that way:
+never point a demo at a real backend or real customer data.
 
-```bash
-smartgen-docs build
-```
-
-The client Pages workflow does not depend on SmartGen's Markdown output. It deploys the generated static demo hub directly, so arbitrary frontend files are not lost or transformed.
-
-## Full-stack and ecommerce notes
-
-GitHub Pages is a static host. It can publish the frontend of a full-stack or ecommerce demo, but it cannot run the project's API, database, authentication, payments, uploads, or server-side worker. Deploy those services separately and point the frontend at their public API URL. Never place credentials in a demo folder or commit `.env` files.
-
-## Universal page navigation and route repair
-
-Every generated HTML page receives a responsive **Demo pages** sidebar. It includes Home, every discovered HTML page, and admin pages, so a client can move through the complete frontend without relying on fragile hard-coded navigation. The build also rewrites root links such as `/`, `/blog.html`, `/account.html`, `/styles.css`, and `/app.js` to the correct nested path under GitHub Pages. Product URL aliases resolve to `product.html`, and `/admin/guide` resolves to the available admin guide or dashboard entry when present.
-
-## Deployment workflow
-
-The workflow in [`.github/workflows/multipletamplate.yml`](.github/workflows/multipletamplate.yml) runs on every change to `main` and can also be started manually from the Actions tab. It first builds the root catalog, runs desktop and mobile Playwright checks, uploads screenshots for review, and then deploys the verified artifact. It uses GitHub Pages artifact deployment, so the repository's Pages source should be set to **GitHub Actions** under **Settings → Pages**.
-
-## Doctor and Medicine workflows
-
-The normal Pages workflow deploys automatically. The separate [`doctor.yml`](.github/workflows/doctor.yml) workflow is **manual only**; it is intentionally not triggered by pushes. Run it from **Actions → Doctor - Audit Every Demo Page → Run workflow** whenever you want a full link audit. Doctor builds the site, crawls every generated HTML page, checks every same-site anchor, records HTTP status and source location, runs the desktop/mobile screenshots, commits the report, and uploads it as an artifact.
-
-Reports are stored in this structure:
-
-```text
-doctor-report/
-└── run-1/
-    ├── audit.md
-    ├── medicine.md
-    └── medicine-fixed.md
-```
-
-The audit table identifies the failing page, exact link, HTTP status, and source-mirror location. The optional [`medicine.yml`](.github/workflows/medicine.yml) workflow is also **manual only**. It reads the latest `doctor-report/run-N/audit.md`, runs `scripts/medicine.mjs`, and writes `medicine-fixed.md` describing the universal route-normalization and sidebar injection points to apply. Run Doctor again after Medicine to confirm that every route is healthy.
-
-To run the same checks locally:
-
-```bash
-npm run build:demo-hub
-npx playwright install chromium
-node scripts/doctor.mjs site doctor-report
-npm run test:preview
-```
-
-## New demo example: `demu-admin`
-
-The repository now includes [`demu-admin`](demu-admin/), a separate Northstar Admin command-center demo with a navy/lilac theme, responsive sidebar, performance chart, customer segments, recent orders, Settings, Orders, Customers, and Help Center pages. Its entry point is `demu-admin/index.html`. The root generator discovers it automatically; no change to `smartgen.yml` or the GitHub Actions workflow is required.
-
-The demo can be opened locally after building at `http://localhost:4173/demos/demu-admin/index.html`. Its valid navigation pages are Overview, Customers, Orders, Settings, and Help center. The generated universal Pages button is added separately by the root build and uses named labels rather than folder names.
-
-## Manual recipe for any future demo
-
-Create a new root folder with a unique slug, place a frontend entry at `new-demo/index.html` or `new-demo/web/index.html`, and keep all CSS, JavaScript, images, fonts, JSON, SVG, video, and other public assets inside that folder. Use relative URLs such as `./styles.css`, `./assets/logo.svg`, and `./pages/about.html`; do not use a domain-root URL such as `/styles.css`. Add real pages for every sidebar link. The generator will preserve supported file types, discover the project, copy the folder, generate the catalog card, repair nested local routes, and inject the compact Pages control into every HTML page.
-
-Run this exact verification sequence before sharing a demo:
+## Testing the real experience
 
 ```bash
 npm ci
-npx playwright install chromium
-npm run build:demo-hub
-node scripts/doctor.mjs site doctor-report
-npm run test:preview
-python3 -m http.server 4173 --directory site
+npx playwright install --with-deps chromium
+npm run build:demo-hub        # discover, copy, generate the hub and wrappers
+npm run thumbs                # screenshot each demo for its card
+npm run test:preview          # open every demo on desktop and mobile
 ```
 
-Doctor must report `Broken internal links: 0`. Playwright must pass the storefront, admin login, desktop and mobile screenshots. If a new demo has custom login or routes, add a dedicated test in `tests/` and include it in `package.json` or the workflow. For manual GitHub checks, open **Actions → Doctor - Audit Every Demo Page → Run workflow**. It writes `doctor-report/run-N/audit.md`, `medicine.md`, and `medicine-fixed.md`; then run the manual Medicine workflow and rerun Doctor.
+`npm run test:preview` walks the manifest, so **every** demo is exercised, not
+just one. For each demo it opens the wrapper and the demo itself at 1440px and
+390px and fails on: an own asset that did not load, an image that decoded to
+nothing, a page that rendered almost no text, or an uncaught JS error.
 
-No existing root YAML file needs to change when adding a normal static demo. Only change the demo folder and its own files. Change [`scripts/build-demo-hub.mjs`](scripts/build-demo-hub.mjs) only when a new routing convention is intentionally introduced; change [`tests/live-preview.mjs`](tests/live-preview.mjs) only when a reusable smoke check is added. GitHub Pages serves static frontend files, so backend APIs, databases, authentication, payments, uploads, and server-side workers must remain separately deployed.
+Third-party requests are separated out. A Google Fonts blip is reported as a
+warning and does not block the deploy; a missing stylesheet of your own does.
+Requests to `/api/`, `*.workers.dev` and analytics endpoints are expected to
+fail — these frontends are published without their backend — and are ignored.
 
-## Demosmartgen premium admin theme
+A readable summary lands at `artifacts/playwright/report.md`, with screenshots
+beside it. The same run happens in CI on every push, and a failure stops the
+deploy, so a demo a client would find broken never reaches the hub.
 
-[`demosmartgen/`](demosmartgen/) is a premium, demo-only commerce operations dashboard. It includes a clear slim sidebar, motion-style area/revenue chart, conversion funnel, investment allocation chart, profit margin KPI, ecommerce launch checklist, invoice/customer/SKU tracking destinations, campaign controls, product preview destination, analytics settings notice, and a Pro Features page marked Coming Soon.
+Outside CI, point Playwright at a local browser: `CHROMIUM_PATH=/path/to/chrome npm run test:preview`.
 
-The demo intentionally contains **no secret keys, payment credentials, real login credentials, Google Tag Manager ID, Meta Pixel ID, or production tracking tag**. The Settings page shows where a private production deployment may connect a GA4 property ID and measurement ID, but those values must never be committed to this public repository.
+## Local preview
 
-The dashboard also includes a reusable developer contact CTA injected by the root build into every page. It links to the [contact page](https://sayadbayezid.com/contact.html), [WhatsApp](https://wa.me/message/TDYG575YENF6F1), `Support@sayadbayezid.com`, and `cwb.agency@outlook.com`. Replace `assets/developer.jpg` with the desired profile photo while keeping the same filename.
+```bash
+npm run build:demo-hub && python3 -m http.server 8000 --directory site
+```
 
-The feature page links are generated as real local pages. Future product upload, invoice search, customer tracking, campaign activation, and analytics connections are represented as safe UI previews until a private backend is intentionally connected. The public Pages build only serves static demo content.
+Then open `http://localhost:8000`.
 
-## Project-specific documentation
+## Repository layout
 
-The existing Veloura project includes its own [`README.md`](veloura-atelier-demo/README.md), admin guide, route verification notes, and tests. Keep project-specific instructions inside each project folder; keep only repository-wide conventions in this file.
+```
+<demo-folder>/        one per demo — index.html plus optional demo.json
+scripts/
+  build-demo-hub.mjs  discovery, copying, publish filtering, page generation
+  capture-thumbnails.mjs  one screenshot per demo for the hub cards
+tests/
+  live-preview.mjs    the desktop + mobile check across every demo
+site/                 build output (git-ignored, published to Pages)
+```

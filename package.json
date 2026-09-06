@@ -2,7 +2,9 @@
   "private": true,
   "scripts": {
     "build:demo-hub": "node scripts/build-demo-hub.mjs site",
-    "test:preview": "node tests/live-preview.mjs"
+    "thumbs": "node scripts/capture-thumbnails.mjs site",
+    "test:preview": "node tests/live-preview.mjs site",
+    "preview": "npm run build:demo-hub && npm run thumbs && python3 -m http.server 8000 --directory site"
   },
   "devDependencies": {
     "playwright": "^1.62.1"

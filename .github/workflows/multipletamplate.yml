@@ -37,8 +37,11 @@ jobs:
       - name: Build root demo hub
         run: node scripts/build-demo-hub.mjs site
 
-      - name: Run desktop and mobile preview checks
-        run: node tests/live-preview.mjs
+      - name: Capture demo thumbnails
+        run: node scripts/capture-thumbnails.mjs site
+
+      - name: Check every demo on desktop and mobile
+        run: node tests/live-preview.mjs site
 
       - name: Upload preview screenshots
         if: always()
@@ -52,7 +55,8 @@ jobs:
         shell: bash
         run: |
           test -s site/index.html
-          test -s site/demos/index.html
+          test -s site/sitemap.xml
+          test -s site/robots.txt
           test -s site/demos/manifest.json
           node --input-type=module <<'NODE'
           import { readFile } from 'node:fs/promises';
@@ -61,6 +65,14 @@ jobs:
           for (const demo of manifest) {
             if (!demo.slug || !demo.entryFile) throw new Error(`Invalid demo entry: ${JSON.stringify(demo)}`);
           }
+          // The artifact is public and indexed: fail the build rather than
+          // publish backend source, migrations or internal notes.
+          const { execSync } = await import('node:child_process');
+          const leaked = execSync(
+            "find site -type f \\( -name '*.md' -o -name '*.sql' -o -name '*.ts' -o -name 'package*.json' -o -name '*.toml' -o -name '*.example' \\) -o -type d \\( -name worker -o -name migrations -o -name node_modules \\)",
+            { encoding: 'utf8' },
+          ).trim();
+          if (leaked) throw new Error(`Internal files reached the public artifact:\n${leaked}`);
           console.log(`Validated ${manifest.length} demo project(s).`);
           NODE
 
