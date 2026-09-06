@@ -12,7 +12,25 @@ no workflow to edit when you add one.
 |---|---|
 | `/` | The hub: one card per demo with a real screenshot, what it demonstrates, and any demo sign-in |
 | `/d/<slug>/` | The **review** view — a slim bar (back, page switcher, desktop/mobile toggle, sign-in reminder) with the demo running in a frame beneath it |
+| `/d/<slug>/<page>/` | The same review view opened on a specific screen — e.g. `/d/veloura-atelier-demo/admin/` |
 | `/demos/<slug>/…` | The **raw** demo, byte-for-byte as built, with nothing of ours added |
+
+**Every screen has its own URL.** A wrapper page is generated for each page a
+demo contains, so `/d/veloura-atelier-demo/admin/` opens the review view on the
+admin dashboard rather than 404ing. Switching pages in the dropdown rewrites the
+address bar too, so the link a client copies opens on the screen they are
+actually looking at. Add `?view=mobile` (or press Mobile, which adds it for you)
+and the link opens phone-framed — useful for "look at this on a phone".
+
+URL segments come from the page path: `web/admin/index.html` → `/admin/`,
+`web/checkout.html` → `/checkout/`. Where a file and a directory collide —
+Veloura has both `web/admin.html` (login) and `web/admin/index.html`
+(dashboard) — the directory index wins the clean segment, because that is what
+a person types, and the loser gets a slug from its label (`/admin-login/`).
+
+Only each demo's landing wrapper is indexed. The per-page wrappers are
+navigation, not two dozen thin pages competing with each other, so they carry
+`noindex, follow` and canonical back to the demo's main wrapper.
 
 The two views matter. `/d/<slug>/` is for a client working through the build —
 they can jump between screens and flip to a phone-width preview without losing
@@ -103,6 +121,9 @@ Third-party requests are separated out. A Google Fonts blip is reported as a
 warning and does not block the deploy; a missing stylesheet of your own does.
 Requests to `/api/`, `*.workers.dev` and analytics endpoints are expected to
 fail — these frontends are published without their backend — and are ignored.
+
+It also asserts that **every** wrapper URL resolves and frames the page it
+claims to — the check that was missing when `/d/<slug>/admin/` shipped as a 404.
 
 A readable summary lands at `artifacts/playwright/report.md`, with screenshots
 beside it. The same run happens in CI on every push, and a failure stops the

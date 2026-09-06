@@ -133,6 +133,47 @@ try {
       await context.close();
     }
   }
+
+  // ---- every wrapper URL must resolve --------------------------------------
+  // A deep link like /d/veloura-atelier-demo/admin/ used to 404 because only
+  // the landing wrapper was generated, and nothing here caught it: the check
+  // only ever opened /d/<slug>/. Assert the whole set now.
+  //
+  // Deliberately a plain fetch, not a browser navigation. This is a routing
+  // assertion — does the URL exist, and does it frame the page it claims to —
+  // and driving 25 of them through Chromium made it hostage to whether a font
+  // CDN answers: the wrapper's inline script waits on its stylesheet, so a slow
+  // fonts.googleapis.com stalls DOMContentLoaded and the check crawls. Fetch
+  // gives the same answer in milliseconds and can't be perturbed by a CDN.
+  {
+    let checked = 0;
+    for (const demo of manifest) {
+      for (const entry of demo.pages || []) {
+        let html = '';
+        let status = 0;
+        try {
+          const response = await fetch(`${base}${entry.url}`);
+          status = response.status;
+          html = await response.text();
+        } catch (error) {
+          problems.push(`${entry.url}: wrapper request failed — ${error.message}`);
+          checked += 1;
+          continue;
+        }
+        if (status !== 200) {
+          problems.push(`${entry.url}: wrapper returned ${status}`);
+        } else {
+          const framed = html.match(/id="frame"\s+src="([^"]+)"/)?.[1] ?? '';
+          if (!framed) problems.push(`${entry.url}: wrapper has no demo frame`);
+          else if (!framed.endsWith(entry.page)) problems.push(`${entry.url}: frames "${framed}", expected it to end with "${entry.page}"`);
+        }
+        checked += 1;
+      }
+    }
+    const failures = problems.filter((p) => p.startsWith('/d/')).length;
+    report.push({ target: `deep links (${checked} wrapper URLs)`, viewport: 'routing', ok: failures === 0 });
+  }
+
 } finally {
   await browser.close();
   server.kill();
