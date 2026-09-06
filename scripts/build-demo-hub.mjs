@@ -579,7 +579,11 @@ ${footer()}
 function renderViewer(demo, pages, slugs, current) {
   const currentSlug = slugs.get(current) ?? '';
   const base = `/d/${demo.slug}/`;
-  const options = pages.map((page) => {
+  // Home leads the switcher. collectPages sorts by path, which for a demo
+  // entered at admin/index.html put "Admin Guide" above "Home" — the entry
+  // page is where a reviewer starts, so it belongs at the top of the list.
+  const ordered = [...pages].sort((a, b) => Number(b === demo.entryFile) - Number(a === demo.entryFile));
+  const options = ordered.map((page) => {
     const slug = slugs.get(page) ?? '';
     return `<option value="${base}${slug ? `${slug}/` : ''}" data-src="/demos/${demo.slug}/${page}"${page === current ? ' selected' : ''}>${htmlEscape(pageLabel(page, demo.entryFile))}</option>`;
   }).join('');
