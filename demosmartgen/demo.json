@@ -1,0 +1,12 @@
+{
+  "title": "SmartGen Commerce OS",
+  "tagline": "Catalogue, campaigns and analytics in one place",
+  "description": "A commerce operations surface that puts the catalogue, customer list, campaign builder and analytics behind one navigation — the shape of tool a growing shop needs once spreadsheets stop scaling.",
+  "category": "Commerce platform",
+  "tags": ["Catalogue", "Campaigns", "Analytics", "Customers"],
+  "highlights": [
+    "Catalogue and customer management",
+    "Campaign builder with performance analytics",
+    "Pro-tier feature gating built into the UI"
+  ]
+}

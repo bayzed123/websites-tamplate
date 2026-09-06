@@ -1,0 +1,12 @@
+{
+  "title": "Northstar Admin",
+  "tagline": "A command centre for an operations team",
+  "description": "An admin console built around the screens a working team opens every day — orders, users, settings and help — with the density and keyboard-first layout of software people use for hours, not a dashboard that only looks good in a screenshot.",
+  "category": "Admin dashboard",
+  "tags": ["Operations", "Data tables", "Settings", "Dark UI"],
+  "highlights": [
+    "Order queue with filtering and bulk actions",
+    "User management and role settings",
+    "In-product help and documentation surface"
+  ]
+}
