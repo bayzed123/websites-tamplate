@@ -401,6 +401,46 @@ function footer() {
 }
 
 /* ------------------------------------------------------------------ pages */
+
+/**
+ * Map a demo page to a shareable URL segment under /d/<slug>/.
+ *
+ *   web/index.html            → ''            (the demo's own landing wrapper)
+ *   web/admin/index.html      → 'admin'
+ *   web/admin/guide/index.html→ 'admin/guide'
+ *   web/checkout.html         → 'checkout'
+ *
+ * Directory-index pages claim the clean segment first, because that is what a
+ * person types: Veloura has BOTH web/admin.html (the login) and
+ * web/admin/index.html (the dashboard), and /admin/ should be the dashboard.
+ * The loser of a collision falls back to a slug built from its human label
+ * (so admin.html becomes 'admin-login'), then to a numeric suffix.
+ */
+function assignPageSlugs(pages, entryFile) {
+  const strip = (page) => page.replace(/^(web|dist|build)\//, '');
+  const slugify = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const isIndex = (page) => /(^|\/)index\.html?$/i.test(page);
+  // Directory indexes first so they win the clean segment.
+  const ordered = [...pages].sort((a, b) => Number(isIndex(b)) - Number(isIndex(a)) || a.localeCompare(b));
+
+  const taken = new Set(['']); // '' is the entry wrapper at /d/<slug>/
+  const bySlug = new Map();
+  for (const page of ordered) {
+    if (page === entryFile) { bySlug.set(page, ''); continue; }
+    const clean = strip(page);
+    let base = isIndex(clean) ? clean.replace(/(^|\/)index\.html?$/i, '') : clean.replace(/\.html?$/i, '');
+    base = base.split('/').map(slugify).filter(Boolean).join('/');
+    let slug = base;
+    if (!slug || taken.has(slug)) slug = slugify(pageLabel(page, entryFile));
+    let n = 2;
+    while (!slug || taken.has(slug)) slug = `${base || 'page'}-${n++}`;
+    taken.add(slug);
+    bySlug.set(page, slug);
+  }
+  return bySlug;
+}
+
+
 function renderCard(demo) {
   const featured = demo.featured ? ' featured' : '';
   const viewer = `/d/${demo.slug}/`;
@@ -527,18 +567,33 @@ ${footer()}
  * Nothing is injected into the demo's own HTML, so what loads in the frame is
  * byte-for-byte what "Open raw" serves.
  */
-function renderViewer(demo, pages) {
-  const options = pages.map((page) =>
-    `<option value="/demos/${demo.slug}/${page}"${page === demo.entryFile ? ' selected' : ''}>${htmlEscape(pageLabel(page, demo.entryFile))}</option>`).join('');
-  const src = `/demos/${demo.slug}/${demo.entryFile}`;
+/**
+ * One wrapper page per demo page, so every screen has a real, shareable URL.
+ *
+ * The first version generated a single wrapper at /d/<slug>/ and swapped the
+ * iframe from a dropdown. That meant /d/<slug>/admin/ was a 404, and a client
+ * looking at the admin dashboard could not copy the address bar to send it to
+ * anyone — the link always reopened on Home. Now each page has its own wrapper,
+ * and the dropdown also rewrites the address bar as you switch.
+ */
+function renderViewer(demo, pages, slugs, current) {
+  const currentSlug = slugs.get(current) ?? '';
+  const base = `/d/${demo.slug}/`;
+  const options = pages.map((page) => {
+    const slug = slugs.get(page) ?? '';
+    return `<option value="${base}${slug ? `${slug}/` : ''}" data-src="/demos/${demo.slug}/${page}"${page === current ? ' selected' : ''}>${htmlEscape(pageLabel(page, demo.entryFile))}</option>`;
+  }).join('');
+  const src = `/demos/${demo.slug}/${current}`;
+  const isEntry = current === demo.entryFile;
+  const pageName = pageLabel(current, demo.entryFile);
   const creds = demo.credentials
     ? `<span class="vb-creds mono" title="${htmlEscape(demo.credentials.note || '')}">${htmlEscape(demo.credentials.username || '')} / ${htmlEscape(demo.credentials.password || '')}</span>` : '';
 
   return `<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${htmlEscape(demo.title)} — ${htmlEscape(SITE.name)}</title>
+<title>${htmlEscape(isEntry ? demo.title : `${pageName} · ${demo.title}`)} — ${htmlEscape(SITE.name)}</title>
 <meta name="description" content="${htmlEscape(demo.description)}">
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="robots" content="${isEntry ? 'index, follow, max-image-preview:large' : 'noindex, follow'}">
 <link rel="canonical" href="${SITE.url}/d/${demo.slug}/">
 <meta property="og:type" content="website"><meta property="og:url" content="${SITE.url}/d/${demo.slug}/">
 <meta property="og:title" content="${htmlEscape(demo.title)}"><meta property="og:description" content="${htmlEscape(demo.description)}">
@@ -572,7 +627,7 @@ html,body{height:100%;overflow:hidden}
   <div class="vbar">
     <a class="vb-back" href="/">← <span>All demos</span></a>
     <span class="vb-sep"></span>
-    <span class="vb-name">${htmlEscape(demo.title)}</span>
+    <span class="vb-name">${htmlEscape(demo.title)}${isEntry ? '' : ` · ${htmlEscape(pageName)}`}</span>
     <span class="vb-sep"></span>
     <select id="pageSel" aria-label="Jump to a page in this demo">${options}</select>
     ${creds}
@@ -589,11 +644,31 @@ html,body{height:100%;overflow:hidden}
   var frame=document.getElementById('frame'),sel=document.getElementById('pageSel'),
       stage=document.getElementById('stage'),raw=document.getElementById('rawLink'),
       desk=document.getElementById('deskBtn'),mob=document.getElementById('mobBtn');
-  sel.addEventListener('change',function(){frame.src=sel.value;raw.href=sel.value;});
-  function mode(phone){stage.classList.toggle('phone',phone);
-    desk.setAttribute('aria-pressed',String(!phone));mob.setAttribute('aria-pressed',String(phone));}
+
+  // Every option is a real wrapper URL. Swapping the frame avoids reloading the
+  // chrome; replaceState keeps the address bar honest so the link a client
+  // copies opens on the screen they are actually looking at.
+  function syncUrl(phone){
+    var opt=sel.options[sel.selectedIndex];
+    if(!opt||!window.history||!history.replaceState)return;
+    history.replaceState(null,'',opt.value+(phone?'?view=mobile':''));
+  }
+  function mode(phone){
+    stage.classList.toggle('phone',phone);
+    desk.setAttribute('aria-pressed',String(!phone));
+    mob.setAttribute('aria-pressed',String(phone));
+    syncUrl(phone);
+  }
+  sel.addEventListener('change',function(){
+    var opt=sel.options[sel.selectedIndex];
+    frame.src=opt.dataset.src;raw.href=opt.dataset.src;
+    syncUrl(stage.classList.contains('phone'));
+  });
   desk.addEventListener('click',function(){mode(false);});
   mob.addEventListener('click',function(){mode(true);});
+
+  // ?view=mobile in the incoming link opens straight into the phone frame.
+  if(new URLSearchParams(location.search).get('view')==='mobile')mode(true);
 })();
 </script>
 </body></html>`;
@@ -602,6 +677,28 @@ html,body{height:100%;overflow:hidden}
 function htmtitle(demo) { return htmlEscape(`${demo.title} demo`); }
 
 /* ------------------------------------------------------------------- build */
+function render404() {
+  return `<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Not found — ${htmlEscape(SITE.name)}</title>
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0A0F0D">
+${FONTS}${FAVICON}
+<style>${STYLES}
+.nf{min-height:70vh;display:grid;place-items:center;text-align:center;padding:40px 20px}
+.nf h1{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:16px}
+</style></head><body>
+${header('')}
+<main class="nf"><div>
+  <p class="eyebrow">404</p>
+  <h1>That demo page isn't here.</h1>
+  <p class="lede" style="margin:0 auto 26px">The link may be out of date, or the demo may have been renamed. Everything that is live is one click away.</p>
+  <a class="btn btn-primary" href="/">See all demos<span class="arrow">→</span></a>
+</div></main>
+${footer()}
+</body></html>`;
+}
+
 function renderSitemap(demos) {
   const today = new Date().toISOString().split('T')[0];
   const urls = [`${SITE.url}/`, ...demos.map((d) => `${SITE.url}/d/${d.slug}/`)];
@@ -634,18 +731,34 @@ for (const demo of demos) {
   await rewriteDemoUrls(built);
 
   const pages = await collectPages(destination);
-  await mkdir(join(outputDir, 'd', demo.slug), { recursive: true });
-  await writeFile(join(outputDir, 'd', demo.slug, 'index.html'), renderViewer(demo, pages));
+  const slugs = assignPageSlugs(pages, demo.entryFile);
+  // A wrapper per page, so /d/<slug>/admin/ resolves instead of 404ing and any
+  // screen a client is looking at can be linked to directly.
+  for (const page of pages) {
+    const pageSlug = slugs.get(page) ?? '';
+    const dir = join(outputDir, 'd', demo.slug, pageSlug);
+    await mkdir(dir, { recursive: true });
+    await writeFile(join(dir, 'index.html'), renderViewer(demo, pages, slugs, page));
+  }
   demo.pageCount = pages.length;
+  demo.pageSlugs = [...slugs.entries()].map(([page, slug]) => ({ page, slug }));
 }
 
 await writeFile(join(outputDir, 'index.html'), renderHome(demos));
 await writeFile(join(outputDir, 'sitemap.xml'), renderSitemap(demos));
+await writeFile(join(outputDir, '404.html'), render404());
 await writeFile(join(outputDir, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xml\n`);
 await writeFile(join(outputDir, '.nojekyll'), '');
 await writeFile(
   join(outputDir, 'demos', 'manifest.json'),
-  JSON.stringify(demos.map(({ slug, title, entryFile, category, pageCount }) => ({ slug, title, entryFile, category, pageCount })), null, 2) + '\n',
+  JSON.stringify(demos.map(({ slug, title, entryFile, category, pageCount, pageSlugs }) => ({
+    slug, title, entryFile, category, pageCount,
+    // Every wrapper URL this demo publishes, so the preview check can prove
+    // each one resolves instead of only testing the landing page.
+    pages: (pageSlugs || []).map(({ page, slug: pageSlug }) => ({
+      page, url: `/d/${slug}/${pageSlug ? `${pageSlug}/` : ''}`,
+    })),
+  })), null, 2) + '\n',
 );
 
 console.log(`\nDiscovered ${demos.length} demo project(s):`);
