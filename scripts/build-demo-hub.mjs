@@ -38,6 +38,10 @@ const SITE = {
   whatsapp: 'https://wa.me/message/TDYG575YENF6F1',
   email: 'Support@sayadbayezid.com',
   repo: 'https://github.com/bayzed123/websites-tamplate',
+  /* Where "Order now" goes. The utm values are read by the landing page and
+     travel with the enquiry, so a request that started on a demo says so —
+     which is the only way to find out whether the demos sell anything. */
+  order: 'https://sayadbayezid.com/ads/fullstack/?utm_source=demo-hub&amp;utm_medium=referral&amp;utm_campaign=demo-to-order',
 };
 
 // Folders that are repository plumbing rather than demos.
@@ -255,8 +259,10 @@ p{margin:0;line-height:1.65;color:var(--soft)}
 .head-nav{display:flex;align-items:center;gap:22px;font-size:.88rem}
 .head-nav a{color:var(--soft);text-decoration:none;transition:color .2s}
 .head-nav a:hover{color:var(--paper)}
-.head-cta{border:1px solid var(--line);border-radius:100px;padding:8px 16px;color:var(--paper)!important}
-.head-cta:hover{border-color:var(--emerald);color:var(--emerald)!important}
+.head-cta{border:1px solid transparent;border-radius:100px;padding:9px 18px;font-weight:700;
+  background:linear-gradient(100deg,#FF6A2B,#FF3D6E);color:#fff!important;
+  box-shadow:0 6px 20px rgba(255,61,110,.3);transition:transform .18s,box-shadow .18s}
+.head-cta:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(255,61,110,.42);color:#fff!important}
 
 /* hero */
 .hero{padding:76px 0 44px;position:relative;overflow:hidden}
@@ -367,6 +373,24 @@ p{margin:0;line-height:1.65;color:var(--soft)}
 
 const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">`;
 
+/**
+ * Meta Pixel + Conversions API for every page of the hub.
+ *
+ * The hub is the middle of an ad funnel: someone clicks an ad, lands on the
+ * offer page, comes here to look at a real build, and orders (or does not).
+ * Without this, that middle is invisible — and the people who browsed the
+ * demos and left are the warmest retargeting audience the funnel produces.
+ *
+ * It loads from sayadbayezid.com deliberately, rather than being copied here.
+ * One file defines how an event is reported; two copies drift, and a drifted
+ * copy means events that do not deduplicate against each other.
+ *
+ * It goes on the hub's own pages only. The demos themselves ship
+ * byte-for-byte with nothing injected — that is the whole reason the wrapper
+ * exists, and a tracking script is not a good enough reason to break it.
+ */
+const TRACKING = `<link rel="preconnect" href="https://sayadbayezid.com"><link rel="preconnect" href="https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev" crossorigin><script src="https://sayadbayezid.com/ads/assets/ads-track.js" defer></script>`;
+
 const FAVICON = `<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A0F0D'/%3E%3Ccircle cx='50' cy='50' r='17' fill='%2300D084'/%3E%3C/svg%3E">`;
 
 function header(active) {
@@ -376,7 +400,7 @@ function header(active) {
     <a href="/#demos"${active === 'demos' ? ' aria-current="page"' : ''}>Demos</a>
     <a href="/#how">How it works</a>
     <a href="${SITE.portfolio}" target="_blank" rel="noopener">Portfolio</a>
-    <a class="head-cta" href="${SITE.contact}" target="_blank" rel="noopener">Start a project</a>
+    <a class="head-cta" href="${SITE.order}" data-order="hub-header" data-order-item="Ecommerce build">Order now</a>
   </nav></div></header>`;
 }
 
@@ -386,7 +410,7 @@ function footer() {
     <div>
       <h3>Want one of these built for your business?</h3>
       <p>Every demo here is a real, working build — not a template screenshot. Tell me what you need and you'll get an honest answer about fit.</p>
-      <div class="hero-actions"><a class="btn btn-primary" href="${SITE.contact}" target="_blank" rel="noopener">Start a project<span class="arrow">→</span></a><a class="btn btn-ghost" href="${SITE.whatsapp}" target="_blank" rel="noopener">WhatsApp</a></div>
+      <div class="hero-actions"><a class="btn btn-primary" href="${SITE.order}" data-order="hub-footer" data-order-item="Ecommerce build">Order now — from $100<span class="arrow">→</span></a><a class="btn btn-ghost" href="${SITE.whatsapp}" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
     <div class="foot-links">
       <span class="foot-head">Elsewhere</span>
@@ -506,7 +530,7 @@ function renderHome(demos) {
 <meta property="og:title" content="${htmlEscape(SITE.name)}"><meta property="og:description" content="Live, working client demos you can open and click through.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0A0F0D">
-${FONTS}${FAVICON}
+${FONTS}${FAVICON}${TRACKING}
 <style>${STYLES}</style>
 <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
 </head><body>
@@ -520,7 +544,7 @@ ${header('demos')}
       <p class="lede">Not screenshots and not a slide deck. Every demo below is a working build — click through the real screens, sign into the real dashboards, and see how the thing behaves before you commission one.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#demos">Browse the demos<span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="${SITE.contact}" target="_blank" rel="noopener">Commission a build</a>
+        <a class="btn btn-ghost" href="${SITE.order}" data-order="hub-hero" data-order-item="Ecommerce build">Order a build — from $100</a>
       </div>
     </div>
     <aside class="hero-panel">
@@ -602,7 +626,7 @@ function renderViewer(demo, pages, slugs, current) {
 <meta property="og:type" content="website"><meta property="og:url" content="${SITE.url}/d/${demo.slug}/">
 <meta property="og:title" content="${htmlEscape(demo.title)}"><meta property="og:description" content="${htmlEscape(demo.description)}">
 <meta name="theme-color" content="#0A0F0D">
-${FONTS}${FAVICON}
+${FONTS}${FAVICON}${TRACKING}
 <style>${STYLES}
 html,body{height:100%;overflow:hidden}
 .viewer{display:flex;flex-direction:column;height:100vh}
@@ -620,6 +644,13 @@ html,body{height:100%;overflow:hidden}
   font-size:.74rem;font-family:'JetBrains Mono',monospace;cursor:pointer;text-decoration:none;transition:all .2s}
 .vb-btn:hover{border-color:var(--emerald);color:var(--emerald)}
 .vb-btn[aria-pressed="true"]{background:var(--emerald);border-color:var(--emerald);color:var(--void)}
+/* The order action wears the ad funnel's flame gradient here too. Someone who
+   pressed it on the offer page recognises it while looking at a demo without
+   reading the label — which is the whole point of reserving one colour for
+   one action across every page of the funnel. */
+.vb-order{border-color:transparent!important;font-weight:700;
+  background:linear-gradient(100deg,#FF6A2B,#FF3D6E)!important;color:#fff!important}
+.vb-order:hover{border-color:transparent!important;color:#fff!important;filter:brightness(1.08)}
 .stage{flex:1;min-height:0;background:#07110D;display:grid;place-items:stretch;padding:0;transition:padding .3s var(--ease)}
 .stage.phone{padding:18px;place-items:center}
 .stage iframe{width:100%;height:100%;border:0;background:#fff}
@@ -639,6 +670,7 @@ html,body{height:100%;overflow:hidden}
       <button class="vb-btn" id="deskBtn" aria-pressed="true">Desktop</button>
       <button class="vb-btn" id="mobBtn" aria-pressed="false">Mobile</button>
       <a class="vb-btn" id="rawLink" href="${src}" target="_blank" rel="noopener">Open raw ↗</a>
+      <a class="vb-btn vb-order" href="${SITE.order}&amp;utm_content=${encodeURIComponent(demo.slug)}" data-order="viewer-bar" data-order-item="${htmlEscape(demo.title)}">Order this</a>
     </span>
   </div>
   <div class="stage" id="stage"><iframe id="frame" src="${src}" title="${htmtitle(demo)}" loading="eager"></iframe></div>
@@ -687,7 +719,7 @@ function render404() {
 <title>Not found — ${htmlEscape(SITE.name)}</title>
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0A0F0D">
-${FONTS}${FAVICON}
+${FONTS}${FAVICON}${TRACKING}
 <style>${STYLES}
 .nf{min-height:70vh;display:grid;place-items:center;text-align:center;padding:40px 20px}
 .nf h1{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:16px}
