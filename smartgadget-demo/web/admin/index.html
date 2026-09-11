@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartGadget Admin — demo dashboard</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0c1625">
+<link rel="stylesheet" href="../assets/styles.css">
+<!--
+  THERE IS NO SIGN-IN HERE, AND THAT IS SAFE ONLY BECAUSE THERE IS NOTHING
+  BEHIND IT.
+
+  The production build this is modelled on protects these screens with PBKDF2
+  password hashing and signed session tokens, because behind them sit real
+  orders, real customers and a real courier account.
+
+  This demo has no backend at all. Every figure on every screen is read from
+  ../assets/demo-data.js, which is a file in this repository. There is no
+  database to reach, no API to call and no token to steal — so an open
+  dashboard gives a visitor exactly what viewing the source would.
+
+  If this demo is ever wired to a real API, the sign-in has to come back
+  first. tests/demo-isolation.mjs fails the build if a network call to
+  anything but this origin appears in the demo.
+-->
+<style>
+  .admin-shell{display:grid;grid-template-columns:1fr;min-height:100vh}
+  .admin-side{background:var(--navy);color:#cbd8e6;padding:14px 12px}
+  .admin-side .brand{color:#fff;margin-bottom:12px}
+  .admin-side nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+  .admin-side nav a{flex:0 0 auto;text-decoration:none;color:#a9bdd0;padding:8px 12px;border-radius:9px;font-size:.86rem;white-space:nowrap}
+  .admin-side nav a[aria-current]{background:rgba(13,148,136,.22);color:#fff;font-weight:650}
+  .admin-main{padding:18px 16px 40px;background:var(--bg)}
+  .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px;box-shadow:var(--shadow-sm)}
+  .kpi b{display:block;font-size:1.35rem;letter-spacing:-.02em}
+  .kpi span{font-size:.76rem;color:var(--muted)}
+  .bars{display:flex;align-items:flex-end;gap:4px;height:132px;padding:10px 0}
+  .bars div{flex:1;background:linear-gradient(180deg,var(--brand),#0f766e);border-radius:4px 4px 0 0;min-height:3px}
+  @media(min-width:900px){
+    .admin-shell{grid-template-columns:210px 1fr}
+    .admin-side nav{flex-direction:column;overflow:visible}
+    .admin-main{padding:24px 28px 50px}
+    .kpis{grid-template-columns:repeat(4,1fr)}
+  }
+</style>
+</head>
+<body>
+<div class="demo-ribbon">
+  <strong>Demo dashboard — no sign-in, because there is no database behind it.</strong>
+  Every order, customer and figure below is fictional. <a href="../">Back to the shop</a>
+</div>
+<div class="admin-shell">
+  <aside class="admin-side">
+    <a class="brand" href="../"><span class="mark">SG</span>Smart<em>Gadget</em></a>
+    <nav aria-label="Dashboard sections" id="admin-nav">
+      <a href="#/overview">Overview</a>
+      <a href="#/orders">Orders</a>
+      <a href="#/products">Products</a>
+      <a href="#/customers">Customers</a>
+      <a href="#/analytics">Analytics</a>
+      <a href="#/settings">Settings</a>
+    </nav>
+  </aside>
+  <main class="admin-main" id="admin-app"></main>
+</div>
+<script type="module" src="./admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartGadget — Wholesale Gadgets, Factory Direct</title>
+<meta name="description" content="SmartGadget demo storefront: phones, audio, wearables and accessories at wholesale tiers, with live stock and volume pricing.">
+<meta name="theme-color" content="#0c1625">
+<!-- A demo must never compete with a client's real shop in search results. -->
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="SmartGadget — demo storefront">
+<meta property="og:description" content="A complete wholesale gadget shop with its own admin dashboard. Every product, order and customer here is fictional.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="./assets/styles.css">
+<!--
+  No tracking tag is hardcoded in this page on purpose.
+
+  The live store this demo is modelled on has its GA4, GTM and Pixel ids in
+  the HTML head. Copying that here would have pointed a public demo at a
+  property that is measuring real ad spend. Instead the tags are installed by
+  assets/analytics.js from assets/tracking-config.js, which ships empty — so
+  the demo loads no tag at all until someone puts a SEPARATE container's ids
+  in. Open /#/tracking in the demo to see the state of all four surfaces.
+-->
+</head>
+<body>
+<div class="demo-ribbon">
+  <strong>Demo store.</strong> Every product, price, order and customer here is fictional — nothing is charged and nothing is stored.
+  <a href="#/tracking">See the tracking setup →</a>
+</div>
+
+<header class="site-head"><div class="wrap bar">
+  <a class="brand" href="#/"><span class="mark">SG</span>Smart<em>Gadget</em></a>
+  <nav aria-label="Primary">
+    <a href="#/catalog">Catalogue</a>
+    <a href="#/catalog/phones">Phones</a>
+    <a href="#/catalog/audio">Audio</a>
+    <a href="#/track">Track order</a>
+    <a href="#/tracking">Tracking</a>
+  </nav>
+  <div class="head-actions">
+    <a class="btn ghost sm" href="./admin/">Admin dashboard</a>
+    <button class="cart-btn" onclick="location.hash='#/cart'">🛒<span class="cart-count" data-cart-count hidden>0</span></button>
+  </div>
+</div></header>
+
+<main id="app"></main>
+
+<footer class="site-foot"><div class="wrap cols">
+  <div>
+    <h4>SmartGadget</h4>
+    <p>A demonstration storefront built to show what the production build does. It has no database, no payment account and no courier account.</p>
+  </div>
+  <div><h4>Shop</h4><ul>
+    <li><a href="#/catalog">All products</a></li>
+    <li><a href="#/track">Track an order</a></li>
+    <li><a href="#/tracking">Tracking setup</a></li>
+  </ul></div>
+  <div><h4>Admin</h4><ul>
+    <li><a href="./admin/">Open the dashboard</a></li>
+    <li><span>No sign-in needed</span></li>
+  </ul></div>
+</div></footer>
+
+<script type="module" src="./assets/app.js"></script>
+</body>
+</html>
