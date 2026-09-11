@@ -1,0 +1,18 @@
+{
+  "title": "SmartGadget",
+  "tagline": "A wholesale gadget shop with an open admin dashboard",
+  "description": "A complete wholesale electronics storefront for the Bangladeshi market — catalogue, tiered wholesale pricing, product pages, cart, checkout and order tracking — plus the admin dashboard the owner runs it from. The dashboard opens with no sign-in so a prospect can look straight through it, and every figure in it is fictional.",
+  "category": "E-commerce",
+  "featured": true,
+  "tags": ["Storefront", "Admin dashboard", "Wholesale pricing", "GA4 + Meta Pixel"],
+  "highlights": [
+    "Volume pricing that steps down as quantity rises, shown per product",
+    "Admin dashboard with no password — nothing sits behind it to protect",
+    "The full measurement stack wired to its own container, never the live one",
+    "Mobile-first — built for phones before desktop"
+  ],
+  "access": {
+    "label": "Admin dashboard",
+    "note": "No sign-in. This demo has no database and no API: every order, customer and metric is read from a fixture file in the repository, so an open dashboard shows exactly what reading the source would."
+  }
+}
