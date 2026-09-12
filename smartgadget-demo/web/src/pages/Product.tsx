@@ -1,0 +1,436 @@
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { api } from '../lib/api';
+import type { Product as ProductType } from '../lib/types';
+import { money, number } from '../lib/format';
+import { ProductGallery } from '../components/ProductGallery';
+import { Prose } from '../components/Prose';
+import { ProductCard } from '../components/ProductCard';
+import { ReviewSection } from '../components/ReviewSection';
+import { Empty, Rating, Spinner, StockBadge } from '../components/ui';
+import { setDirectBuy, useCart, useCustomer, useToast, useWishlist } from '../lib/store';
+import { trackAddToCart, trackSelectItem, trackViewItem } from '../lib/analytics';
+import { useSeo, useJsonLd } from '../lib/seo';
+import { mediaUrl } from '../lib/api';
+
+/** Markdown → plain text, for the one-line description schema.org wants. Good
+ * enough for JSON-LD; the rich version stays in the on-page Prose render. */
+function plainText(markdown: string, max = 500): string {
+  const text = markdown
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/^[-*>]\s+/gm, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text.length > max ? `${text.slice(0, max - 1)}…` : text;
+}
+
+/** Mirrors the Worker's tier resolution so the page can price instantly. */
+function unitPriceFor(product: ProductType, qty: number): number {
+  let price = product.price;
+  let best = 0;
+  for (const tier of product.tiers) {
+    if (qty >= tier.min_qty && tier.min_qty >= best) {
+      best = tier.min_qty;
+      price = tier.unit_price;
+    }
+  }
+  return price;
+}
+
+export function Product() {
+  const { slug } = useParams<{ slug: string }>();
+  const [product, setProduct] = useState<ProductType | null>(null);
+  const [related, setRelated] = useState<ProductType[]>([]);
+  const [qty, setQty] = useState(1);
+  const [error, setError] = useState('');
+  const cart = useCart();
+  const navigate = useNavigate();
+  const wishlist = useWishlist();
+  const { customer } = useCustomer();
+  const toast = useToast();
+
+  useEffect(() => {
+    setProduct(null);
+    setError('');
+    window.scrollTo({ top: 0 });
+
+    api<{ product: ProductType; related: ProductType[] }>(`/api/products/${slug}`)
+      .then((res) => {
+        setProduct(res.product);
+        setRelated(res.related);
+        setQty(res.product.moq);
+        trackViewItem(res.product);
+      })
+      .catch((err: Error) => setError(err.message));
+  }, [slug]);
+
+  const unitPrice = useMemo(() => (product ? unitPriceFor(product, qty) : 0), [product, qty]);
+  const activeTier = useMemo(() => {
+    if (!product) return -1;
+    let index = -1;
+    product.tiers.forEach((tier, i) => {
+      if (qty >= tier.min_qty) index = i;
+    });
+    return index;
+  }, [product, qty]);
+
+  useSeo({
+    title: product ? `${product.name}${product.brand ? ` — ${product.brand}` : ''}` : 'Product',
+    description: product?.summary || undefined,
+  });
+
+  // Product + Offer + (when there are reviews) AggregateRating — the markup
+  // Google's rich-result and Merchant listing eligibility both key off. Only
+  // rendered once the product has loaded, and removed again on unmount so a
+  // stale product's schema never survives a route change to another PDP.
+  useJsonLd(
+    'product',
+    product
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: product.name,
+          sku: product.sku,
+          description: product.summary || plainText(product.description) || product.name,
+          image: [product.image_url, ...product.gallery].filter(Boolean).map(mediaUrl),
+          ...(product.brand ? { brand: { '@type': 'Brand', name: product.brand } } : {}),
+          offers: {
+            '@type': 'Offer',
+            url: window.location.href,
+            priceCurrency: 'BDT',
+            price: (product.price / 100).toFixed(2),
+            availability: product.in_stock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+            itemCondition: 'https://schema.org/NewCondition',
+          },
+          ...(product.review_count > 0
+            ? {
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: product.rating,
+                  reviewCount: product.review_count,
+                },
+              }
+            : {}),
+        }
+      : null,
+  );
+
+  useJsonLd(
+    'breadcrumbs',
+    product
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: window.location.origin },
+            ...(product.category
+              ? [
+                  {
+                    '@type': 'ListItem',
+                    position: 2,
+                    name: product.category.name,
+                    item: `${window.location.origin}/catalog?category=${product.category.slug}`,
+                  },
+                ]
+              : []),
+            { '@type': 'ListItem', position: product.category ? 3 : 2, name: product.name, item: window.location.href },
+          ],
+        }
+      : null,
+  );
+
+  if (error) return <Empty icon="⚠️" title="Product not found" hint={error} />;
+  if (!product) return <Spinner />;
+
+  const lineTotal = unitPrice * qty;
+  const savings = (product.price - unitPrice) * qty;
+  const specs = Object.entries(product.specs);
+  const saved = wishlist.has(product.id);
+  // Captured once, outside the closures below — TypeScript's null-narrowing
+  // of `product` from the guard above does not carry into a nested function.
+  const productId = product.id;
+  const productName = product.name;
+
+  function toggleWishlist() {
+    if (!customer) {
+      navigate('/account');
+      return;
+    }
+    void wishlist.toggle(productId);
+  }
+
+  /** Native share sheet where available; copies the link everywhere else. */
+  async function share() {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: productName, url });
+      } catch {
+        /* the shopper cancelled the share sheet — not an error */
+      }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      toast('Product link copied', 'success');
+    } catch {
+      toast(url, 'info');
+    }
+  }
+
+  return (
+    <>
+      <nav className="small dim row gap-8" style={{ marginBottom: 16 }} aria-label="Breadcrumb">
+        <Link to="/">Home</Link>
+        <span aria-hidden="true">›</span>
+        {product.category && (
+          <>
+            <Link to={`/catalog?category=${product.category.slug}`}>{product.category.name}</Link>
+            <span aria-hidden="true">›</span>
+          </>
+        )}
+        <span className="truncate">{product.name}</span>
+      </nav>
+
+      <div className="pdp">
+        <div>
+          <ProductGallery
+            name={product.name}
+            imageUrl={product.image_url}
+            gallery={product.gallery ?? []}
+            category={product.category?.slug}
+          />
+
+          {/*
+            Specifications first, then the description — a shopper scanning a
+            product wants the hard facts (model, capacity, battery life...)
+            before a paragraph of prose about it.
+          */}
+          {specs.length > 0 && (
+            <section style={{ marginTop: 26 }}>
+              <h2 style={{ marginBottom: 10 }}>Specifications</h2>
+              <div className="spec-list">
+                {specs.map(([key, value]) => (
+                  <div key={key}>
+                    <span className="k">{key}</span>
+                    <span>{value}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {product.description && (
+            <section style={{ marginTop: 26 }}>
+              <h2 style={{ marginBottom: 10 }}>About this product</h2>
+              {/*
+                Was a single <p>, so a description written with blank lines and
+                bullet points collapsed into one wall of text. Prose is the same
+                renderer the policy pages use — it builds React elements rather
+                than setting innerHTML, so a stray tag typed into the dashboard
+                stays text instead of becoming markup.
+              */}
+              <Prose body={product.description} />
+            </section>
+          )}
+
+          <section style={{ marginTop: 26 }}>
+            <h2 style={{ marginBottom: 10 }}>Ordering &amp; delivery</h2>
+            <ul className="muted small" style={{ paddingLeft: 20, display: 'grid', gap: 6 }}>
+              <li>Minimum order quantity is {product.moq} unit{product.moq === 1 ? '' : 's'}.</li>
+              <li>Dispatched within 48 hours of payment confirmation.</li>
+              <li>Cash on delivery, bKash, Nagad and bank transfer accepted.</li>
+              {/*
+                Stated per product now that staff mark which lines are covered.
+                A shopper learns this before paying rather than when they try to
+                send a clearance item back.
+              */}
+              {product.returnable ? (
+                <li>Seven-day return window on sealed, unopened units.</li>
+              ) : (
+                <li>
+                  <strong>Sold as-is</strong> — this item is not covered by the return policy. Faulty units are
+                  still handled under warranty.
+                </li>
+              )}
+            </ul>
+          </section>
+        </div>
+
+        <aside className="pdp-buy">
+          <div>
+            <span className="card-brand">{product.brand}</span>
+            <h1 style={{ fontSize: '1.5rem', margin: '4px 0 8px' }}>{product.name}</h1>
+            <div className="row gap-12 wrap-row">
+              <Rating value={product.rating} count={product.review_count} />
+              <span className="tiny dim">SKU {product.sku}</span>
+            </div>
+          </div>
+
+          <p className="muted small">{product.summary}</p>
+
+          <div className="price-lead">
+            <span className="now">{money(unitPrice)}</span>
+            {product.compare_at_price > unitPrice && <span className="was">{money(product.compare_at_price)}</span>}
+            {product.discount_pct > 0 && <span className="badge brand">-{product.discount_pct}%</span>}
+          </div>
+
+          <StockBadge state={product.stock_state} stock={product.stock} />
+
+          {product.tiers.length > 0 && (
+            <div>
+              <span className="eyebrow" style={{ display: 'block', marginBottom: 6 }}>
+                Volume pricing
+              </span>
+              <table className="tier-table">
+                <thead>
+                  <tr>
+                    <th>Quantity</th>
+                    <th className="right">Unit price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className={activeTier === -1 ? 'active' : ''}>
+                    <td>
+                      {product.moq} – {product.tiers[0].min_qty - 1}
+                    </td>
+                    <td className="right price">{money(product.price)}</td>
+                  </tr>
+                  {product.tiers.map((tier, index) => {
+                    const next = product.tiers[index + 1];
+                    return (
+                      <tr key={tier.min_qty} className={activeTier === index ? 'active' : ''}>
+                        <td>{next ? `${tier.min_qty} – ${next.min_qty - 1}` : `${tier.min_qty}+`}</td>
+                        <td className="right price">{money(tier.unit_price)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          <div className="row gap-12 wrap-row">
+            <div className="qty">
+              <button onClick={() => setQty((q) => Math.max(q - 1, product.moq))} disabled={qty <= product.moq} aria-label="Decrease quantity">
+                −
+              </button>
+              <input
+                type="number"
+                value={qty}
+                min={product.moq}
+                max={product.stock}
+                onChange={(e) =>
+                  // Clamped both ways: below the minimum is invalid, above stock
+                  // would only fail later at checkout.
+                  setQty(Math.min(Math.max(Number(e.target.value) || product.moq, product.moq), product.stock))
+                }
+                aria-label="Quantity"
+              />
+              <button
+                onClick={() => setQty((q) => Math.min(q + 1, product.stock))}
+                disabled={qty >= product.stock}
+                aria-label="Increase quantity"
+              >
+                +
+              </button>
+            </div>
+            <span className="small dim">
+              {product.moq > 1 && <>MOQ {product.moq} · </>}
+              {number(product.stock)} in stock
+            </span>
+          </div>
+
+          <div style={{ background: 'var(--surface-inset)', padding: '12px 14px', borderRadius: 'var(--radius-sm)' }}>
+            <div className="between small">
+              <span className="muted">
+                {number(qty)} × {money(unitPrice)}
+              </span>
+              <strong className="num" style={{ fontSize: '1.15rem' }}>
+                {money(lineTotal)}
+              </strong>
+            </div>
+            {savings > 0 && (
+              <div className="tiny" style={{ color: 'var(--good)', fontWeight: 700, marginTop: 4 }}>
+                You save {money(savings)} at this quantity
+              </div>
+            )}
+          </div>
+
+          <div className="stack gap-8">
+            <button
+              className="btn primary lg block"
+              disabled={!product.in_stock}
+              onClick={() => {
+                trackSelectItem('Shop now', { ...product, qty });
+                setDirectBuy({
+                  product_id: product.id,
+                  qty,
+                  name: product.name,
+                  slug: product.slug,
+                  image_url: product.image_url,
+                  category: product.category?.slug ?? null,
+                });
+                navigate('/checkout');
+              }}
+            >
+              {product.in_stock ? 'Shop now' : 'Out of stock'}
+            </button>
+            <button
+              className="btn ghost lg block"
+              disabled={!product.in_stock}
+              onClick={() => {
+                cart.add(product, qty);
+                trackAddToCart(product, qty);
+              }}
+            >
+              Add to cart
+            </button>
+            <div className="row gap-8">
+              <button
+                className="btn ghost"
+                aria-pressed={saved}
+                onClick={toggleWishlist}
+                style={{
+                  flex: 1,
+                  ...(saved ? { color: 'var(--bad)', borderColor: 'color-mix(in srgb, var(--bad) 35%, var(--line))' } : {}),
+                }}
+              >
+                {saved ? '♥ Saved' : '♡ Save'}
+              </button>
+              <button className="btn ghost" style={{ flex: 1 }} onClick={() => void share()}>
+                ↗ Share
+              </button>
+            </div>
+          </div>
+
+          {product.stock > 0 && qty > product.stock && (
+            <p className="alert warn">Only {product.stock} units are available right now.</p>
+          )}
+        </aside>
+      </div>
+
+      <ReviewSection slug={product.slug} productName={product.name} />
+
+      {related.length > 0 && (
+        <section style={{ marginTop: 48 }}>
+          <div className="section-head">
+            <div>
+              <div className="rule" />
+              <h2>Customers also viewed</h2>
+            </div>
+          </div>
+          <div className="prod-rail">
+            {related.map((item) => (
+              <ProductCard key={item.id} product={item} />
+            ))}
+          </div>
+        </section>
+      )}
+    </>
+  );
+}
