@@ -1,67 +1,60 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SmartGadget — Wholesale Gadgets, Factory Direct</title>
-<meta name="description" content="SmartGadget demo storefront: phones, audio, wearables and accessories at wholesale tiers, with live stock and volume pricing.">
-<meta name="theme-color" content="#0c1625">
-<!-- A demo must never compete with a client's real shop in search results. -->
-<meta name="robots" content="noindex, nofollow">
-<meta property="og:title" content="SmartGadget — demo storefront">
-<meta property="og:description" content="A complete wholesale gadget shop with its own admin dashboard. Every product, order and customer here is fictional.">
-<meta property="og:type" content="website">
-<link rel="stylesheet" href="./assets/styles.css">
-<!--
-  No tracking tag is hardcoded in this page on purpose.
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arif Gadgets — Wholesale Gadgets, Factory Direct</title>
+    <meta
+      name="description"
+      content="Arif Gadgets supplies phones, audio, wearables and accessories at wholesale tiers. Live stock, volume pricing, ships in 48 hours across Bangladesh."
+    />
+    <meta name="theme-color" content="#0A101E" />
+    <link rel="icon" type="image/svg+xml" href="./brand/logo-mark.svg" />
+    <meta property="og:title" content="Arif Gadgets — Premium Tech Marketplace" />
+    <meta property="og:description" content="Wholesale gadgets, priced by the carton. Live inventory and tiered pricing." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./brand/banner.svg" />
 
-  The live store this demo is modelled on has its GA4, GTM and Pixel ids in
-  the HTML head. Copying that here would have pointed a public demo at a
-  property that is measuring real ad spend. Instead the tags are installed by
-  assets/analytics.js from assets/tracking-config.js, which ships empty — so
-  the demo loads no tag at all until someone puts a SEPARATE container's ids
-  in. Open /#/tracking in the demo to see the state of all four surfaces.
--->
-</head>
-<body>
-<div class="demo-ribbon">
-  <strong>Demo store.</strong> Every product, price, order and customer here is fictional — nothing is charged and nothing is stored.
-  <a href="#/tracking">See the tracking setup →</a>
-</div>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MGQ6S4HX');</script>
+    <!-- End Google Tag Manager -->
 
-<header class="site-head"><div class="wrap bar">
-  <a class="brand" href="#/"><span class="mark">SG</span>Smart<em>Gadget</em></a>
-  <nav aria-label="Primary">
-    <a href="#/catalog">Catalogue</a>
-    <a href="#/catalog/phones">Phones</a>
-    <a href="#/catalog/audio">Audio</a>
-    <a href="#/track">Track order</a>
-    <a href="#/tracking">Tracking</a>
-  </nav>
-  <div class="head-actions">
-    <a class="btn ghost sm" href="./admin/">Admin dashboard</a>
-    <button class="cart-btn" onclick="location.hash='#/cart'">🛒<span class="cart-count" data-cart-count hidden>0</span></button>
-  </div>
-</div></header>
+    <!-- Google tag (gtag.js) — GA4 e-commerce events; see src/lib/analytics.ts -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0NMRBW4SEG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-<main id="app"></main>
+      // send_page_view is off because this is a single-page app: the router
+      // reports every screen itself (see src/lib/analytics.ts), including the
+      // first one. Leaving it on would double-count the landing page.
+      gtag('config', 'G-0NMRBW4SEG', { send_page_view: false });
+    </script>
 
-<footer class="site-foot"><div class="wrap cols">
-  <div>
-    <h4>SmartGadget</h4>
-    <p>A demonstration storefront built to show what the production build does. It has no database, no payment account and no courier account.</p>
-  </div>
-  <div><h4>Shop</h4><ul>
-    <li><a href="#/catalog">All products</a></li>
-    <li><a href="#/track">Track an order</a></li>
-    <li><a href="#/tracking">Tracking setup</a></li>
-  </ul></div>
-  <div><h4>Admin</h4><ul>
-    <li><a href="./admin/">Open the dashboard</a></li>
-    <li><span>No sign-in needed</span></li>
-  </ul></div>
-</div></footer>
+    <!-- Meta Pixel: the access token is intentionally never sent to the browser. -->
+    <script>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,
+      'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '2153514518908988');
+    </script>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MGQ6S4HX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=2153514518908988&ev=PageView&noscript=1" /></noscript>
 
-<script type="module" src="./assets/app.js"></script>
-</body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
