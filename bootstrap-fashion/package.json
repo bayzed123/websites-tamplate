@@ -1,5 +1,5 @@
 {
-    "name": "sigma",
+    "name": "bootstrap-fashion",
     "version": "1.0.0",
     "description": "Bootstrap HTML Template created by Pixel Rocket",
     "scripts": {
@@ -8,7 +8,7 @@
         "build-docs": "del-cli docs && webpack --config ./webpack.config.docs.js -p"
     },
     "keywords": [],
-    "author": "PixelRocket",
+    "author": "bayzed123",
     "license": "MIT",
     "devDependencies": {
         "@babel/core": "^7.12.10",
