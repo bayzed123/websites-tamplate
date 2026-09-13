@@ -52,7 +52,12 @@ const browser = await chromium.launch(launch);
 const fresh = () => browser.newContext({ viewport: { width: 1280, height: 900 } });
 
 const VENDOR = /googletagmanager\.com|google-analytics\.com|analytics\.google\.com|facebook\.(com|net)/;
-/** A loaded library is not a sent event. Only these URLs carry data out. */
+/**
+ * Before consent, NOTHING to these hosts is acceptable — not a beacon and not
+ * a script. Loading gtag.js with Consent Mode denied still pings
+ * google-analytics.com on every page so Google can model the conversions it is
+ * not allowed to measure, which is how the first version of this failed.
+ */
 const isBeacon = (url) => /\/collect|\/g\/collect|facebook\.com\/tr/.test(url);
 
 function watchWire(page) {
@@ -70,6 +75,7 @@ console.log('== nothing is measured before the banner is answered ==');
   await page.waitForTimeout(2600);
   check('the banner appears', (await page.locator('#hub-consent').count()) === 1);
   check('no beacon reached Google or Meta', wire.beacons().length === 0, wire.beacons().slice(0, 3).join('\n       '));
+  check('no tag library was even requested', wire.all.length === 0, wire.all.slice(0, 3).join('\n       '));
   const state = await page.evaluate(() => ({
     consent: window.hubTrack.consent(),
     consentCalls: (window.dataLayer || []).filter((e) => e && e[0] === 'consent').map((e) => [e[1], e[2] && e[2].analytics_storage]),
@@ -91,7 +97,7 @@ console.log('\n== declining is honoured, not worked around ==');
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await page.waitForTimeout(1200);
   check('the banner closes', (await page.locator('#hub-consent').count()) === 0);
-  check('still no beacon after scrolling the whole page', wire.beacons().length === 0, wire.beacons().slice(0, 3).join('\n       '));
+  check('still nothing on the wire after scrolling the whole page', wire.all.length === 0, wire.all.slice(0, 3).join('\n       '));
   check('the refusal is remembered', (await page.evaluate(() => window.hubTrack.consent())) === false);
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(2000);
@@ -124,6 +130,27 @@ console.log('\n== accepting releases what was held, with the right parameters ==
   check('every event is stamped site_section=demo-hub', pv.site_section === 'demo-hub', JSON.stringify(pv));
   check('every event carries traffic_type', typeof pv.traffic_type === 'string' && pv.traffic_type.length > 0, JSON.stringify(pv));
   check('every event carries an event_id for deduplication', typeof pv.event_id === 'string' && pv.event_id.length > 5, JSON.stringify(pv));
+  await ctx.close();
+}
+
+console.log('\n== and accepting actually loads the tags ==');
+{
+  const ctx = await fresh();
+  const page = await ctx.newPage();
+  const wire = watchWire(page);
+  await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(1700);
+  await page.click('#hub-consent [data-consent="yes"]');
+  await page.waitForTimeout(2500);
+  // Without this, a bug that loaded nothing ever would sail through every
+  // check above — silence is what they all assert.
+  check('gtag.js is fetched on accept', wire.all.some((u) => /googletagmanager\.com\/gtag\/js/.test(u)), wire.all.join('\n       '));
+  check('the Pixel is fetched on accept', wire.all.some((u) => /connect\.facebook\.net/.test(u)), wire.all.join('\n       '));
+  // Deliberately NOT asserting that a beacon goes out: that needs gtag.js to
+  // download and run, which makes the check depend on Google being reachable.
+  // The request for the library is the part this code controls.
+  const consent = await page.evaluate(() => (window.dataLayer || []).filter((e) => e && e[0] === 'consent').map((e) => [e[1], e[2] && e[2].analytics_storage]));
+  check('Consent Mode was updated to granted', JSON.stringify(consent).includes('["update","granted"]'), JSON.stringify(consent));
   await ctx.close();
 }
 

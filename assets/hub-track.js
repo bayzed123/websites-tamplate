@@ -3,11 +3,16 @@
  *
  * Two jobs, in this order:
  *
- *   1. ASK. Nothing that identifies a visitor leaves this page until the
- *      banner is answered. scripts/hub-tracking.mjs has already set Google
- *      Consent Mode to denied and revoked the Pixel's consent before either
- *      tag loaded, so "denied" is the state the page starts in rather than
- *      something applied late.
+ *   1. ASK. Nothing reaches Google or Meta until the banner is answered —
+ *      not a beacon, not a script, not a DNS lookup. No tag is loaded at all
+ *      until then; loadTags() below injects them at the moment consent is
+ *      granted, and never otherwise.
+ *
+ *      Loading them up front with Consent Mode set to denied is the more
+ *      common build and is NOT good enough: GA4 still sends a cookieless ping
+ *      on every page so Google can model the conversions it is not allowed to
+ *      measure. Our own test caught that happening after a visitor pressed
+ *      "No thanks".
  *
  *   2. MEASURE. Once allowed, report what a visitor actually did here —
  *      which demos they opened, how long they stayed inside one, whether they
@@ -139,19 +144,69 @@
 
   var allowed = consentState() === true;
 
+  var tagsLoaded = false;
+
+  function inject(src) {
+    var el = document.createElement('script');
+    el.async = true;
+    el.src = src;
+    document.head.appendChild(el);
+  }
+
+  /**
+   * Fetch the tag libraries. Only ever called with consent in hand.
+   *
+   * gtag() already exists as the standard stub that queues into dataLayer, so
+   * the consent update, the config and any events pushed here are replayed in
+   * order the moment gtag.js finishes loading. That is what lets an event
+   * raised while the banner was open still arrive correctly attributed.
+   */
+  function loadTags() {
+    if (tagsLoaded) return;
+    tagsLoaded = true;
+
+    if (CFG.ga4) {
+      window.gtag('js', new Date());
+      // send_page_view is off because this file reports the page itself, with
+      // the traffic_type and demo slug attached.
+      window.gtag('config', CFG.ga4, { send_page_view: false });
+      inject('https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(CFG.ga4));
+    }
+
+    if (CFG.gtm) {
+      window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+      inject('https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(CFG.gtm));
+    }
+
+    if (CFG.pixel) {
+      /* Meta's own loader stub, minus the script injection it normally does —
+         inject() does that — so fbq queues until fbevents.js arrives. */
+      if (!window.fbq) {
+        var n = (window.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        });
+        if (!window._fbq) window._fbq = n;
+        n.push = n;
+        n.loaded = true;
+        n.version = '2.0';
+        n.queue = [];
+        inject('https://connect.facebook.net/en_US/fbevents.js');
+      }
+      window.fbq('init', CFG.pixel);
+    }
+  }
+
   function applyConsent(granted) {
     allowed = granted;
-    if (typeof window.gtag === 'function') {
-      window.gtag('consent', 'update', {
-        ad_storage: granted ? 'granted' : 'denied',
-        ad_user_data: granted ? 'granted' : 'denied',
-        ad_personalization: granted ? 'granted' : 'denied',
-        analytics_storage: granted ? 'granted' : 'denied',
-      });
-    }
-    if (typeof window.fbq === 'function') {
-      window.fbq('consent', granted ? 'grant' : 'revoke');
-    }
+    if (!granted) return; // nothing is loaded, so there is nothing to tell
+
+    window.gtag('consent', 'update', {
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+      analytics_storage: 'granted',
+    });
+    loadTags();
   }
 
   /* ---------------------------------------------------------------- events */
@@ -197,7 +252,8 @@
     if (!allowed) {
       // Held, not dropped: if the banner is accepted a moment later, the
       // page_view that happened before the click still gets reported, which
-      // is what makes the first session's funnel complete.
+      // is what makes the first session's funnel complete. Nothing is on the
+      // wire in the meantime — the libraries are not even loaded.
       if (queue.length < 40) queue.push([name, payload]);
       return;
     }

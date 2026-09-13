@@ -26,7 +26,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 
-import { bodySnippet, headSnippet, preconnects } from './hub-tracking.mjs';
+import { headSnippet } from './hub-tracking.mjs';
 
 const root = resolve(new URL('..', import.meta.url).pathname);
 const outputDir = resolve(process.argv[2] || join(root, 'site'));
@@ -412,13 +412,15 @@ const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com"><link 
  * a person browsing demos from a person who clicked an ad. The hub is the
  * middle of the funnel, not the campaign, and it needs to be readable on its
  * own — so it now has its own container, its own script, and a permission
- * banner of its own.
+ * banner of its own. Nothing is loaded until that banner is answered; see
+ * scripts/hub-tracking.mjs for why the denied-but-loaded alternative is not
+ * good enough.
  *
  * It goes on the hub's own pages only. The demos themselves ship
  * byte-for-byte with nothing injected — that is the whole reason the wrapper
  * exists, and a tracking script is not a good enough reason to break it.
  */
-const TRACKING = `${preconnects()}${headSnippet()}`;
+const TRACKING = headSnippet();
 
 const FAVICON = `<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A0F0D'/%3E%3Ccircle cx='50' cy='50' r='17' fill='%2300D084'/%3E%3C/svg%3E">`;
 
@@ -563,7 +565,7 @@ function renderHome(demos) {
 ${FONTS}${FAVICON}${TRACKING}
 <style>${STYLES}</style>
 <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
-</head><body>${bodySnippet()}
+</head><body>
 <a class="skip" href="#demos">Skip to demos</a>
 ${header('demos')}
 <main>
@@ -687,7 +689,7 @@ html,body{height:100%;overflow:hidden}
 .stage.phone iframe{width:390px;max-width:100%;height:100%;max-height:844px;border-radius:26px;
   border:9px solid #1b241f;box-shadow:0 26px 70px rgba(0,0,0,.6)}
 @media (max-width:760px){.vb-name,.vb-creds{display:none}.vbar{gap:9px;padding:0 10px}.vbar select{max-width:130px}}
-</style></head><body>${bodySnippet()}
+</style></head><body>
 <div class="viewer">
   <div class="vbar">
     <a class="vb-back" href="/">← <span>All demos</span></a>
@@ -753,7 +755,7 @@ ${FONTS}${FAVICON}${TRACKING}
 <style>${STYLES}
 .nf{min-height:70vh;display:grid;place-items:center;text-align:center;padding:40px 20px}
 .nf h1{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:16px}
-</style></head><body>${bodySnippet()}
+</style></head><body>
 ${header('')}
 <main class="nf"><div>
   <p class="eyebrow">404</p>
