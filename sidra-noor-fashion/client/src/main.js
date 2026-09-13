@@ -1,3 +1,6 @@
+// First import on purpose: it installs the in-page API before the router
+// and store below are evaluated, and both read from the API on import.
+import "./demo/install";
 import { createApp } from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";

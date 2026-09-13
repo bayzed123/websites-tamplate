@@ -14,7 +14,7 @@
     >
       <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
-          <img src="img/logo.png" alt="logo" class="w-10" />
+          <img src="@/assets/img/logo.png" alt="logo" class="w-10" />
 
           <span class="mx-2 text-2xl font-semibold text-white">Admin area</span>
         </div>

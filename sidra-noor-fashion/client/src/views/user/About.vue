@@ -16,15 +16,16 @@
           <h2>Explore us</h2>
         </div>
         <p class="my-3">
-          Welcome to Fashion club, your number one source for all things
-          fashion. We're dedicated to providing you the very best of fashion
-          product, with an emphasis on rapidity, securety, professionality.
+          Welcome to Sidra Noor Fashion, a demonstration storefront for
+          everyday wear, party pieces and small accessories. Everything on this
+          site — the products, the prices, the orders, the people — is invented
+          to show the design working, not to sell you anything.
         </p>
         <p class="my-3">
-          Founded in 2022 by Thamer Ayachi, Fashion club has come a long way
-          from its beginnings in sousse tunisia. When Thamer first started out,
-          his passion for large variety of international products across the
-          globe drove them to start their own business.
+          This is a demo build. The storefront and the admin dashboard behind
+          it are a template you can have set up under your own name, with your
+          own catalogue and copy in place of this one. The original template
+          was written by Thamer Ayachi and is credited in the footer.
         </p>
         <p class="my-3">
           We hope you enjoy our products as much as we enjoy offering them to

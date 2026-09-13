@@ -5,7 +5,7 @@
       <div
         class="bg-center bg-cover h-full"
         style="
-          background-image: url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80');
+          background-image: url('demo-uploads/profile-banner.svg');
         "
       ></div>
     </section>
@@ -191,7 +191,7 @@ export default {
       data: {
         id: "",
         imgUrl:
-          "https://i.pinimg.com/originals/f5/a7/e5/f5a7e5849ba31101a60c242ed6f857e6.gif",
+          "demo-uploads/loader.svg",
         email: "",
         username: "",
         role: "",

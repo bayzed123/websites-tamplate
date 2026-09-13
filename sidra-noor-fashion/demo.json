@@ -1,8 +1,28 @@
 {
   "title": "Sidra Noor Fashion",
-  "tagline": "Vue 3 storefront with a NestJS backend",
-  "description": "A Vue 3 storefront with a NestJS API behind it. Not published yet \u2014 see draftReason.",
+  "tagline": "A storefront with the back office behind it",
+  "description": "A Vue 3 fashion storefront with the admin dashboard its owner runs it from. The shop side has category pages, product pages, a cart and a checkout; the admin side has eight screens — dashboard, products, orders, customers, messages, staff, profile and a single-product editor. The dashboard opens with no sign-in so you can look straight through it, and every product, order, customer and message in it is invented.",
   "category": "E-commerce",
-  "draft": true,
-  "draftReason": "Two things stop it publishing. (1) The client is a Vue Router history-mode app, so at a nested static path it renders its own 404 page instead of the shop \u2014 it needs hash routing, the same fix sidra-clothing needed. (2) Every screen reads from http://localhost:3000/api/, and unlike sidra-clothing there is no db.json to serve from: the data lives in the NestJS server and its database, so a fixture layer means inventing the whole catalogue first. It also only builds with CYPRESS_INSTALL_BINARY=0 and NODE_OPTIONS=--openssl-legacy-provider, because Vue CLI 4.5 predates modern Node."
+  "featured": true,
+  "price": "From $100",
+  "priceNote": "setup included · your branding, products and copy",
+  "tags": [
+    "Storefront",
+    "Admin dashboard",
+    "Vue 3",
+    "Vuex",
+    "From $100"
+  ],
+  "highlights": [
+    "Eight admin screens: dashboard, products, orders, customers, messages, staff, profile, product editor",
+    "Admin opens with no password — there is no database behind it to protect",
+    "Edit a product, confirm an order, delete a message — changes stick while you browse",
+    "Storefront and admin share one catalogue, so what you change in one shows in the other",
+    "Runs with no server at all: the whole API answers inside the page"
+  ],
+  "entry": "client/dist/index.html",
+  "access": {
+    "label": "Admin dashboard",
+    "note": "No sign-in needed. The Login screen still works if you want to see it, but the dashboard is open — this build has no database and no API, so there is nothing behind it for a password to protect. Anything you change lives in your tab and resets on reload."
+  }
 }

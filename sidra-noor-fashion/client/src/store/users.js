@@ -60,8 +60,13 @@ const users = {
       const form = new FormData();
       form.append("image", data.image);
       try {
+        // The upload host and its key come from configuration, never from a
+        // literal in the bundle. This template shipped with a live imgbb key
+        // hardcoded on this line; anything checked in here is readable by
+        // everyone who loads the page, so there is no safe value to inline.
+        // Unset, the request stays in the page and the demo adapter answers it.
         const res = await axios.post(
-          "https://api.imgbb.com/1/upload?key=e6a735fac9ee98b1897034ee6315d69b",
+          process.env.VUE_APP_IMAGE_UPLOAD_URL || "https://api.imgbb.com/1/upload",
           form
         );
         // const imgUrl = res.data.data.display_url;

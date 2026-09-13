@@ -11,7 +11,10 @@ export default createStore({
   state: {
     access_token: sessionStorage.getItem("access_token"),
     role: sessionStorage.getItem("role"),
-    baseUrl: "http://localhost:3000/api/products/",
+    // Relative on purpose: the demo serves product photos from the built
+    // bundle, and this is published under a nested path, so a leading
+    // slash would resolve against the domain root and 404.
+    baseUrl: "demo-uploads/",
   },
   mutations: {
     SET_TOKEN(state, data) {

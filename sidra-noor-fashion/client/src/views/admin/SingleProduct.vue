@@ -302,7 +302,7 @@ export default {
         id: "",
       },
       imgUrl:
-        "https://i.pinimg.com/originals/f5/a7/e5/f5a7e5849ba31101a60c242ed6f857e6.gif",
+        "demo-uploads/loader.svg",
       myDate: "",
       open: false,
       isSending: false,

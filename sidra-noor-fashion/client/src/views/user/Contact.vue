@@ -17,7 +17,7 @@
             address
           </h2>
           <span class="block">4000 centre ville</span>
-          <span class="block">Sousse. Tunisia</span>
+          <span class="block">Dhaka. Bangladesh</span>
         </div>
 
         <!-- phone -->
@@ -25,8 +25,8 @@
           <h2 class="uppercase text-base text-black font-semibold block">
             phone
           </h2>
-          <span class="block">+216 55 111 222</span>
-          <span class="block">+216 55 111 222</span>
+          <span class="block">+880 1711 000 100</span>
+          <span class="block">+880 1711 000 100</span>
         </div>
 
         <!-- email -->
@@ -34,10 +34,10 @@
           <h2 class="uppercase text-base text-black font-semibold block">
             email
           </h2>
-          <a href="mailto:myFashionClub@protonmail.com" class="block"
-            >myFashionClub@protonmail.com</a
+          <a href="mailto:hello@sidranoor.demo" class="block"
+            >hello@sidranoor.demo</a
           >
-          <a href="mailto:myFashionClub@protonmail.com" class="block"
+          <a href="mailto:hello@sidranoor.demo" class="block"
             >FashionClub@service.com</a
           >
         </div>

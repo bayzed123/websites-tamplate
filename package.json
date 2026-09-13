@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build:smartgadget": "npm ci --prefix smartgadget-demo/web && npm run build --prefix smartgadget-demo/web",
-    "build:demo-hub": "npm run build:smartgadget && npm run build:sidra-clothing && node scripts/build-demo-hub.mjs site",
+    "build:demo-hub": "npm run build:smartgadget && npm run build:sidra-clothing && npm run build:sidra-noor && node scripts/build-demo-hub.mjs site",
     "thumbs": "node scripts/capture-thumbnails.mjs site",
     "test:preview": "node tests/live-preview.mjs site",
     "test:demo-isolation": "node tests/demo-isolation.mjs",
@@ -11,7 +11,9 @@
     "test:bootstrap-fashion": "node tests/bootstrap-fashion.mjs site",
     "build:sidra-clothing": "npm ci --prefix sidra-clothing && npm run build --prefix sidra-clothing",
     "test:sidra-clothing": "node tests/sidra-clothing.mjs sidra-clothing/dist",
-    "test:smartgadget-admin": "node tests/smartgadget-admin.mjs smartgadget-demo/web/dist"
+    "test:smartgadget-admin": "node tests/smartgadget-admin.mjs smartgadget-demo/web/dist",
+    "build:sidra-noor": "cd sidra-noor-fashion/client && CYPRESS_INSTALL_BINARY=0 npm install --legacy-peer-deps --no-audit --no-fund && NODE_OPTIONS=--openssl-legacy-provider npm run build",
+    "test:sidra-noor": "node tests/sidra-noor-fashion.mjs sidra-noor-fashion/client/dist"
   },
   "devDependencies": {
     "playwright": "^1.62.1"
