@@ -32,6 +32,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Build demo hub
+        # build:demo-hub builds the SmartGadget Vite project first.
         run: npm run build:demo-hub
 
       - name: Run Doctor audit

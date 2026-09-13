@@ -20,7 +20,7 @@ export function Press() {
       .catch((err: Error) => setError(err.message));
   }, []);
 
-  useSeo({ title: 'Press & Media', description: 'Where Arif Gadgets has been featured in the press.' });
+  useSeo({ title: 'Press & Media', description: 'Where SmartGadget has been featured in the press.' });
 
   if (error) return <Empty icon="⚠️" title="Could not load press coverage" hint={error} />;
   if (!items) return <Spinner />;
@@ -31,7 +31,7 @@ export function Press() {
         <div>
           <div className="rule" />
           <h1>Press Coverage</h1>
-          <p className="small muted">Where Arif Gadgets has been mentioned in the news.</p>
+          <p className="small muted">Where SmartGadget has been mentioned in the news.</p>
         </div>
       </div>
 

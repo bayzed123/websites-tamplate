@@ -14,6 +14,7 @@ import { ImageZoom } from './ImageZoom';
 import { trackPageView, trackSearch } from '../lib/analytics';
 import { announceRoute, isPreviewMessage } from '../lib/previewBridge';
 import { useJsonLd } from '../lib/seo';
+import { DemoBar } from './DemoBar';
 
 export function Layout() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -105,7 +106,7 @@ export function Layout() {
           '@graph': [
             {
               '@type': 'Organization',
-              name: settings.store_name || 'Arif Gadgets',
+              name: settings.store_name || 'SmartGadget',
               url: window.location.origin,
               logo: `${window.location.origin}${import.meta.env.BASE_URL}brand/logo-mark.svg`,
               ...(settings.support_phone
@@ -115,7 +116,7 @@ export function Layout() {
             },
             {
               '@type': 'WebSite',
-              name: settings.store_name || 'Arif Gadgets',
+              name: settings.store_name || 'SmartGadget',
               url: window.location.origin,
               potentialAction: {
                 '@type': 'SearchAction',
@@ -134,6 +135,8 @@ export function Layout() {
         Skip to content
       </a>
 
+      <DemoBar />
+
       <header className="header">
         <div className="wrap">
           <button
@@ -147,7 +150,7 @@ export function Layout() {
             </span>
           </button>
 
-          <Link to="/" className="brand-link" aria-label="Arif Gadgets home">
+          <Link to="/" className="brand-link" aria-label="SmartGadget home">
             <Logo />
           </Link>
 
@@ -275,7 +278,7 @@ export function Layout() {
                     href={settings.facebook_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="Arif Gadgets on Facebook"
+                    aria-label="SmartGadget on Facebook"
                     title="Follow us on Facebook"
                   >
                     <svg viewBox="0 0 24 24" width="19" height="19" fill="#fff" aria-hidden="true">
@@ -375,7 +378,7 @@ export function Layout() {
 
           <div className="footer-bot">
             <span>
-              © {new Date().getFullYear()} {settings?.store_name ?? 'Arif Gadgets'}. All rights reserved.
+              © {new Date().getFullYear()} {settings?.store_name ?? 'SmartGadget'}. All rights reserved.
             </span>
 
             <span className="credits">

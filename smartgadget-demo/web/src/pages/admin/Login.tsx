@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { api, ApiError } from '../../lib/api';
+import { api, ApiError, DEMO } from '../../lib/api';
 import { useAuth, useToast } from '../../lib/store';
 import { Logo } from '../../components/Logo';
 
@@ -103,6 +103,39 @@ export function Login() {
     } finally {
       setBusy(false);
     }
+  }
+
+  /*
+   * In the demonstration build the session is already open — there is no
+   * account to sign in to, because there is no server holding one. This screen
+   * is only reachable by pressing "sign out", so it offers the way back in
+   * rather than a form with no correct answer.
+   */
+  if (DEMO) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 20, background: 'var(--bg)' }}>
+        <div className="panel" style={{ width: '100%', maxWidth: 420 }}>
+          <div className="panel-body stack gap-24" style={{ padding: 30 }}>
+            <div className="center" style={{ color: 'var(--ink)' }}>
+              <Logo />
+            </div>
+            <div className="center">
+              <h1 style={{ fontSize: '1.35rem' }}>Demonstration dashboard</h1>
+              <p className="small muted">
+                No password. This build has no server and no real data — everything you see and
+                change lives in this browser tab and resets when you reload.
+              </p>
+            </div>
+            <button className="btn primary lg" onClick={() => void signIn('demo', 'demo')}>
+              Open the dashboard
+            </button>
+            <Link to="/" className="btn ghost">
+              Back to the shop
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const title =

@@ -42,7 +42,7 @@ const LABELS: Record<string, { label: string; hint: string }> = {
   tax_pct: { label: 'Tax percentage', hint: 'Applied to the net order value. 0 disables it.' },
   site_url: {
     label: 'Live storefront URL',
-    hint: 'e.g. https://arifgadget.store — used by the daily site health check to confirm the live site is actually up',
+    hint: 'e.g. https://your-shop.example — used by the daily site health check to confirm the live site is actually up',
   },
 };
 

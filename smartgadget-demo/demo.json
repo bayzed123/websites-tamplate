@@ -1,18 +1,25 @@
 {
   "title": "SmartGadget",
   "tagline": "A wholesale gadget shop with an open admin dashboard",
-  "description": "A complete wholesale electronics storefront for the Bangladeshi market — catalogue, tiered wholesale pricing, product pages, cart, checkout and order tracking — plus the admin dashboard the owner runs it from. The dashboard opens with no sign-in so a prospect can look straight through it, and every figure in it is fictional.",
+  "description": "A complete wholesale electronics storefront for the Bangladeshi market \u2014 catalogue, tiered wholesale pricing, product pages, cart, checkout and order tracking \u2014 plus the admin dashboard the owner runs it from: products, stock, orders, customers, reviews, content and analytics. The dashboard opens with no sign-in so a prospect can look straight through it, and every product, order, customer and figure in it is generated rather than real.",
   "category": "E-commerce",
   "featured": true,
-  "tags": ["Storefront", "Admin dashboard", "Wholesale pricing", "GA4 + Meta Pixel"],
+  "tags": [
+    "Storefront",
+    "Admin dashboard",
+    "Wholesale pricing",
+    "GA4 + Meta Pixel"
+  ],
   "highlights": [
     "Volume pricing that steps down as quantity rises, shown per product",
-    "Admin dashboard with no password — nothing sits behind it to protect",
-    "The full measurement stack wired to its own container, never the live one",
-    "Mobile-first — built for phones before desktop"
+    "Admin dashboard with no password \u2014 nothing sits behind it to protect",
+    "Every number agrees: the dashboard totals are summed from the same orders the order list shows",
+    "Edits stick while you browse \u2014 change a price and the revenue and margin move with it",
+    "Mobile-first \u2014 built for phones before desktop"
   ],
   "access": {
     "label": "Admin dashboard",
-    "note": "No sign-in. This demo has no database and no API: every order, customer and metric is read from a fixture file in the repository, so an open dashboard shows exactly what reading the source would."
-  }
+    "note": "No sign-in. This demo has no database and no API: the whole backend is a file in the browser, so an open dashboard shows exactly what reading the source would. Anything you change lives in your tab and resets on reload."
+  },
+  "entry": "web/dist/index.html"
 }

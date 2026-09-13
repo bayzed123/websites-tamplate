@@ -81,10 +81,10 @@ export function AdminLayout() {
         >
           <span aria-hidden="true">☰</span>
         </button>
-        <NavLink to="/" className="admin-topbar-logo" aria-label="Arif Gadgets">
+        <NavLink to="/" className="admin-topbar-logo" aria-label="SmartGadget">
           <Logo />
         </NavLink>
-        <NotificationBell compact />
+        <NotificationBell />
       </header>
 
       <div className={`drawer-root admin-menu-drawer ${menuOpen ? 'open' : ''}`} aria-hidden={!menuOpen}>

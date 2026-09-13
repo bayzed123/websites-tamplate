@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 /**
  * Inlined rather than loaded from /brand/logo.svg so the wordmark can pick up
  * `currentColor` and stay legible in both themes.
@@ -20,13 +22,19 @@ function Mark({ idPrefix }: { idPrefix: string }) {
         <path d="M12 20v-4a4 4 0 0 1 4-4h4" />
         <path d="M52 44v4a4 4 0 0 1-4 4h-4" />
       </g>
+      {/* The "S" of SmartGadget. Drawn as a stroked path rather than text so it
+          renders identically without the brand font loaded, and keeps its
+          weight when the mark is scaled down to a favicon. */}
       <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M19 47 31.2 18" stroke={`url(#${idPrefix}gold)`} strokeWidth="5.4" />
-        <path d="M45 47 32.8 18" stroke="#FFD75E" strokeWidth="5.4" opacity="0.62" />
-        <path d="M24.6 36.4h14.8" stroke="#22D3EE" strokeWidth="3.4" />
+        <path
+          d="M42 24.5C42 18.5 22 18 22 26.2 22 33.6 42 31.6 42 39.8 42 48 22 47.4 22 41.4"
+          stroke={`url(#${idPrefix}gold)`}
+          strokeWidth="5.6"
+        />
+        <path d="M26.5 52.5h11" stroke="#22D3EE" strokeWidth="3" />
       </g>
-      <circle cx="32" cy="16.4" r="3.2" fill="#FFD75E" />
-      <circle cx="32" cy="16.4" r="6.2" fill="#FFD75E" opacity="0.16" />
+      <circle cx="45.5" cy="17.5" r="3.2" fill="#FFD75E" />
+      <circle cx="45.5" cy="17.5" r="6.2" fill="#FFD75E" opacity="0.16" />
     </g>
   );
 }
@@ -57,11 +65,22 @@ function Defs({ idPrefix }: { idPrefix: string }) {
 }
 
 export function Logo({ compact = false }: { compact?: boolean }) {
-  const p = compact ? 'lc' : 'lf';
+  /*
+   * Unique per instance, not per variant.
+   *
+   * Two logos of the same variant on one page used to share ids like "lfgold",
+   * and `url(#lfgold)` resolves to the FIRST match in the document — which on
+   * the admin screens is the mobile top bar's copy, sitting inside a
+   * display:none container. Chrome will not paint from a hidden subtree, so
+   * every gradient in the visible sidebar logo silently rendered as nothing:
+   * no chip, no rim, and the word "GADGET" gone entirely, leaving a mark that
+   * read "SMART".
+   */
+  const p = `${useId().replace(/:/g, '')}${compact ? 'c' : 'f'}`;
 
   if (compact) {
     return (
-      <svg viewBox="0 0 72 72" width="72" height="72" role="img" aria-label="Arif Gadgets">
+      <svg viewBox="0 0 72 72" width="72" height="72" role="img" aria-label="SmartGadget">
         <Defs idPrefix={p} />
         <Mark idPrefix={p} />
       </svg>
@@ -69,15 +88,16 @@ export function Logo({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <svg viewBox="0 0 348 72" width="348" height="72" role="img" aria-label="Arif Gadgets">
+    <svg viewBox="0 0 348 72" width="348" height="72" role="img" aria-label="SmartGadget">
       <Defs idPrefix={p} />
       <Mark idPrefix={p} />
       <g fontFamily="var(--font)">
+        {/* One <text> with two tspans, so "GADGET" always starts where "SMART"
+            ends — two absolutely positioned <text> elements overlapped the
+            moment either word changed length. */}
         <text x="84" y="38" fontSize="27" fontWeight="700" letterSpacing="1.2" fill="currentColor">
-          ARIF
-        </text>
-        <text x="152" y="38" fontSize="27" fontWeight="700" letterSpacing="1.2" fill={`url(#${p}word)`}>
-          GADGETS
+          SMART
+          <tspan fill={`url(#${p}word)`}>GADGET</tspan>
         </text>
         <text x="85" y="55" fontSize="9.5" fontWeight="600" letterSpacing="3.5" fill="currentColor" opacity="0.55">
           PREMIUM TECH MARKETPLACE

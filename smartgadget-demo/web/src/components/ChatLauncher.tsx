@@ -46,7 +46,7 @@ export function ChatLauncher({ number, storeName }: { number?: string; storeName
   }, [turns, busy, open, view]);
 
   const waHref = waLink(number ?? '');
-  const waLabel = `Chat with ${storeName ?? 'Arif Gadgets'} on WhatsApp`;
+  const waLabel = `Chat with ${storeName ?? 'SmartGadget'} on WhatsApp`;
 
   function openWhatsApp() {
     trackContact('whatsapp_float');

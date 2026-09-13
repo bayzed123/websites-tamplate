@@ -13,7 +13,7 @@
  */
 
 /** Marks our messages so a stray postMessage from anything else is ignored. */
-export const PREVIEW_SOURCE = 'arif-gadgets-preview';
+export const PREVIEW_SOURCE = 'smartgadget-preview';
 
 export interface PreviewRouteMessage {
   source: typeof PREVIEW_SOURCE;

@@ -1,0 +1,5 @@
+# A demonstration build with invented products, orders and customers.
+# It must never appear in a search result, where it could be mistaken for a
+# real shop or outrank one.
+User-agent: *
+Disallow: /
