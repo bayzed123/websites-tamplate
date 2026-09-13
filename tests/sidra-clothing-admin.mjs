@@ -18,6 +18,45 @@ const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/cs
   '.svg': 'image/svg+xml', '.json': 'application/json', '.png': 'image/png',
   '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon' };
 
+/**
+ * Refuse to check a build older than the source it came from.
+ *
+ * This exists because of a real miss: a syntax error failed the build, the
+ * previous dist/ was still on disk, and every check below passed against it.
+ * A stale artifact is indistinguishable from a passing one — unless you look
+ * at the clock.
+ */
+async function assertFresh() {
+  const { stat, readdir } = await import('node:fs/promises');
+  const entry = join(ROOT, 'index.html');
+  let built;
+  try {
+    built = (await stat(entry)).mtimeMs;
+  } catch {
+    console.log(`  FAIL ${entry} does not exist — the build did not run`);
+    process.exit(1);
+  }
+  let newest = 0;
+  const walk = async (dir) => {
+    for (const item of await readdir(dir, { withFileTypes: true })) {
+      const full = join(dir, item.name);
+      if (item.isDirectory()) await walk(full);
+      else newest = Math.max(newest, (await stat(full)).mtimeMs);
+    }
+  };
+  await walk('sidra-clothing/src');
+  if (newest > built) {
+    console.log(
+      `  FAIL ${entry} is older than sidra-clothing/src — rebuild before checking.\n` +
+      `       A failed build leaves the previous bundle in place, and every check below\n` +
+      `       would then pass against code that is not the code you changed.`,
+    );
+    process.exit(1);
+  }
+}
+// Only meaningful against a build output, not against the published copy.
+if (ROOT.includes('sidra-clothing/dist')) await assertFresh();
+
 const db = JSON.parse(await readFile(SEED, 'utf8'));
 const settled = db.orders.filter((o) => o.orderStatus !== 'cancelled');
 const revenue = settled.reduce((s, o) => s + Number(o.subtotal ?? 0), 0);

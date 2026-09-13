@@ -18,13 +18,13 @@ const LINKS = [
   { to: "/admin/customers", label: "Customers" },
 ];
 
+// No data-theme on the wrapper below: the admin follows whichever theme the
+// visitor picked on the shop. Pinning one would also mean naming a theme daisyUI
+// actually compiled — "winter" appears in tailwind.config.js but never reaches
+// the CSS, because the list sits under `theme:` where daisyUI expects a
+// top-level `daisyui:` key, so only `light` and `dark` are emitted.
 const AdminLayout = () => {
   return (
-    {/* No data-theme here: the admin follows whichever theme the visitor
-        picked on the shop. A theme name pinned here would also have to be
-        one daisyUI actually compiled — "winter" is named in
-        tailwind.config.js but never reaches the CSS, because the list sits
-        under `theme:` where daisyUI expects a top-level `daisyui:` key. */}
     <div className="min-h-screen bg-base-200">
       <div className="bg-base-300 text-base-content px-4 py-2 text-sm flex flex-wrap gap-x-3 gap-y-1 items-center">
         <span className="badge badge-neutral badge-sm font-bold">DEMO</span>
