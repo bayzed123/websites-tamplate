@@ -1,0 +1,21 @@
+{
+  "title": "Bootstrap Fashion",
+  "tagline": "A ten-page fashion storefront, Bootstrap 5",
+  "description": "A responsive fashion retail front end: homepage, category listing with live filters, product page with gallery and reviews, cart, a three-step checkout, and the account screens. Built on Bootstrap 5, so it restyles quickly to a brand and integrates with any commerce backend. Front end only — nothing here is wired to a shop.",
+  "category": "E-commerce",
+  "featured": false,
+  "tags": ["Storefront", "Bootstrap 5", "Responsive", "Front end only"],
+  "highlights": [
+    "Ten pages, including the full checkout flow",
+    "Category filters, price slider and product gallery already built",
+    "Bootstrap 5 under it, so brand colours and type are a variables change",
+    "Static pages — drop them onto any commerce backend"
+  ],
+  "entry": "dist/index.html",
+  "credit": {
+    "name": "Pixel Rocket",
+    "url": "https://www.pixelrocket.store",
+    "licence": "MIT",
+    "note": "A third-party template, shown as a starting point we customise — not as our own build."
+  }
+}
