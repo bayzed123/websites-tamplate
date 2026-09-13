@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Head -->
+{{> (config config.partials.head) title="Orders | Bootstrap Fashion admin" }}
+
+<body class="{{ config.classes.body }} bg-light">
+
+    {{> admin/demo-note }}
+
+    {{!-- min-vh-100 so the dark sidebar reaches the bottom of the viewport on
+     short pages; without it the nav column stops where its content ends
+     and the page shows a ragged edge against the grey body. --}}
+    <div class="d-flex admin-shell min-vh-100">
+        {{> admin/sidebar active="orders" }}
+
+        <main class="flex-grow-1 min-w-0">
+            {{> admin/topbar heading="Orders" }}
+
+            <div class="p-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0">
+                        <h2 class="h6 fw-bold mb-0">
+                            All orders
+                            <span class="text-muted fw-normal ms-1">— newest first</span>
+                        </h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Order</th>
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Placed</th>
+                                    <th scope="col" class="text-end">Items</th>
+                                    <th scope="col" class="text-end">Total</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each admin.orders}}
+                                <tr>
+                                    <td class="fw-bold">{{ this.ref }}</td>
+                                    <td>
+                                        <span class="d-block">{{ this.customer }}</span>
+                                        <a href="mailto:{{ this.email }}" class="text-muted small text-decoration-none">{{ this.email }}</a>
+                                    </td>
+                                    <td class="text-muted small">{{ this.placed }}</td>
+                                    <td class="text-end">{{ this.items }}</td>
+                                    <td class="text-end fw-bold">{{ ../admin.currency }}{{ this.total }}</td>
+                                    <td><span class="badge {{ this.badge }}">{{ this.status }}</span></td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer bg-white border-0 text-muted small">
+                        Showing all {{ admin.orders.length }} orders in this demo.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Theme JS -->
+    {{> footer/scripts }}
+
+</body>
+
+</html>

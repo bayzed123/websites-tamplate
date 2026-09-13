@@ -1,0 +1,272 @@
+{
+  "shop": "Bootstrap Fashion",
+  "currency": "$",
+  "stats": [
+    {
+      "label": "Revenue, last 30 days",
+      "value": "$48,210",
+      "delta": "+18%",
+      "tone": "success",
+      "icon": "ri-line-chart-line",
+      "note": "from 214 paid orders",
+      "badge": "bg-success"
+    },
+    {
+      "label": "Orders, last 30 days",
+      "value": "214",
+      "delta": "+12%",
+      "tone": "success",
+      "icon": "ri-shopping-bag-3-line",
+      "note": "18 still to fulfil",
+      "badge": "bg-success"
+    },
+    {
+      "label": "Average order value",
+      "value": "$225.28",
+      "delta": "+5%",
+      "tone": "success",
+      "icon": "ri-price-tag-3-line",
+      "note": "1.7 items per order",
+      "badge": "bg-success"
+    },
+    {
+      "label": "Needs restocking",
+      "value": "3",
+      "delta": "of 9",
+      "tone": "warning",
+      "icon": "ri-alert-line",
+      "note": "1 out, 2 running low",
+      "badge": "bg-warning text-dark"
+    }
+  ],
+  "orders": [
+    {
+      "ref": "BF-2041",
+      "customer": "Amelia Doyle",
+      "email": "amelia.doyle@example.com",
+      "placed": "12 Sep 2026",
+      "items": 2,
+      "total": "319.98",
+      "status": "Awaiting fulfilment",
+      "tone": "warning",
+      "badge": "bg-warning text-dark"
+    },
+    {
+      "ref": "BF-2040",
+      "customer": "Jonah Reyes",
+      "email": "j.reyes@example.com",
+      "placed": "12 Sep 2026",
+      "items": 1,
+      "total": "174.99",
+      "status": "Awaiting fulfilment",
+      "tone": "warning",
+      "badge": "bg-warning text-dark"
+    },
+    {
+      "ref": "BF-2039",
+      "customer": "Priya Raman",
+      "email": "priya.raman@example.com",
+      "placed": "11 Sep 2026",
+      "items": 3,
+      "total": "404.97",
+      "status": "Shipped",
+      "tone": "info",
+      "badge": "bg-info"
+    },
+    {
+      "ref": "BF-2038",
+      "customer": "Tom Whitfield",
+      "email": "t.whitfield@example.com",
+      "placed": "11 Sep 2026",
+      "items": 1,
+      "total": "129.99",
+      "status": "Shipped",
+      "tone": "info",
+      "badge": "bg-info"
+    },
+    {
+      "ref": "BF-2037",
+      "customer": "Sofia Marchetti",
+      "email": "sofia.m@example.com",
+      "placed": "10 Sep 2026",
+      "items": 2,
+      "total": "254.98",
+      "status": "Delivered",
+      "tone": "success",
+      "badge": "bg-success"
+    },
+    {
+      "ref": "BF-2036",
+      "customer": "Daniel Okoro",
+      "email": "d.okoro@example.com",
+      "placed": "09 Sep 2026",
+      "items": 1,
+      "total": "219.99",
+      "status": "Delivered",
+      "tone": "success",
+      "badge": "bg-success"
+    },
+    {
+      "ref": "BF-2035",
+      "customer": "Hannah Lindqvist",
+      "email": "hannah.l@example.com",
+      "placed": "08 Sep 2026",
+      "items": 4,
+      "total": "489.96",
+      "status": "Delivered",
+      "tone": "success",
+      "badge": "bg-success"
+    },
+    {
+      "ref": "BF-2034",
+      "customer": "Marcus Bell",
+      "email": "marcus.bell@example.com",
+      "placed": "07 Sep 2026",
+      "items": 1,
+      "total": "34.99",
+      "status": "Refunded",
+      "tone": "danger",
+      "badge": "bg-danger"
+    }
+  ],
+  "customers": [
+    {
+      "name": "Hannah Lindqvist",
+      "email": "hannah.l@example.com",
+      "city": "Stockholm",
+      "orders": 9,
+      "spent": "2,140.55",
+      "joined": "Mar 2025"
+    },
+    {
+      "name": "Priya Raman",
+      "email": "priya.raman@example.com",
+      "city": "Manchester",
+      "orders": 7,
+      "spent": "1,689.30",
+      "joined": "Jun 2025"
+    },
+    {
+      "name": "Amelia Doyle",
+      "email": "amelia.doyle@example.com",
+      "city": "Dublin",
+      "orders": 6,
+      "spent": "1,455.12",
+      "joined": "Jan 2026"
+    },
+    {
+      "name": "Daniel Okoro",
+      "email": "d.okoro@example.com",
+      "city": "Lagos",
+      "orders": 5,
+      "spent": "1,204.88",
+      "joined": "Aug 2025"
+    },
+    {
+      "name": "Sofia Marchetti",
+      "email": "sofia.m@example.com",
+      "city": "Milan",
+      "orders": 4,
+      "spent": "948.40",
+      "joined": "Nov 2025"
+    },
+    {
+      "name": "Jonah Reyes",
+      "email": "j.reyes@example.com",
+      "city": "Austin",
+      "orders": 3,
+      "spent": "612.97",
+      "joined": "Feb 2026"
+    },
+    {
+      "name": "Tom Whitfield",
+      "email": "t.whitfield@example.com",
+      "city": "Leeds",
+      "orders": 2,
+      "spent": "389.98",
+      "joined": "Apr 2026"
+    },
+    {
+      "name": "Marcus Bell",
+      "email": "marcus.bell@example.com",
+      "city": "Cardiff",
+      "orders": 1,
+      "spent": "34.99",
+      "joined": "Jul 2026"
+    }
+  ],
+  "stock": [
+    {
+      "sku": "CRS-RK-01",
+      "stock": 42,
+      "state": "In stock",
+      "tone": "success",
+      "low": false,
+      "badge": "bg-success"
+    },
+    {
+      "sku": "CRS-CL-02",
+      "stock": 18,
+      "state": "In stock",
+      "tone": "success",
+      "low": false,
+      "badge": "bg-success"
+    },
+    {
+      "sku": "MRL-RB-03",
+      "stock": 4,
+      "state": "Low stock",
+      "tone": "warning",
+      "low": true,
+      "badge": "bg-warning text-dark"
+    },
+    {
+      "sku": "VNT-TG-04",
+      "stock": 27,
+      "state": "In stock",
+      "tone": "success",
+      "low": false,
+      "badge": "bg-success"
+    },
+    {
+      "sku": "MRL-CB-05",
+      "stock": 0,
+      "state": "Out of stock",
+      "tone": "danger",
+      "low": true,
+      "badge": "bg-danger"
+    },
+    {
+      "sku": "CRS-SM-06",
+      "stock": 33,
+      "state": "In stock",
+      "tone": "success",
+      "low": false,
+      "badge": "bg-success"
+    },
+    {
+      "sku": "HLD-RK-07",
+      "stock": 6,
+      "state": "Low stock",
+      "tone": "warning",
+      "low": true,
+      "badge": "bg-warning text-dark"
+    },
+    {
+      "sku": "VNT-GE-08",
+      "stock": 21,
+      "state": "In stock",
+      "tone": "success",
+      "low": false,
+      "badge": "bg-success"
+    },
+    {
+      "sku": "CRS-RT-09",
+      "stock": 15,
+      "state": "In stock",
+      "tone": "success",
+      "low": false,
+      "badge": "bg-success"
+    }
+  ]
+}

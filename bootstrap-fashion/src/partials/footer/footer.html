@@ -30,7 +30,16 @@
                 <p class="small m-0 text-center text-lg-start">&copy; 2026 <a class="text-reset"
                             href="{{webRoot}}/index.html">Bootstrap Fashion</a> All Rights Reserved. Template by <a
                             href="https://sayadbayezid.com" target="_blank"
-                            rel="noopener">Sayad Bayezid</a></p>
+                            rel="noopener">Sayad Bayezid</a>
+                        {{!-- The only way into the admin from the shop. Without a link here the
+                              dashboard exists but nobody finds it, which is exactly how the Sidra
+                              Noor admin stayed invisible. Kept in the footer rather than a banner
+                              so the storefront design is unchanged. --}}
+                        <span class="d-block d-lg-inline ms-lg-2 mt-2 mt-lg-0">
+                            <a class="text-reset fw-bold text-decoration-underline"
+                               href="{{webRoot}}/admin.html">Open the admin dashboard</a>
+                            <span class="text-muted">— no password</span>
+                        </span></p>
                 <ul class="list-unstyled mb-0 ms-lg-4 mt-3 mt-lg-0 d-flex justify-content-end align-items-center">
                     <li class="bg-light p-2 d-flex align-items-center justify-content-center me-2">
                         <i class="pi pi-sm pi-paypal"></i></li>

@@ -82,6 +82,11 @@ jobs:
       - name: Check the Bootstrap Fashion demo is completable
         run: node tests/bootstrap-fashion.mjs site
 
+      - name: Check the Bootstrap Fashion admin agrees with the shop
+        # dist/ is committed for this template, so the admin is checked against
+        # the committed output the hub actually publishes.
+        run: node tests/bootstrap-fashion-admin.mjs bootstrap-fashion/dist
+
       - name: Check the Sidra Clothing demo works with no server
         run: node tests/sidra-clothing.mjs sidra-clothing/dist
 

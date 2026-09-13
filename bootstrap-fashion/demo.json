@@ -1,6 +1,6 @@
 {
   "title": "Bootstrap Fashion",
-  "tagline": "A ten-page fashion storefront, ready to brand",
+  "tagline": "A Bootstrap 5 storefront with the admin behind it",
   "description": "A complete fashion retail front end: homepage, category listing with live filters and a price slider, product page with gallery and reviews, cart, and a three-step checkout with shipping and payment. Built on Bootstrap 5, so your colours, type and logo go in without rewriting anything. Front end only \u2014 it drops onto whatever commerce backend you already use, or we wire one up.",
   "category": "E-commerce",
   "featured": false,
@@ -12,12 +12,12 @@
     "From $100"
   ],
   "highlights": [
-    "Ten finished pages, including the whole checkout flow",
-    "Category filters, price slider, product gallery and reviews already built",
-    "Every form validates: required fields marked, 197 countries in the address picker",
-    "Mobile-first \u2014 checked at phone width on every page, no sideways scroll",
-    "Your brand in a variables file: colours, fonts and logo, no rewrite",
-    "Static pages \u2014 fast to host anywhere, nothing to keep patched"
+    "Four admin screens: dashboard, products, orders and customers",
+    "Admin opens with no password \u2014 nothing sits behind it to protect",
+    "The product table is the shop\u2019s own catalogue, so the two can never disagree",
+    "Category listings with working filters, product pages, cart and a three-step checkout",
+    "Every required field marked, 197 countries at checkout, alt text on every product image",
+    "Plain HTML, CSS and JavaScript \u2014 no framework to learn or licence to renew"
   ],
   "entry": "dist/index.html",
   "credit": {
@@ -27,5 +27,9 @@
     "note": "A third-party template, shown as a starting point we customise \u2014 not as our own build."
   },
   "price": "From $100",
-  "priceNote": "setup included \u00b7 your branding, products and copy"
+  "priceNote": "setup included \u00b7 your branding, products and copy",
+  "access": {
+    "label": "Admin dashboard",
+    "note": "Linked from the footer of every shop page, or open admin.html directly. No sign-in: this is a static build with no database, so there is nothing behind it for a password to protect."
+  }
 }

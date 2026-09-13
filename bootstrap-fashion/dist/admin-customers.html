@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Head -->
+<head>
+  <!-- Page Meta Tags-->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bootstrap Fashion — a responsive Bootstrap 5 fashion storefront: category listings with filters, product pages, cart and a three-step checkout.">
+  <meta name="author" content="">
+  <meta name="keywords" content="">
+
+  <!-- Custom Google Fonts-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Roboto:wght@300;400;700&display=auto"
+    rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon/favicon-16x16.png">
+  <link rel="mask-icon" href="./assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="./assets/css/libs.bundle.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
+
+  <!-- Fix for custom scrollbar if JS is disabled-->
+  <noscript>
+    <style>
+      /**
+          * Reinstate scrolling for non-JS clients
+          */
+      .simplebar-content-wrapper {
+        overflow: auto;
+      }
+    </style>
+  </noscript>
+
+  <!-- Page Title -->
+  <title>Customers | Bootstrap Fashion admin</title>
+
+</head>
+<body class=" bg-light">
+
+    <!-- The one honest label in the admin. Everything below it is invented, and a
+         prospect reading a revenue figure deserves to know that before believing
+         it. It also explains why there is no password, which is the first thing
+         anyone notices. -->
+    <div class="alert alert-secondary border-0 rounded-0 mb-0 small d-flex flex-wrap gap-2 align-items-center">
+        <strong class="text-uppercase">Demo</strong>
+        <span>Every product, order and customer here is invented. The dashboard opens with no
+            sign-in because there is no database behind it to protect.</span>
+        <a href="./index.html" class="ms-auto text-dark fw-bold text-decoration-underline">Back to the shop</a>
+    </div>
+
+    <div class="d-flex admin-shell min-vh-100">
+        <!-- Admin sidebar -->
+        <nav class="bg-dark text-white d-flex flex-column flex-shrink-0 p-3 admin-sidebar" aria-label="Admin sections">
+            <a class="navbar-brand fw-bold fs-4 text-white text-decoration-none d-flex align-items-center mb-4"
+                href="./admin.html">
+                <div class="d-flex align-items-center">
+                    <svg class="f-w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.53 72.26"><path d="M10.43,54.2h0L0,36.13,10.43,18.06,20.86,0H41.72L10.43,54.2Zm67.1-7.83L73,54.2,68.49,62,45,48.47,31.29,72.26H20.86l-5.22-9L52.15,0H62.58l5.21,9L54.06,32.82,77.53,46.37Z" fill="currentColor" fill-rule="evenodd"/></svg>
+                </div>
+            </a>
+            <span class="text-uppercase small fw-bold text-white-50 mb-2">Shop admin</span>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item mb-1">
+                    <a href="./admin.html"
+                       class="nav-link text-white-50"
+                       >
+                        <i class="ri-dashboard-line align-bottom me-2" aria-hidden="true"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="./admin-products.html"
+                       class="nav-link text-white-50"
+                       >
+                        <i class="ri-price-tag-3-line align-bottom me-2" aria-hidden="true"></i> Products
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="./admin-orders.html"
+                       class="nav-link text-white-50"
+                       >
+                        <i class="ri-shopping-bag-3-line align-bottom me-2" aria-hidden="true"></i> Orders
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="./admin-customers.html"
+                       class="nav-link active bg-white text-dark fw-bold"
+                       aria-current="page">
+                        <i class="ri-user-3-line align-bottom me-2" aria-hidden="true"></i> Customers
+                    </a>
+                </li>
+            </ul>
+            <hr class="text-white-50">
+            <a href="./index.html" class="nav-link text-white-50 px-3">
+                <i class="ri-store-2-line align-bottom me-2" aria-hidden="true"></i> View the shop
+            </a>
+        </nav>
+        <!-- / Admin sidebar -->
+
+        <main class="flex-grow-1 min-w-0">
+            <!-- Admin topbar -->
+            <header class="d-flex justify-content-between align-items-center border-bottom bg-white px-4 py-3 flex-wrap gap-2">
+                <div>
+                    <span class="text-uppercase small fw-bold text-muted d-block">Bootstrap Fashion</span>
+                    <h1 class="h4 fw-bold mb-0">Customers</h1>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="badge bg-light text-dark border">Demo data</span>
+                    <span class="d-none d-sm-inline text-muted small">Signed in as Store owner</span>
+                    <span class="rounded-circle bg-dark text-white d-inline-flex justify-content-center align-items-center"
+                        style="width:2.25rem;height:2.25rem" aria-hidden="true">SO</span>
+                </div>
+            </header>
+            <!-- / Admin topbar -->
+
+            <div class="p-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0">
+                        <h2 class="h6 fw-bold mb-0">
+                            All customers
+                            <span class="text-muted fw-normal ms-1">— by lifetime spend</span>
+                        </h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col" class="text-end">Orders</th>
+                                    <th scope="col" class="text-end">Spent</th>
+                                    <th scope="col">Joined</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold d-block">Hannah Lindqvist</span>
+                                        <a href="mailto:hannah.l@example.com" class="text-muted small text-decoration-none">hannah.l@example.com</a>
+                                    </td>
+                                    <td class="text-muted">Stockholm</td>
+                                    <td class="text-end">9</td>
+                                    <td class="text-end fw-bold">$2,140.55</td>
+                                    <td class="text-muted small">Mar 2025</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold d-block">Priya Raman</span>
+                                        <a href="mailto:priya.raman@example.com" class="text-muted small text-decoration-none">priya.raman@example.com</a>
+                                    </td>
+                                    <td class="text-muted">Manchester</td>
+                                    <td class="text-end">7</td>
+                                    <td class="text-end fw-bold">$1,689.30</td>
+                                    <td class="text-muted small">Jun 2025</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold d-block">Amelia Doyle</span>
+                                        <a href="mailto:amelia.doyle@example.com" class="text-muted small text-decoration-none">amelia.doyle@example.com</a>
+                                    </td>
+                                    <td class="text-muted">Dublin</td>
+                                    <td class="text-end">6</td>
+                                    <td class="text-end fw-bold">$1,455.12</td>
+                                    <td class="text-muted small">Jan 2026</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold d-block">Daniel Okoro</span>
+                                        <a href="mailto:d.okoro@example.com" class="text-muted small text-decoration-none">d.okoro@example.com</a>
+                                    </td>
+                                    <td class="text-muted">Lagos</td>
+                                    <td class="text-end">5</td>
+                                    <td class="text-end fw-bold">$1,204.88</td>
+                                    <td class="text-muted small">Aug 2025</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold d-block">Sofia Marchetti</span>
+                                        <a href="mailto:sofia.m@example.com" class="text-muted small text-decoration-none">sofia.m@example.com</a>
+                                    </td>
+                                    <td class="text-muted">Milan</td>
+                                    <td class="text-end">4</td>
+                                    <td class="text-end fw-bold">$948.40</td>
+                                    <td class="text-muted small">Nov 2025</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold d-block">Jonah Reyes</span>
+                                        <a href="mailto:j.reyes@example.com" class="text-muted small text-decoration-none">j.reyes@example.com</a>
+                                    </td>
+                                    <td class="text-muted">Austin</td>
+                                    <td class="text-end">3</td>
+                                    <td class="text-end fw-bold">$612.97</td>
+                                    <td class="text-muted small">Feb 2026</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold d-block">Tom Whitfield</span>
+                                        <a href="mailto:t.whitfield@example.com" class="text-muted small text-decoration-none">t.whitfield@example.com</a>
+                                    </td>
+                                    <td class="text-muted">Leeds</td>
+                                    <td class="text-end">2</td>
+                                    <td class="text-end fw-bold">$389.98</td>
+                                    <td class="text-muted small">Apr 2026</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold d-block">Marcus Bell</span>
+                                        <a href="mailto:marcus.bell@example.com" class="text-muted small text-decoration-none">marcus.bell@example.com</a>
+                                    </td>
+                                    <td class="text-muted">Cardiff</td>
+                                    <td class="text-end">1</td>
+                                    <td class="text-end fw-bold">$34.99</td>
+                                    <td class="text-muted small">Jul 2026</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer bg-white border-0 text-muted small">
+                        Showing all 8 customers in this demo.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Theme JS -->
+    <!-- Vendor JS -->
+    <script src="./assets/js/vendor.bundle.js"></script>
+    
+    <!-- Theme JS -->
+    <script src="./assets/js/theme.bundle.js"></script>
+</body>
+
+</html>

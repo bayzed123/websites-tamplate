@@ -13,7 +13,9 @@
     "test:sidra-clothing": "node tests/sidra-clothing.mjs sidra-clothing/dist",
     "test:smartgadget-admin": "node tests/smartgadget-admin.mjs smartgadget-demo/web/dist",
     "build:sidra-noor": "cd sidra-noor-fashion/client && CYPRESS_INSTALL_BINARY=0 npm install --legacy-peer-deps --no-audit --no-fund && NODE_OPTIONS=--openssl-legacy-provider npm run build",
-    "test:sidra-noor": "node tests/sidra-noor-fashion.mjs sidra-noor-fashion/client/dist"
+    "test:sidra-noor": "node tests/sidra-noor-fashion.mjs sidra-noor-fashion/client/dist",
+    "build:bootstrap-fashion": "cd bootstrap-fashion && npm install --legacy-peer-deps --no-audit --no-fund && NODE_OPTIONS=--openssl-legacy-provider npm run build",
+    "test:bootstrap-fashion-admin": "node tests/bootstrap-fashion-admin.mjs bootstrap-fashion/dist"
   },
   "devDependencies": {
     "playwright": "^1.62.1"

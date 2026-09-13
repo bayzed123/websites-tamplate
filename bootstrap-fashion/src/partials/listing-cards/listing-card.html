@@ -14,7 +14,12 @@
         </div>
         <span class="position-absolute top-0 end-0 p-2 z-index-20 text-muted"><i class="ri-heart-line"></i></span>
         <picture class="position-relative overflow-hidden d-block bg-light">
-            <img class="w-100 img-fluid position-relative z-index-10" title="" src="{{ img }}" alt="{{config.defaultImgAlt}}">
+            {{!-- alt is the product name. `config.defaultImgAlt` was used here, but inside
+                 an {{#each}} the item is the context and `config` is out of scope, so it
+                 resolved to nothing and every card shipped an empty alt. It was also the
+                 wrong text: a template credit tells a screen-reader user nothing about
+                 the product they are being offered. --}}
+            <img class="w-100 img-fluid position-relative z-index-10" title="" src="{{ img }}" alt="{{ title }}">
         </picture>
         {{#unless sold-out}}
             <div class="position-absolute start-0 bottom-0 end-0 z-index-20 p-2">

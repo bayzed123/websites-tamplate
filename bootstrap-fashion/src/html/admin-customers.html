@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Head -->
+{{> (config config.partials.head) title="Customers | Bootstrap Fashion admin" }}
+
+<body class="{{ config.classes.body }} bg-light">
+
+    {{> admin/demo-note }}
+
+    {{!-- min-vh-100 so the dark sidebar reaches the bottom of the viewport on
+     short pages; without it the nav column stops where its content ends
+     and the page shows a ragged edge against the grey body. --}}
+    <div class="d-flex admin-shell min-vh-100">
+        {{> admin/sidebar active="customers" }}
+
+        <main class="flex-grow-1 min-w-0">
+            {{> admin/topbar heading="Customers" }}
+
+            <div class="p-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0">
+                        <h2 class="h6 fw-bold mb-0">
+                            All customers
+                            <span class="text-muted fw-normal ms-1">— by lifetime spend</span>
+                        </h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col" class="text-end">Orders</th>
+                                    <th scope="col" class="text-end">Spent</th>
+                                    <th scope="col">Joined</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each admin.customers}}
+                                <tr>
+                                    <td>
+                                        <span class="fw-bold d-block">{{ this.name }}</span>
+                                        <a href="mailto:{{ this.email }}" class="text-muted small text-decoration-none">{{ this.email }}</a>
+                                    </td>
+                                    <td class="text-muted">{{ this.city }}</td>
+                                    <td class="text-end">{{ this.orders }}</td>
+                                    <td class="text-end fw-bold">{{ ../admin.currency }}{{ this.spent }}</td>
+                                    <td class="text-muted small">{{ this.joined }}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer bg-white border-0 text-muted small">
+                        Showing all {{ admin.customers.length }} customers in this demo.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Theme JS -->
+    {{> footer/scripts }}
+
+</body>
+
+</html>
