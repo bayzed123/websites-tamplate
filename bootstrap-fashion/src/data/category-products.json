@@ -1,74 +1,76 @@
 {
-    "entries": [{
-            "title": "Nike Air VaporMax 2021",
-            "price": "329.99",
-            "sale-price": "198.66",
+    "entries": [
+        {
+            "title": "Corso Runner Knit",
+            "price": "189.99",
             "currency": "$",
-            "options": "4 colours, 10 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-1.jpg"
+            "options": "4 colours, 9 sizes",
+            "img": "{{webRoot}}/assets/images/products/product-1.jpg",
+            "sale-price": "129.99",
+            "sale": 1
         },
         {
-            "title": "Nike ZoomX Vaporfly",
-            "price": "275.45",
-            "new": true,
+            "title": "Corso Court Low",
+            "price": "159.99",
             "currency": "$",
-            "options": "2 colours, 4 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-2.jpg"
-        },
-        {
-            "title": "Nike Blazer Mid '77",
-            "price": "198.56",
-            "sold-out": true,
-            "currency": "$",
-            "options": "5 colours, 6 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-3.jpg"
-        },
-        {
-            "title": "Nike Air Force 1",
-            "price": "425.85",
-            "currency": "$",
-            "options": "6 colours, 9 sizes",
+            "options": "6 colours, 11 sizes",
             "img": "{{webRoot}}/assets/images/products/product-4.jpg"
         },
         {
-            "title": "Nike Air Max 90",
-            "price": "196.99",
-            "sale-price": "98.66",
+            "title": "Marlowe Ribbed Beanie",
+            "price": "34.99",
             "currency": "$",
-            "options": "4 colours, 10 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-5.jpg"
+            "options": "5 colours, one size",
+            "img": "{{webRoot}}/assets/images/categories/category-5.jpg",
+            "new": 1
         },
         {
-            "title": "Nike Glide FlyEase",
-            "price": "329.99",
-            "sale-price": "198.66",
-            "new": true,
+            "title": "Vantage Trail GTX",
+            "price": "219.99",
             "currency": "$",
-            "options": "1 colour",
-            "img": "{{webRoot}}/assets/images/products/product-6.jpg"
+            "options": "2 colours, 10 sizes",
+            "img": "{{webRoot}}/assets/images/products/product-5.jpg",
+            "sale-price": "174.99",
+            "sale": 1
         },
         {
-            "title": "Nike Zoom Freak",
-            "price": "444.99",
+            "title": "Marlowe Crossbody Bag",
+            "price": "119.99",
             "currency": "$",
-            "options": "2 colours, 2 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-7.jpg"
+            "options": "3 colours, 4L",
+            "img": "{{webRoot}}/assets/images/categories/category-8.jpg",
+            "new": 1
         },
         {
-            "title": "Nike Air Pegasus",
-            "price": "178.99",
-            "new": true,
+            "title": "Corso Skate Mid",
+            "price": "139.99",
             "currency": "$",
-            "options": "3 colours, 10 sizes",
+            "options": "4 colours, 12 sizes",
             "img": "{{webRoot}}/assets/images/products/product-8.jpg"
         },
         {
-            "title": "Nike Air Jordans",
-            "price": "154.99",
-            "new": true,
+            "title": "Halden Ribbed Knit Top",
+            "price": "89.99",
             "currency": "$",
-            "options": "3 colours, 10 sizes",
-            "img": "{{webRoot}}/assets/images/products/product-1.jpg"
+            "options": "6 colours, 5 sizes",
+            "img": "{{webRoot}}/assets/images/categories/category-2.jpg",
+            "sale-price": "64.99",
+            "sale": 1
+        },
+        {
+            "title": "Vantage Glide EZ",
+            "price": "179.99",
+            "currency": "$",
+            "options": "2 colours, 9 sizes",
+            "img": "{{webRoot}}/assets/images/products/product-6.jpg",
+            "sold-out": 1
+        },
+        {
+            "title": "Corso Retro Trainer",
+            "price": "149.99",
+            "currency": "$",
+            "options": "5 colours, 11 sizes",
+            "img": "{{webRoot}}/assets/images/products/product-2.jpg"
         }
     ]
 }

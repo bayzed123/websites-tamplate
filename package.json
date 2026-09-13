@@ -7,7 +7,8 @@
     "test:preview": "node tests/live-preview.mjs site",
     "test:demo-isolation": "node tests/demo-isolation.mjs",
     "preview": "npm run build:demo-hub && npm run thumbs && python3 -m http.server 8000 --directory site",
-    "test:hub-tracking": "node tests/hub-tracking.mjs site"
+    "test:hub-tracking": "node tests/hub-tracking.mjs site",
+    "test:bootstrap-fashion": "node tests/bootstrap-fashion.mjs site"
   },
   "devDependencies": {
     "playwright": "^1.62.1"

@@ -133,6 +133,11 @@ async function readMeta(slug, dir, entryFile) {
     category: meta.category || 'Demo',
     tags: Array.isArray(meta.tags) ? meta.tags : [],
     highlights: Array.isArray(meta.highlights) ? meta.highlights : [],
+    /* What this build costs, shown on the card. A demo a client cannot price
+       is a demo they have to email about before they know if it is even in
+       their range — and most of them simply do not email. */
+    price: typeof meta.price === 'string' ? meta.price : '',
+    priceNote: typeof meta.priceNote === 'string' ? meta.priceNote : '',
     credentials: meta.credentials || null,
     featured: Boolean(meta.featured),
   };
@@ -372,6 +377,9 @@ p{margin:0;line-height:1.65;color:var(--soft)}
 .highlights{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:8px}
 .highlights li{position:relative;padding-left:20px;font-size:.85rem;color:var(--soft);line-height:1.5}
 .highlights li::before{content:"→";position:absolute;left:0;color:var(--emerald-deep);font-size:.78rem}
+.price{margin:8px 0 0;font-size:.95rem;color:var(--ink)}
+.price b{font-size:1.35rem;font-weight:700;color:var(--emerald)}
+.price span{color:var(--soft);font-size:.82rem}
 .tags{display:flex;flex-wrap:wrap;gap:7px}
 .tag{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim);border:1px solid var(--line);border-radius:100px;padding:4px 10px}
 .creds{margin-top:4px;padding:12px 14px;border-radius:12px;background:rgba(212,175,106,.07);border:1px solid rgba(212,175,106,.25)}
@@ -510,6 +518,9 @@ function renderCard(demo) {
        <code>${htmlEscape(demo.credentials.username || '')}</code> / <code>${htmlEscape(demo.credentials.password || '')}</code>
        ${demo.credentials.note ? `<span>${htmlEscape(demo.credentials.note)}</span>` : ''}</div>` : '';
   const tagline = demo.tagline ? `<p class="tagline">${htmlEscape(demo.tagline)}</p>` : '';
+  const price = demo.price
+    ? `<p class="price"><b>${htmlEscape(demo.price)}</b>${demo.priceNote ? ` <span>${htmlEscape(demo.priceNote)}</span>` : ''}</p>`
+    : '';
 
   return `<article class="card${featured}" data-category="${htmlEscape(demo.category)}" data-search="${htmlEscape(`${demo.title} ${demo.category} ${demo.tags.join(' ')} ${demo.description}`.toLowerCase())}">
   <a class="shot" href="${viewer}" aria-label="Open the ${htmlEscape(demo.title)} demo">
@@ -521,6 +532,7 @@ function renderCard(demo) {
     <div class="card-top"><span class="pill">Live</span><span class="cat">${htmlEscape(demo.category)}</span></div>
     <h2>${htmlEscape(demo.title)}</h2>
     ${tagline}
+    ${price}
     <p class="desc">${htmlEscape(demo.description)}</p>
     ${highlights}
     ${tags}
