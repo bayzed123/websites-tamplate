@@ -79,59 +79,42 @@ export const hasPixel = () => isSet(TRACKING.metaPixelId);
 export const hasGtm = () => isSet(TRACKING.gtmContainerId);
 
 /**
- * Everything that has to run before the page paints, as one <head> string.
+ * Everything that runs before the page paints — and it reaches no network.
  *
- * Consent is DENIED here, before a single tag loads, and stays denied until
- * the visitor says otherwise in the banner. That ordering is the whole point:
- * Google Consent Mode only withholds data if the defaults are set before
- * gtag config runs, and the Pixel only withholds it if `consent revoke` is
- * called before any event. Setting either one afterwards measures the visitor
- * first and asks permission second, which is not consent.
+ * WHY NO TAG LOADS HERE. The obvious build of this sets Google Consent Mode to
+ * denied, loads gtag.js anyway, and lets the consent signal do the rest. That
+ * is "advanced" consent mode, and it is not what "we do not track you unless
+ * you say yes" means: with consent denied GA4 still sends a cookieless ping to
+ * google-analytics.com on every page, carrying no identifier but telling
+ * Google the visit happened so conversions can be modelled. Our own test
+ * caught exactly that — a /g/collect with gcs=G100 after the visitor had
+ * pressed "No thanks".
+ *
+ * So nothing is loaded until the banner is answered. No gtag.js, no GTM, no
+ * fbevents.js, and no preconnect either — a preconnect opens a TCP connection
+ * and hands over an IP address before anyone agreed to anything, and for a
+ * visitor who declines it is pure waste. assets/hub-track.js injects the tags
+ * at the moment consent is granted, and never otherwise.
+ *
+ * The cost is real and worth naming: Google gets no modelled conversions for
+ * visitors who decline. The alternative is measuring them anyway and calling
+ * it consent.
+ *
+ * What does run here is the dataLayer stub and the denied default. Both are
+ * local — the stub only queues commands for a library that may never arrive,
+ * and the default has to be set before any tag loads or it would not apply to
+ * the one we load later.
  */
 export function headSnippet() {
   const parts = [];
 
-  if (hasGa4() || hasGtm()) {
-    parts.push(
-      `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}` +
-        `gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',` +
-        `ad_personalization:'denied',analytics_storage:'denied',` +
-        `functionality_storage:'granted',security_storage:'granted',wait_for_update:500});` +
-        `gtag('set',{site_section:${JSON.stringify(TRACKING.siteSection)}});</script>`,
-    );
-  }
-
-  if (hasGtm()) {
-    parts.push(
-      `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});` +
-        `var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;` +
-        `j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);` +
-        `})(window,document,'script','dataLayer',${JSON.stringify(TRACKING.gtmContainerId)});</script>`,
-    );
-  }
-
-  if (hasGa4()) {
-    parts.push(
-      `<script async src="https://www.googletagmanager.com/gtag/js?id=${TRACKING.ga4MeasurementId}"></script>`,
-      // send_page_view is off because hub-track.js reports the page itself,
-      // with the traffic_type and demo slug attached. Leaving it on would send
-      // a second, thinner page_view alongside every one of those.
-      `<script>gtag('js',new Date());gtag('config',${JSON.stringify(TRACKING.ga4MeasurementId)},{send_page_view:false});</script>`,
-    );
-  }
-
-  if (hasPixel()) {
-    parts.push(
-      `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?` +
-        `n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;` +
-        `n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;` +
-        `s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',` +
-        `'https://connect.facebook.net/en_US/fbevents.js');` +
-        // revoke BEFORE init: the Pixel queues nothing while revoked, so no
-        // PageView leaves the browser until the banner is answered.
-        `fbq('consent','revoke');fbq('init',${JSON.stringify(TRACKING.metaPixelId)});</script>`,
-    );
-  }
+  parts.push(
+    `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}` +
+      `gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',` +
+      `ad_personalization:'denied',analytics_storage:'denied',` +
+      `functionality_storage:'granted',security_storage:'granted'});` +
+      `gtag('set',{site_section:${JSON.stringify(TRACKING.siteSection)}});</script>`,
+  );
 
   const config = {
     ga4: TRACKING.ga4MeasurementId,
@@ -145,21 +128,4 @@ export function headSnippet() {
   parts.push(`<script src="/assets/hub-track.js" defer></script>`);
 
   return parts.join('');
-}
-
-/** Preconnects worth paying for, and only for tags that actually load. */
-export function preconnects() {
-  const hosts = [];
-  if (hasGa4() || hasGtm()) hosts.push('https://www.googletagmanager.com');
-  if (hasPixel()) hosts.push('https://connect.facebook.net');
-  return hosts.map((h) => `<link rel="preconnect" href="${h}">`).join('');
-}
-
-/** The GTM <noscript> iframe, for the top of <body>. Empty without a container. */
-export function bodySnippet() {
-  if (!hasGtm()) return '';
-  return (
-    `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${TRACKING.gtmContainerId}"` +
-    ` height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`
-  );
 }
