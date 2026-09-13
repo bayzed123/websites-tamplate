@@ -10,7 +10,8 @@
     "test:hub-tracking": "node tests/hub-tracking.mjs site",
     "test:bootstrap-fashion": "node tests/bootstrap-fashion.mjs site",
     "build:sidra-clothing": "npm ci --prefix sidra-clothing && npm run build --prefix sidra-clothing",
-    "test:sidra-clothing": "node tests/sidra-clothing.mjs sidra-clothing/dist"
+    "test:sidra-clothing": "node tests/sidra-clothing.mjs sidra-clothing/dist",
+    "test:smartgadget-admin": "node tests/smartgadget-admin.mjs smartgadget-demo/web/dist"
   },
   "devDependencies": {
     "playwright": "^1.62.1"
