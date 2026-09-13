@@ -1,6 +1,3 @@
-Amake maph korben, bhul bojhobujhir jonno! Apnar nirdeshona onujayi ekhon "OldSkool" er poriborte apnar template er ashol nam **"Bootstrap Fashion"** bebohar kore puro README file ti update kore dichchi.
-Niche full code block deya holo:
-```markdown
 # Bootstrap Fashion - Bootstrap 5 HTML Responsive Template
 
 ## Overview
@@ -161,6 +158,4 @@ To create a new page, navigate in your code editor to: src/html. To make it easi
 Bootstrap already has a comprehensive documentation site that will guide you in setting up and using all default Bootstrap features. Bootstrap 5 is fully integrated to our template's source code. Please refer to Bootstrap's doc site first for any default Bootstrap features: Visit Bootstrap's Doc Site
 ```
 
-*Note:* Ami `Quick Start` section e `cd bootstrap-fashion` command tao add kore diyechi jate jokhon keu apnar main repository clone korbe, tara asholey thik folder-e giye command gulo run korar nirdeshona pay. Eta repository-r current structure er sathe perfectly match korbe.
 
-```
