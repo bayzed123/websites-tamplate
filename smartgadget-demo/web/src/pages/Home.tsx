@@ -37,7 +37,7 @@ export function Home() {
   useSeo({
     title: 'Wholesale Gadgets, Factory Direct',
     description:
-      'Arif Gadgets supplies phones, audio, wearables and accessories at wholesale tiers. Live stock, volume pricing, ships in 48 hours across Bangladesh.',
+      'SmartGadget supplies phones, audio, wearables and accessories at wholesale tiers. Live stock, volume pricing, ships in 48 hours across Bangladesh.',
   });
 
   if (error) return <Empty icon="⚠️" title="Could not load the storefront" hint={error} />;
@@ -53,7 +53,7 @@ export function Home() {
             // default the moment that setting is empty, so there's never a
             // broken image while nobody has uploaded one yet.
             src={data.settings.hero_banner_url ? mediaUrl(data.settings.hero_banner_url) : `${import.meta.env.BASE_URL}brand/banner.svg`}
-            alt="Welcome to Arif Gadget Store — genuine gadgets delivered across Bangladesh"
+            alt="Welcome to SmartGadget — genuine gadgets delivered across Bangladesh"
             // No fixed width/height: the bundled default is 1600×560, but a
             // staff-uploaded banner can be any shape, and .hero-banner img
             // already scales to width:100%;height:auto in styles.css.

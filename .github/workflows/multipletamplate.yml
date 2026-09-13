@@ -34,6 +34,14 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 
+      - name: Build the SmartGadget demo
+        # A Vite project, unlike every other demo here — it has to be built
+        # before the hub goes looking for an index.html to publish.
+        run: npm ci --prefix smartgadget-demo/web && npm run build --prefix smartgadget-demo/web
+
+      - name: Check the demo leaks nothing from the live store
+        run: node tests/demo-isolation.mjs
+
       - name: Build root demo hub
         run: node scripts/build-demo-hub.mjs site
 

@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider, CartProvider, CustomerProvider, ToastProvider, WishlistProvider } from './lib/store';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
@@ -26,9 +26,25 @@ import { Calculators } from './pages/admin/Calculators';
 import { Guide } from './pages/admin/Guide';
 import { Preview } from './pages/admin/Preview';
 import { Staff } from './pages/admin/Staff';
+import { DEMO } from './lib/api';
 
 // Vite's BASE_URL is "/" on a custom domain and "/<repo>/" on project Pages.
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+/*
+ * The demo routes on the hash; a real deployment routes on the path.
+ *
+ * The demo is published as plain files inside the showcase hub, several
+ * directories deep and inside an iframe, on a static host with no rewrite
+ * rules. A path router there gives you a working home page and a 404 on every
+ * link off it, because the host looks for a directory called "catalog" and
+ * there isn't one. The hash never reaches the host, so it works at any depth
+ * with nothing to configure.
+ *
+ * A real shop is served from its own domain with a rewrite, wants clean URLs,
+ * and keeps BrowserRouter — which is why this is a branch and not a rewrite.
+ */
+const Router = DEMO ? HashRouter : BrowserRouter;
 
 export function App() {
   return (
@@ -37,7 +53,7 @@ export function App() {
         <CustomerProvider>
           <WishlistProvider>
           <CartProvider>
-          <BrowserRouter basename={basename || undefined}>
+          <Router basename={DEMO ? undefined : basename || undefined}>
             <Routes>
               <Route element={<Layout />}>
                 <Route index element={<Home />} />
@@ -74,7 +90,7 @@ export function App() {
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-          </BrowserRouter>
+          </Router>
           </CartProvider>
           </WishlistProvider>
         </CustomerProvider>

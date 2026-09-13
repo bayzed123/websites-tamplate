@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// VITE_BASE is "/" for a custom domain and "/<repo>/" for a project Pages site.
-// The deploy workflow sets it; local dev keeps "/".
+// Relative by default: the demo is published several directories deep inside
+// the showcase hub, and "./" is the only base that works without knowing where.
+// A real deployment sets VITE_BASE to its own path ("/" on a custom domain,
+// "/<repo>/" on a project Pages site).
 export default defineConfig({
-  base: process.env.VITE_BASE ?? '/',
+  base: process.env.VITE_BASE ?? './',
   plugins: [react()],
   build: {
     outDir: 'dist',

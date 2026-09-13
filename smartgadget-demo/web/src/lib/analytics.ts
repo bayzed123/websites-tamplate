@@ -13,7 +13,7 @@
  *     not look like customer behaviour.
  */
 
-export const GA_MEASUREMENT_ID = 'G-0NMRBW4SEG';
+export { GA_MEASUREMENT_ID, META_PIXEL_ID, GTM_CONTAINER_ID } from './tracking-config';
 
 const CURRENCY = 'BDT';
 
@@ -43,13 +43,36 @@ function measurable(): boolean {
   return typeof window.gtag === 'function' || typeof window.fbq === 'function';
 }
 
-import { api } from './api';
+import { api, DEMO } from './api';
+import { DEMO_SITE_TAG } from './tracking-config';
+
+/**
+ * Which Meta event this build is allowed to send.
+ *
+ * The demonstration shop reports to the agency's own Pixel — the same one its
+ * real campaigns optimise against. A Purchase from a checkout that takes no
+ * money is not a weak signal, it is a wrong one: Meta would learn to find more
+ * people who behave like demo visitors, and the agency would pay for it.
+ *
+ * So every standard conversion event collapses to one custom event. The visit
+ * is still measured, the funnel is still visible in the Events Manager under
+ * `DemoInteraction`, and no optimisation or attribution model ever sees a
+ * conversion that did not happen. PageView is the one exception — it carries
+ * no conversion meaning and is what makes the demo show up as traffic at all.
+ */
+function demoSafeEvent(metaEvent: string): { name: string; custom: boolean } {
+  if (!DEMO || metaEvent === 'PageView') return { name: metaEvent, custom: false };
+  return { name: 'DemoInteraction', custom: true };
+}
 
 /** Fire-and-forget. Analytics must never break a checkout. */
 function send(event: string, params: Record<string, unknown> = {}): void {
   if (!measurable()) return;
   try {
-    const { event_id: suppliedEventId, ...eventParams } = params;
+    const { event_id: suppliedEventId, ...rest } = params;
+    // Stamped on every GA4 event so this build's invented orders can be
+    // segmented out of the property the real site also reports to.
+    const eventParams = DEMO ? { ...rest, demo_site: DEMO_SITE_TAG } : rest;
     const event_id = suppliedEventId ?? (event === 'add_to_cart' || event === 'begin_checkout' ? crypto.randomUUID() : undefined);
     window.gtag?.('event', event, eventParams);
     const metaNames: Record<string, string> = {
@@ -70,14 +93,19 @@ function send(event: string, params: Record<string, unknown> = {}): void {
       contact: 'Contact',
       select_promotion: 'ViewContent',
     };
-    const metaEvent = metaNames[event] ?? event;
-    const metaArgs: unknown[] = ['track', metaEvent, eventParams];
-    if (event_id) metaArgs.push({ eventID: event_id });
+    const { name: metaEvent, custom } = demoSafeEvent(metaNames[event] ?? event);
+    const metaParams = custom
+      ? // A custom event carries no value or currency: nothing here should be
+        // readable as revenue by anything downstream.
+        { demo_site: DEMO_SITE_TAG, demo_step: event }
+      : eventParams;
+    const metaArgs: unknown[] = [custom ? 'trackCustom' : 'track', metaEvent, metaParams];
+    if (event_id && !custom) metaArgs.push({ eventID: event_id });
     window.fbq?.(...metaArgs);
 
     // Meta's browser and server events share this ID for deduplication. The
     // Worker supplies IP/user-agent data and reads the CAPI token privately.
-    if (event_id && (event === 'add_to_cart' || event === 'begin_checkout')) {
+    if (!DEMO && event_id && (event === 'add_to_cart' || event === 'begin_checkout')) {
       const items = Array.isArray(eventParams.items) ? eventParams.items : [];
       void api('/api/meta/events', {
         method: 'POST',

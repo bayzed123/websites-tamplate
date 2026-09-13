@@ -74,7 +74,13 @@ const titleize = (value) => value.replace(/[-_]+/g, ' ').replace(/\b\w/g, (lette
 const htmlEscape = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 async function findEntry(dir) {
-  const preferred = ['index.html', 'web/index.html', 'dist/index.html', 'build/index.html', 'admin/index.html'];
+  /* Build output first. A bundler project keeps an index.html at its source
+     root that is a template, not a page — publishing it gives a blank screen
+     with a <script src="/src/main.tsx"> nothing can load. */
+  const preferred = [
+    'dist/index.html', 'build/index.html', 'web/dist/index.html', 'web/build/index.html',
+    'index.html', 'web/index.html', 'admin/index.html',
+  ];
   for (const candidate of preferred) if (exists(join(dir, candidate))) return candidate;
   const queue = [''];
   while (queue.length) {
@@ -126,6 +132,23 @@ async function readMeta(slug, dir, entryFile) {
   };
 }
 
+/**
+ * Where a demo's publishable files start.
+ *
+ * For a plain HTML demo that is the folder itself. For a bundler project it is
+ * the build output, and only the build output: copying the whole folder
+ * publishes src/ — the project's TypeScript, its component tree and its
+ * comments — to anyone who can open the showcase, alongside a source
+ * index.html that renders a blank page and still earns a card in the page
+ * switcher.
+ */
+function publishRoot(sourceDir, entryFile) {
+  const built = entryFile.match(/^(.*\/)?(dist|build)\/(.+)$/);
+  if (!built) return { sourceDir, entryFile };
+  const [, prefix = '', outDir, file] = built;
+  return { sourceDir: join(sourceDir, prefix, outDir), entryFile: file };
+}
+
 async function discoverDemos() {
   const demos = [];
   for (const entry of await readdir(root, { withFileTypes: true })) {
@@ -136,7 +159,8 @@ async function discoverDemos() {
       console.log(`  – ${entry.name}: no index.html yet, skipping (a client never sees a broken card)`);
       continue;
     }
-    demos.push({ ...(await readMeta(entry.name, sourceDir, entryFile)), sourceDir });
+    const meta = await readMeta(entry.name, sourceDir, entryFile);
+    demos.push({ ...meta, ...publishRoot(sourceDir, meta.entryFile) });
   }
   // Featured first, then alphabetical — the landing page leads with the deepest build.
   return demos.sort((a, b) => Number(b.featured) - Number(a.featured) || a.title.localeCompare(b.title));

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 560" width="1600" height="560" role="img" aria-label="SmartGadget — wholesale gadgets, factory direct">
+  <defs>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A101E"/>
+      <stop offset="0.55" stop-color="#1E2A52"/>
+      <stop offset="1" stop-color="#4C1D95"/>
+    </linearGradient>
+    <linearGradient id="w" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#C084FC"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="560" fill="url(#b)"/>
+  <circle cx="1330" cy="150" r="230" fill="#8B5CF6" opacity="0.18"/>
+  <circle cx="1180" cy="440" r="170" fill="#3B82F6" opacity="0.16"/>
+  <g font-family="system-ui,-apple-system,Segoe UI,sans-serif">
+    <text x="110" y="210" font-size="34" letter-spacing="7" fill="#93C5FD">WHOLESALE · FACTORY DIRECT</text>
+    <text x="110" y="310" font-size="86" font-weight="800" fill="#fff">SMART<tspan fill="url(#w)">GADGET</tspan></text>
+    <text x="112" y="376" font-size="34" fill="#CBD5E1">Phones, audio, wearables and power — priced by the carton.</text>
+    <text x="112" y="432" font-size="28" fill="#94A3B8">Ships in 48 hours · Cash on delivery · 7-day returns</text>
+  </g>
+</svg>

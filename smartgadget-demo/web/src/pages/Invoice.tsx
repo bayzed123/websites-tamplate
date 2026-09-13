@@ -122,7 +122,7 @@ export function Invoice() {
               a document someone may present for a warranty claim or an expense
               return, so it states who the shop legally is.
             */}
-            <h1>{settings?.legal_name || settings?.store_name || 'ARIF GADGET STORE'}</h1>
+            <h1>{settings?.legal_name || settings?.store_name || 'SMARTGADGET'}</h1>
             {settings?.store_address && <p className="small">{settings.store_address}</p>}
             <p className="small">
               {settings?.support_phone}

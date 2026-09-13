@@ -1,5 +1,5 @@
 /* ============================================================
-   Arif Gadgets — design tokens
+   SmartGadget — design tokens
    Light is the storefront default; dark follows the OS unless the
    viewer flips the toggle, which stamps data-theme on <html>.
    ============================================================ */
@@ -2319,4 +2319,63 @@ table.data td.num, table.data th.num { text-align: right; font-variant-numeric: 
 
 @media (max-width: 720px) {
   .delivery-card { max-width: none; width: 100%; }
+}
+/* ── Demonstration strip ──────────────────────────────────────────────────
+   Sits above the header on every customer-facing screen. Dark against the
+   shop's light chrome so it reads as an annotation on the site rather than
+   part of it — a prospect should never mistake it for a promotional banner.
+   ───────────────────────────────────────────────────────────────────────── */
+.demo-bar {
+  background: linear-gradient(100deg, #0A101E 0%, #2A1B4D 100%);
+  color: #E8EDF7;
+  border-bottom: 1px solid rgba(255, 215, 94, 0.3);
+}
+
+.demo-bar .wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-block: 9px;
+  flex-wrap: wrap;
+}
+
+.demo-bar p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #C3CCDE;
+  /* Takes the leftover width so the tag and the link keep their own size and
+     the sentence is what wraps. */
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.demo-bar-tag {
+  flex: none;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background: linear-gradient(100deg, #FF7A18, #FFD75E);
+  color: #1A1206;
+}
+
+.demo-bar-cta {
+  flex: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #FFD75E;
+  text-decoration: none;
+  border: 1px solid rgba(255, 215, 94, 0.45);
+  border-radius: 8px;
+  /* 24px minimum target, met by padding rather than a height that would
+     clip the label when it wraps on a narrow screen. */
+  padding: 7px 12px;
+}
+
+.demo-bar-cta:hover,
+.demo-bar-cta:focus-visible {
+  background: rgba(255, 215, 94, 0.12);
+  text-decoration: underline;
 }

@@ -9,5 +9,9 @@
 .env.*
 !.env.example
 
+# Built by the deploy workflow before the hub runs, never committed — a
+# checked-in bundle drifts from the source it was built from.
+/smartgadget-demo/web/dist/
+
 # Dependencies
 node_modules/

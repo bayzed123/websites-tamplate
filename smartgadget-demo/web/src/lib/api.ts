@@ -1,7 +1,32 @@
-/** Base URL of the Worker API. Injected at build time by the deploy workflow. */
-export const API_BASE = (
-  import.meta.env.VITE_API_BASE ?? 'http://127.0.0.1:8787'
-).replace(/\/$/, '');
+import { DemoHttpError, handle } from './demo/server';
+
+/**
+ * Demonstration mode — every request is answered in the browser by
+ * `./demo/server` and nothing leaves the tab.
+ *
+ * On by default in this repository, because this repository IS the demo. Set
+ * VITE_DEMO=false at build time to point the same UI at a real Worker.
+ *
+ * This is what makes the passwordless admin safe: with no server to reach,
+ * "logging in" grants access to a dataset that already shipped inside the
+ * page. There is no customer record, no API key and no order behind it.
+ */
+export const DEMO = import.meta.env.VITE_DEMO !== 'false';
+
+/**
+ * Base URL of the Worker API, injected at build time by the deploy workflow.
+ *
+ * No fallback address, on purpose. This repository is the demo: an API host
+ * baked into its source is a real endpoint shipped to strangers, one edit away
+ * from pointing a password-free admin dashboard at a live database. Empty
+ * means requests are same-origin, which is right behind a proxy and harmless
+ * here, where nothing reaches the network at all.
+ *
+ * Running the UI against a local Worker (VITE_DEMO=false) means setting
+ * VITE_API_BASE yourself — an unset value should fail visibly rather than
+ * quietly aim at a port that may belong to something else.
+ */
+export const API_BASE = (import.meta.env.VITE_API_BASE ?? '').replace(/\/$/, '');
 
 const TOKEN_KEY = 'ag.admin.token';
 
@@ -54,6 +79,16 @@ function customerToken(): string | null {
 
 export async function api<T = unknown>(path: string, options: RequestOptions = {}): Promise<T> {
   const { method = 'GET', body, auth = false, customerAuth = false, signal } = options;
+
+  if (DEMO) {
+    try {
+      return (await handle(method, path, body as Record<string, unknown> | undefined)) as T;
+    } catch (err) {
+      if (err instanceof DemoHttpError) throw new ApiError(err.message, err.status);
+      throw new ApiError(err instanceof Error ? err.message : 'Request failed', 500);
+    }
+  }
+
   const headers: Record<string, string> = {};
 
   if (body !== undefined) headers['Content-Type'] = 'application/json';
@@ -123,6 +158,24 @@ export interface UploadedImage {
  */
 export async function uploadImages(files: File[]): Promise<UploadedImage[]> {
   if (!files.length) return [];
+
+  if (DEMO) {
+    // Read the picked file into a data URI. The admin's image controls then
+    // behave exactly as they do in production — pick, see it, save it — while
+    // the bytes never leave the browser, which is the only honest way to offer
+    // an upload button on a site with no storage behind it.
+    return Promise.all(
+      files.map(
+        (file) =>
+          new Promise<UploadedImage>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve({ url: String(reader.result), key: `demo/${file.name}` });
+            reader.onerror = () => reject(new ApiError('Could not read that file', 0));
+            reader.readAsDataURL(file);
+          }),
+      ),
+    );
+  }
 
   const form = new FormData();
   for (const file of files) form.append('file', file);
