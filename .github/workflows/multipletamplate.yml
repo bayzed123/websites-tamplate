@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  # Every red deploy so far was discovered on main, after the fact, because
+  # nothing ran these checks before a merge. Pull requests build and run the
+  # full check suite; only the deploy job is skipped for them.
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -12,7 +18,9 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
+  # A pull request check must never cancel a deploy that is mid-flight, so PRs
+  # get their own group, one per branch.
+  group: ${{ github.event_name == 'pull_request' && format('demo-hub-pr-{0}', github.head_ref) || 'github-pages' }}
   cancel-in-progress: true
 
 jobs:
@@ -99,9 +107,11 @@ jobs:
           NODE
 
       - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
@@ -109,6 +119,8 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     needs: build
+    # A pull request proves the build; it does not publish it.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
