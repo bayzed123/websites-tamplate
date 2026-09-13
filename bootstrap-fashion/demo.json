@@ -1,21 +1,31 @@
 {
   "title": "Bootstrap Fashion",
-  "tagline": "A ten-page fashion storefront, Bootstrap 5",
-  "description": "A responsive fashion retail front end: homepage, category listing with live filters, product page with gallery and reviews, cart, a three-step checkout, and the account screens. Built on Bootstrap 5, so it restyles quickly to a brand and integrates with any commerce backend. Front end only — nothing here is wired to a shop.",
+  "tagline": "A ten-page fashion storefront, ready to brand",
+  "description": "A complete fashion retail front end: homepage, category listing with live filters and a price slider, product page with gallery and reviews, cart, and a three-step checkout with shipping and payment. Built on Bootstrap 5, so your colours, type and logo go in without rewriting anything. Front end only \u2014 it drops onto whatever commerce backend you already use, or we wire one up.",
   "category": "E-commerce",
   "featured": false,
-  "tags": ["Storefront", "Bootstrap 5", "Responsive", "Front end only"],
+  "tags": [
+    "Storefront",
+    "Bootstrap 5",
+    "Responsive",
+    "Checkout flow",
+    "From $100"
+  ],
   "highlights": [
-    "Ten pages, including the full checkout flow",
-    "Category filters, price slider and product gallery already built",
-    "Bootstrap 5 under it, so brand colours and type are a variables change",
-    "Static pages — drop them onto any commerce backend"
+    "Ten finished pages, including the whole checkout flow",
+    "Category filters, price slider, product gallery and reviews already built",
+    "Every form validates: required fields marked, 197 countries in the address picker",
+    "Mobile-first \u2014 checked at phone width on every page, no sideways scroll",
+    "Your brand in a variables file: colours, fonts and logo, no rewrite",
+    "Static pages \u2014 fast to host anywhere, nothing to keep patched"
   ],
   "entry": "dist/index.html",
   "credit": {
     "name": "Pixel Rocket",
     "url": "https://www.pixelrocket.store",
     "licence": "MIT",
-    "note": "A third-party template, shown as a starting point we customise — not as our own build."
-  }
+    "note": "A third-party template, shown as a starting point we customise \u2014 not as our own build."
+  },
+  "price": "From $100",
+  "priceNote": "setup included \u00b7 your branding, products and copy"
 }
