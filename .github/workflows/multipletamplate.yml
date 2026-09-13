@@ -51,6 +51,9 @@ jobs:
       - name: Check every demo on desktop and mobile
         run: node tests/live-preview.mjs site
 
+      - name: Check the hub measures nobody without permission
+        run: node tests/hub-tracking.mjs site
+
       - name: Upload preview screenshots
         if: always()
         uses: actions/upload-artifact@v4

@@ -26,6 +26,8 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 
+import { bodySnippet, headSnippet, preconnects } from './hub-tracking.mjs';
+
 const root = resolve(new URL('..', import.meta.url).pathname);
 const outputDir = resolve(process.argv[2] || join(root, 'site'));
 
@@ -35,6 +37,10 @@ const SITE = {
   owner: 'Sayad Md Bayezid Hosan',
   portfolio: 'https://sayadbayezid.com',
   contact: 'https://sayadbayezid.com/contact.html',
+  /* Linked from the consent banner and the footer. A banner that asks for
+     permission without saying what is collected is asking for a click, not
+     for consent. */
+  privacy: 'https://sayadbayezid.com/privacy-policy.html',
   whatsapp: 'https://wa.me/message/TDYG575YENF6F1',
   email: 'Support@sayadbayezid.com',
   repo: 'https://github.com/bayzed123/websites-tamplate',
@@ -398,22 +404,21 @@ p{margin:0;line-height:1.65;color:var(--soft)}
 const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">`;
 
 /**
- * Meta Pixel + Conversions API for every page of the hub.
+ * The hub's own measurement, defined in scripts/hub-tracking.mjs.
  *
- * The hub is the middle of an ad funnel: someone clicks an ad, lands on the
- * offer page, comes here to look at a real build, and orders (or does not).
- * Without this, that middle is invisible — and the people who browsed the
- * demos and left are the warmest retargeting audience the funnel produces.
- *
- * It loads from sayadbayezid.com deliberately, rather than being copied here.
- * One file defines how an event is reported; two copies drift, and a drifted
- * copy means events that do not deduplicate against each other.
+ * These pages used to load the AD LANDING PAGE's script
+ * (sayadbayezid.com/ads/assets/ads-track.js). That made every hub visit look
+ * like campaign-page activity: one container, one set of tags, no way to tell
+ * a person browsing demos from a person who clicked an ad. The hub is the
+ * middle of the funnel, not the campaign, and it needs to be readable on its
+ * own — so it now has its own container, its own script, and a permission
+ * banner of its own.
  *
  * It goes on the hub's own pages only. The demos themselves ship
  * byte-for-byte with nothing injected — that is the whole reason the wrapper
  * exists, and a tracking script is not a good enough reason to break it.
  */
-const TRACKING = `<link rel="preconnect" href="https://sayadbayezid.com"><link rel="preconnect" href="https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev" crossorigin><script src="https://sayadbayezid.com/ads/assets/ads-track.js" defer></script>`;
+const TRACKING = `${preconnects()}${headSnippet()}`;
 
 const FAVICON = `<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A0F0D'/%3E%3Ccircle cx='50' cy='50' r='17' fill='%2300D084'/%3E%3C/svg%3E">`;
 
@@ -442,6 +447,7 @@ function footer() {
       <a href="${SITE.portfolio}/projects.html" target="_blank" rel="noopener">All projects</a>
       <a href="${SITE.repo}" target="_blank" rel="noopener">This repository</a>
       <a href="mailto:${SITE.email}">${SITE.email}</a>
+      <a href="${SITE.privacy}" target="_blank" rel="noopener">Privacy &amp; cookies</a>
     </div>
   </div>
   <div class="legal"><span>© <span id="yr"></span> ${SITE.owner}</span><span class="mono">Demos are fictional data. Nothing here is a live production system.</span></div>
@@ -557,7 +563,7 @@ function renderHome(demos) {
 ${FONTS}${FAVICON}${TRACKING}
 <style>${STYLES}</style>
 <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
-</head><body>
+</head><body>${bodySnippet()}
 <a class="skip" href="#demos">Skip to demos</a>
 ${header('demos')}
 <main>
@@ -681,7 +687,7 @@ html,body{height:100%;overflow:hidden}
 .stage.phone iframe{width:390px;max-width:100%;height:100%;max-height:844px;border-radius:26px;
   border:9px solid #1b241f;box-shadow:0 26px 70px rgba(0,0,0,.6)}
 @media (max-width:760px){.vb-name,.vb-creds{display:none}.vbar{gap:9px;padding:0 10px}.vbar select{max-width:130px}}
-</style></head><body>
+</style></head><body>${bodySnippet()}
 <div class="viewer">
   <div class="vbar">
     <a class="vb-back" href="/">← <span>All demos</span></a>
@@ -747,7 +753,7 @@ ${FONTS}${FAVICON}${TRACKING}
 <style>${STYLES}
 .nf{min-height:70vh;display:grid;place-items:center;text-align:center;padding:40px 20px}
 .nf h1{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:16px}
-</style></head><body>
+</style></head><body>${bodySnippet()}
 ${header('')}
 <main class="nf"><div>
   <p class="eyebrow">404</p>
