@@ -50,9 +50,22 @@ const Footer = () => {
           <FaSquareYoutube className="text-6xl max-sm:text-4xl text-accent-content" />
         </div>
       </nav>
-      <aside>
+      <aside className="flex flex-col items-center gap-2">
         <p className="text-2xl max-sm:text-sm text-accent-content">
-          Copyright © 2023 - All right reserved by Sidra Clothing & Shoes
+          Copyright © 2026 - All right reserved by Sidra Clothing &amp; Shoes
+        </p>
+        {/* The only way into the admin from the shop. Without a link here the
+            dashboard exists and nobody finds it, which is how the Sidra Noor
+            admin stayed invisible until someone went looking for it. */}
+        <p className="text-sm text-accent-content">
+          <Link
+            to="/admin"
+            className="link font-bold"
+            onClick={() => window.scrollTo(0, 0)}
+          >
+            Open the admin dashboard
+          </Link>
+          <span className="opacity-70"> — no password</span>
         </p>
       </aside>
     </footer>

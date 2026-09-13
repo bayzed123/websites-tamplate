@@ -90,6 +90,9 @@ jobs:
       - name: Check the Sidra Clothing demo works with no server
         run: node tests/sidra-clothing.mjs sidra-clothing/dist
 
+      - name: Check the Sidra Clothing admin agrees with the shop
+        run: node tests/sidra-clothing-admin.mjs sidra-clothing/dist
+
       - name: Check the Sidra Noor shop and admin both work
         run: node tests/sidra-noor-fashion.mjs sidra-noor-fashion/client/dist
 
