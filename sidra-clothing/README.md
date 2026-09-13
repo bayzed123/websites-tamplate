@@ -1,10 +1,10 @@
-# sidra-clothing & Shoes
+# Sidra Clothing & Shoes
 
-Welcome to Sida Clothing & Shoes, the ultimate destination for fashion enthusiasts seeking a sophisticated online shopping experience. This is the project I have made completely alone with my current React.js skills. I created this project for my college exam and also because I wanted to test my current web development skills. Kuzma Clothing & Shoes is an innovative e-commerce platform offering a diverse range of clothing and footwear. With a catalog of over a hundred products, my online shop is designed to cater to the varied tastes and preferences of our customers. The website is equipped with user-friendly features to ensure a seamless shopping experience. This repository is home to a comprehensive React.js eCommerce project, showcasing a refined and responsive shopping platform 
+Welcome to Sidra Clothing & Shoes, the ultimate destination for fashion enthusiasts seeking a sophisticated online shopping experience. This is the project I have made completely alone with my current React.js skills. I created this project for my college exam and also because I wanted to test my current web development skills. Sidra Clothing & Shoes is an innovative e-commerce platform offering a diverse range of clothing and footwear. With a catalog of over a hundred products, my online shop is designed to cater to the varied tastes and preferences of our customers. The website is equipped with user-friendly features to ensure a seamless shopping experience. This repository is home to a comprehensive React.js eCommerce project, showcasing a refined and responsive shopping platform 
 tailored for the trendy and style-savvy.
 
 # Introduction
-sidra Clothing & Shoes is a fashion eCommerce website design that's built with the modern consumer in mind. Leveraging the power of React.js, I've created an engaging and intuitive platform that stands out in the digital marketplace. My project demonstrates how eCommerce and fashion can merge seamlessly in a digital ecosystem, providing an exceptional user experience from homepage to checkout.
+Sidra Clothing & Shoes is a fashion eCommerce website design that's built with the modern consumer in mind. Leveraging the power of React.js, I've created an engaging and intuitive platform that stands out in the digital marketplace. My project demonstrates how eCommerce and fashion can merge seamlessly in a digital ecosystem, providing an exceptional user experience from homepage to checkout.
 
 # Project Features
 - React Ecommerce Frontend: A modern and clean interface that highlights our product catalog with elegance and style.
@@ -51,7 +51,60 @@ Front-End: HTML5, CSS3, JavaScript (with React.js framework)
 Mobile-First Approach: The website is designed to be fully responsive and mobile-friendly, ensuring a consistent experience across all devices.
 
 # Conclusion
-sidra Clothing & Shoes is dedicated to providing an exceptional online shopping experience. With our comprehensive range of products and user-centric features, we aim to be the go-to destination for fashion enthusiasts seeking convenience, variety, and style.
+Sidra Clothing & Shoes is dedicated to providing an exceptional online shopping experience. With our comprehensive range of products and user-centric features, we aim to be the go-to destination for fashion enthusiasts seeking convenience, variety, and style.
 
 Project screenshots:
 
+
+---
+
+# Demo mode (how this runs on the demo hub)
+
+The README above is the original template's own instructions: it expects you to
+start `json-server` on port 8080 in a second terminal. That works locally, and
+it is still how you should develop against the template.
+
+It cannot work on the demo hub, which is static hosting — there is no second
+terminal and no port 8080. So the build carries a small demo layer that answers
+the API *inside the page*:
+
+| File | What it does |
+| --- | --- |
+| `src/demo/server.js` | An in-memory json-server. Loads `src/data/db.json`, and answers the query language the pages actually use: equality filters, `_lte`/`_gte`, `q`, `_sort`/`_order`, `_page`/`_limit`, and the `x-total-count` header. Writes mutate the in-memory copy, so cart, orders and account changes stick until reload. |
+| `src/demo/install.js` | Installs it. This exists as its own module on purpose — see the note below. |
+| `src/demo/imageFallback.js` | Swaps a local SVG placeholder in when a product photo fails to load. |
+
+**Why `install.js` is a separate file.** Every `import` in a module is evaluated
+before that module's first statement runs. `src/App.jsx` builds the router at
+module scope, and the router's loaders fire immediately. So calling
+`installDemoServer()` as a *statement* in `main.jsx` was too late — the landing
+loader had already escaped to `http://localhost:8080` and failed. Making it an
+imported side-effect module, listed first in `main.jsx`, is what guarantees the
+interception is in place before any loader runs.
+
+Two other changes the static host needed:
+
+- `src/App.jsx` uses `createHashRouter`, not `createBrowserRouter`. At a nested
+  static path with no server rewrites, a history-mode router renders its own
+  "404 Not Found" instead of the app.
+- `vite.config.js` sets `base: "./"`, so the bundle resolves from wherever it is
+  published rather than from the domain root.
+
+To run the template the original way, ignore all of the above and follow the
+setup steps further up — the demo layer only intercepts requests that would have
+gone to `localhost:8080`, so a real json-server on that port is never reached
+in a demo build, and the layer is the only thing you need to remove to restore
+normal behaviour.
+
+# Credits
+
+The storefront in this folder is a third-party React template that was uploaded
+into this repository; its README (above) is the original author's, written in
+their voice. Renaming it to **Sidra Clothing & Shoes**, the demo layer described
+above, the hash routing, the image fallback and the local review avatars are the
+changes made here. If you ship this to a client, check the original template's
+own licence terms first — no licence file came with the upload.
+
+The product photography is **not** licensed for this repository: it is hotlinked
+from a live retailer's CDN and shows real third-party brands. Replace it before
+this goes anywhere near a paying client.

@@ -19,7 +19,7 @@
       "reviews": [
         {
           "username": "Darron Miloscia",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "United Kingdom",
           "rating": 5,
           "date": "March 3, 2017",
@@ -28,7 +28,7 @@
         },
         {
           "username": "Andres Papp",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Portugal",
           "rating": 4,
           "date": "March 3, 2020",
@@ -37,7 +37,7 @@
         },
         {
           "username": "Twana Davinroy",
-          "userImage": "/src/assets/user profile photo 3 f.jpg",
+          "userImage": "avatars/user profile photo 3 f.jpg",
           "location": "Germany",
           "rating": 3,
           "date": "March 3, 2023",
@@ -84,7 +84,7 @@
       "reviews": [
         {
           "username": "Gabriele Krein",
-          "userImage": "/src/assets/user profile photo 1 f.jpg",
+          "userImage": "avatars/user profile photo 1 f.jpg",
           "location": "France",
           "rating": 5,
           "date": "March 3, 2023",
@@ -93,7 +93,7 @@
         },
         {
           "username": "Ashlie Amon",
-          "userImage": "/src/assets/user profile photo 2 f.jpg",
+          "userImage": "avatars/user profile photo 2 f.jpg",
           "location": "France",
           "rating": 4,
           "date": "March 3, 2021",
@@ -102,7 +102,7 @@
         },
         {
           "username": "Rosenda Kukucka",
-          "userImage": "/src/assets/user profile photo 6 f.jpg",
+          "userImage": "avatars/user profile photo 6 f.jpg",
           "location": "Greece",
           "rating": 4,
           "date": "March 3, 2021",
@@ -149,7 +149,7 @@
       "reviews": [
         {
           "username": "Bennett Bushley",
-          "userImage": "/src/assets/user profile photo 10.jpg",
+          "userImage": "avatars/user profile photo 10.jpg",
           "location": "India",
           "rating": 5,
           "date": "March 3, 2023",
@@ -158,7 +158,7 @@
         },
         {
           "username": "Bennett Bushley",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "China",
           "rating": 5,
           "date": "March 3, 2023",
@@ -166,8 +166,8 @@
           "reviewText": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, vero distinctio maxime quidem aperiam ut expedita voluptate similique, officia, maiores a minus fugit explicabo dolor iure quisquam in voluptatibus ipsa facilis aliquid. Labore nulla quibusdam adipisci eligendi eum accusamus repellat!"
         },
         {
-          "username": "Milan Dragić",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "username": "Milan Dragi\u0107",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "Serbia",
           "rating": 1,
           "date": "March 3, 2023",
@@ -214,7 +214,7 @@
       "reviews": [
         {
           "username": "Darwin Jeffres",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Gibraltar",
           "rating": 1,
           "date": "January 3, 2023",
@@ -223,7 +223,7 @@
         },
         {
           "username": "Armando Robertus",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "England",
           "rating": 2,
           "date": "January 2, 2023",
@@ -232,7 +232,7 @@
         },
         {
           "username": "Art Colombo",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Senegal",
           "rating": 1,
           "date": "January 3, 2023",
@@ -278,7 +278,7 @@
       "reviews": [
         {
           "username": "Edwin Stegura",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "Pakistan",
           "rating": 1,
           "date": "January 3, 2023",
@@ -287,7 +287,7 @@
         },
         {
           "username": "Art Colombo",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Mexico",
           "rating": 3,
           "date": "January 1, 2023",
@@ -296,7 +296,7 @@
         },
         {
           "username": "Paris Boye",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "China",
           "rating": 1,
           "date": "January 3, 2023",
@@ -342,7 +342,7 @@
       "reviews": [
         {
           "username": "Paris Boye",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "China",
           "rating": 4,
           "date": "January 3, 2023",
@@ -351,7 +351,7 @@
         },
         {
           "username": "Ronald Haisten",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Denmark",
           "rating": 5,
           "date": "January 3, 2023",
@@ -360,7 +360,7 @@
         },
         {
           "username": "Tula Gunnip",
-          "userImage": "/src/assets/user profile photo 7 f.jpg",
+          "userImage": "avatars/user profile photo 7 f.jpg",
           "location": "Egipt",
           "rating": 5,
           "date": "January 3, 2023",
@@ -406,7 +406,7 @@
       "reviews": [
         {
           "username": "Tula Gunnip",
-          "userImage": "/src/assets/user profile photo 11.jpg",
+          "userImage": "avatars/user profile photo 11.jpg",
           "location": "Italy",
           "rating": 3,
           "date": "January 3, 2023",
@@ -415,7 +415,7 @@
         },
         {
           "username": "Alden Stropki",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Bosnia",
           "rating": 4,
           "date": "February 3, 2023",
@@ -424,7 +424,7 @@
         },
         {
           "username": "Trenton Schairer",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Germany",
           "rating": 5,
           "date": "December 31, 2023",
@@ -470,7 +470,7 @@
       "reviews": [
         {
           "username": "Trenton Schairer",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Germany",
           "rating": 5,
           "date": "December 31, 2023",
@@ -479,7 +479,7 @@
         },
         {
           "username": "John Markin",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "Greece",
           "rating": 4,
           "date": "January 31, 2023",
@@ -488,7 +488,7 @@
         },
         {
           "username": "Wilber Risola",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Switzerland",
           "rating": 5,
           "date": "December 31, 2023",
@@ -534,8 +534,8 @@
       "rating": 5,
       "reviews": [
         {
-          "username": "Luka Modrić",
-          "userImage": "/src/assets/user profile photo 9.jpg",
+          "username": "Luka Modri\u0107",
+          "userImage": "avatars/user profile photo 9.jpg",
           "location": "Croatia",
           "rating": 5,
           "date": "December 31, 2023",
@@ -544,7 +544,7 @@
         },
         {
           "username": "Leon Westphalen",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Japan",
           "rating": 4,
           "date": "Januarz 31, 2023",
@@ -553,7 +553,7 @@
         },
         {
           "username": "Berta Ruediger",
-          "userImage": "/src/assets/user profile photo 2 f.jpg",
+          "userImage": "avatars/user profile photo 2 f.jpg",
           "location": "England",
           "rating": 5,
           "date": "Januarz 31, 2023",
@@ -600,7 +600,7 @@
       "reviews": [
         {
           "username": "Hae Studer",
-          "userImage": "/src/assets/user profile photo 3 f.jpg",
+          "userImage": "avatars/user profile photo 3 f.jpg",
           "location": "England",
           "rating": 5,
           "date": "January 31, 2023",
@@ -609,7 +609,7 @@
         },
         {
           "username": "Earnest Monie",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "January 31, 2023",
@@ -618,7 +618,7 @@
         },
         {
           "username": "Hae Studer",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "England",
           "rating": 5,
           "date": "January 31, 2023",
@@ -665,7 +665,7 @@
       "reviews": [
         {
           "username": "Benedict Pojar",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "England",
           "rating": 3,
           "date": "January 31, 2023",
@@ -674,7 +674,7 @@
         },
         {
           "username": "Henry Buller",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "England",
           "rating": 5,
           "date": "January 31, 2023",
@@ -683,7 +683,7 @@
         },
         {
           "username": "Earnest Monie",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Egypt",
           "rating": 1,
           "date": "January 31, 2023",
@@ -730,7 +730,7 @@
       "reviews": [
         {
           "username": "Cristopher Sciano",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 4,
           "date": "February 31, 2023",
@@ -739,7 +739,7 @@
         },
         {
           "username": "Tommie Huesing",
-          "userImage": "/src/assets/user profile photo 9.jpg",
+          "userImage": "avatars/user profile photo 9.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "February 31, 2023",
@@ -748,7 +748,7 @@
         },
         {
           "username": "Bryant Garns",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "USA",
           "rating": 5,
           "date": "August 31, 2023",
@@ -795,7 +795,7 @@
       "reviews": [
         {
           "username": "Jerald Rosemond",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "USA",
           "rating": 5,
           "date": "September 31, 2023",
@@ -804,7 +804,7 @@
         },
         {
           "username": "Elwood Winstone",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Canada",
           "rating": 5,
           "date": "September 31, 2023",
@@ -813,7 +813,7 @@
         },
         {
           "username": "Claude Soots",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Denmark",
           "rating": 4,
           "date": "October 31, 2023",
@@ -860,7 +860,7 @@
       "reviews": [
         {
           "username": "Manuel Lefleur",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Denmark",
           "rating": 4,
           "date": "October 29, 2023",
@@ -869,7 +869,7 @@
         },
         {
           "username": "Lewis Breslin",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 5,
           "date": "October 29, 2023",
@@ -878,7 +878,7 @@
         },
         {
           "username": "Lewis Lefleur",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "USA",
           "rating": 5,
           "date": "November 29, 2022",
@@ -924,7 +924,7 @@
       "reviews": [
         {
           "username": "Lewis Lefleur",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "USA",
           "rating": 4,
           "date": "November 31, 2022",
@@ -933,7 +933,7 @@
         },
         {
           "username": "Geraldo Dellapina",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "USA",
           "rating": 5,
           "date": "December 31, 2022",
@@ -942,7 +942,7 @@
         },
         {
           "username": "Lewis Lefleur",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -988,7 +988,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -997,7 +997,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -1006,7 +1006,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -1052,7 +1052,7 @@
       "reviews": [
         {
           "username": "Nathaniel Luebrecht",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "Greece",
           "rating": 1,
           "date": "January 31, 2022",
@@ -1061,7 +1061,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Switzerland",
           "rating": 2,
           "date": "January 31, 2022",
@@ -1070,7 +1070,7 @@
         },
         {
           "username": "Val Nak",
-          "userImage": "/src/assets/user profile photo 9.jpg",
+          "userImage": "avatars/user profile photo 9.jpg",
           "location": "England",
           "rating": 3,
           "date": "January 31, 2022",
@@ -1116,7 +1116,7 @@
       "reviews": [
         {
           "username": "Korey Stevie",
-          "userImage": "/src/assets/user profile photo 10.jpg",
+          "userImage": "avatars/user profile photo 10.jpg",
           "location": "England",
           "rating": 2,
           "date": "January 31, 2022",
@@ -1125,7 +1125,7 @@
         },
         {
           "username": "Val Nak",
-          "userImage": "/src/assets/user profile photo 9.jpg",
+          "userImage": "avatars/user profile photo 9.jpg",
           "location": "Belgium",
           "rating": 3,
           "date": "Februrary 31, 2022",
@@ -1134,7 +1134,7 @@
         },
         {
           "username": "Omar Wolfendale",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Romania",
           "rating": 1,
           "date": "January 31, 2022",
@@ -1180,7 +1180,7 @@
       "reviews": [
         {
           "username": "Forrest Grazian",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Senegal",
           "rating": 1,
           "date": "January 31, 2022",
@@ -1189,7 +1189,7 @@
         },
         {
           "username": "Nathanial Vensel",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Portugal",
           "rating": 1,
           "date": "January 31, 2022",
@@ -1198,7 +1198,7 @@
         },
         {
           "username": "Sammy Canet",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Denmark",
           "rating": 2,
           "date": "February 21, 2022",
@@ -1244,7 +1244,7 @@
       "reviews": [
         {
           "username": "Sammy Canet",
-          "userImage": "/src/assets/user profile photo 9.jpg",
+          "userImage": "avatars/user profile photo 9.jpg",
           "location": "Denmark",
           "rating": 4,
           "date": "February 21, 2022",
@@ -1253,7 +1253,7 @@
         },
         {
           "username": "Avery Servedio",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Germany",
           "rating": 5,
           "date": "February 21, 2022",
@@ -1262,7 +1262,7 @@
         },
         {
           "username": "Dick Buffman",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "February 21, 2022",
@@ -1308,7 +1308,7 @@
       "reviews": [
         {
           "username": "Dick Buffman",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "February 21, 2022",
@@ -1317,7 +1317,7 @@
         },
         {
           "username": "Shayne Tagoe",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "February 21, 2022",
@@ -1326,7 +1326,7 @@
         },
         {
           "username": "Lucius Popple",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 2,
           "date": "February 21, 2022",
@@ -1372,7 +1372,7 @@
       "reviews": [
         {
           "username": "Lucius Popple",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "February 21, 2022",
@@ -1381,7 +1381,7 @@
         },
         {
           "username": "Cyrus Kosiak",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "England",
           "rating": 4,
           "date": "February 21, 2022",
@@ -1390,7 +1390,7 @@
         },
         {
           "username": "Whitney Freely",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Denmark",
           "rating": 5,
           "date": "February 21, 2022",
@@ -1436,7 +1436,7 @@
       "reviews": [
         {
           "username": "Alphonso Arnon",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "Denmark",
           "rating": 5,
           "date": "February 21, 2022",
@@ -1445,7 +1445,7 @@
         },
         {
           "username": "Jonathon Melker",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Denmark",
           "rating": 4,
           "date": "February 21, 2022",
@@ -1454,7 +1454,7 @@
         },
         {
           "username": "Ollie Keat",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Brazil",
           "rating": 5,
           "date": "February 21, 2022",
@@ -1500,7 +1500,7 @@
       "reviews": [
         {
           "username": "Ollie Keat",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Brazil",
           "rating": 1,
           "date": "February 21, 2022",
@@ -1509,7 +1509,7 @@
         },
         {
           "username": "Clint Hirn",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Brazil",
           "rating": 1,
           "date": "February 21, 2022",
@@ -1518,7 +1518,7 @@
         },
         {
           "username": "Nicholas Koehling",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Senegal",
           "rating": 3,
           "date": "February 21, 2022",
@@ -1564,7 +1564,7 @@
       "reviews": [
         {
           "username": "Brain Gilk",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "Senegal",
           "rating": 3,
           "date": "February 21, 2022",
@@ -1573,7 +1573,7 @@
         },
         {
           "username": "Alexis Bustin",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Brazil",
           "rating": 4,
           "date": "February 21, 2022",
@@ -1582,7 +1582,7 @@
         },
         {
           "username": "Leonel Frassrand",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Hungray",
           "rating": 3,
           "date": "August 21, 2022",
@@ -1628,7 +1628,7 @@
       "reviews": [
         {
           "username": "Leonel Frassrand",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Hungray",
           "rating": 5,
           "date": "August 21, 2023",
@@ -1637,7 +1637,7 @@
         },
         {
           "username": "Leonel Frassrand",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "September 21, 2023",
@@ -1646,7 +1646,7 @@
         },
         {
           "username": "Leonel Frassrand",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Denmark",
           "rating": 4,
           "date": "August 21, 2022",
@@ -1692,7 +1692,7 @@
       "reviews": [
         {
           "username": "Jarrett Cortney",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Denmark",
           "rating": 4,
           "date": "August 21, 2022",
@@ -1701,7 +1701,7 @@
         },
         {
           "username": "Dylan Wengenroth",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Japan",
           "rating": 5,
           "date": "August 21, 2022",
@@ -1710,7 +1710,7 @@
         },
         {
           "username": "Brain Gilk",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Denmark",
           "rating": 5,
           "date": "August 21, 2022",
@@ -1756,7 +1756,7 @@
       "reviews": [
         {
           "username": "Brain Gilk",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Denmark",
           "rating": 5,
           "date": "August 21, 2022",
@@ -1765,7 +1765,7 @@
         },
         {
           "username": "Nicholas Koehling",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Switzerland",
           "rating": 4,
           "date": "August 21, 2022",
@@ -1774,7 +1774,7 @@
         },
         {
           "username": "Alexis Bustin",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -1820,7 +1820,7 @@
       "reviews": [
         {
           "username": "Dwayne Paulose",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Holand",
           "rating": 4,
           "date": "August 21, 2022",
@@ -1829,7 +1829,7 @@
         },
         {
           "username": "Alexis Bustin",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -1838,7 +1838,7 @@
         },
         {
           "username": "Isiah Pollin",
-          "userImage": "/src/assets/user profile photo 10.jpg",
+          "userImage": "avatars/user profile photo 10.jpg",
           "location": "Greece",
           "rating": 4,
           "date": "August 21, 2022",
@@ -1884,7 +1884,7 @@
       "reviews": [
         {
           "username": "Wesley Rothan",
-          "userImage": "/src/assets/user profile photo 11 f.jpg",
+          "userImage": "avatars/user profile photo 11 f.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "August 21, 2022",
@@ -1893,7 +1893,7 @@
         },
         {
           "username": "Eliseo Lerg",
-          "userImage": "/src/assets/user profile photo 11.jpg",
+          "userImage": "avatars/user profile photo 11.jpg",
           "location": "Senegal",
           "rating": 4,
           "date": "August 21, 2022",
@@ -1902,7 +1902,7 @@
         },
         {
           "username": "Isiah Pollin",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Nepal",
           "rating": 4,
           "date": "August 21, 2022",
@@ -1948,7 +1948,7 @@
       "reviews": [
         {
           "username": "Arnoldo Brumett",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Senegal",
           "rating": 4,
           "date": "August 21, 2022",
@@ -1957,7 +1957,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "England",
           "rating": 5,
           "date": "August 21, 2022",
@@ -1966,7 +1966,7 @@
         },
         {
           "username": "Arnoldo Brumett",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "Ireland",
           "rating": 4,
           "date": "August 21, 2022",
@@ -2012,7 +2012,7 @@
       "reviews": [
         {
           "username": "Arnoldo Brumett",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Denmark",
           "rating": 5,
           "date": "August 21, 2022",
@@ -2021,7 +2021,7 @@
         },
         {
           "username": "Ernesto Pollis",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Italy",
           "rating": 4,
           "date": "August 21, 2022",
@@ -2030,7 +2030,7 @@
         },
         {
           "username": "Quinn Kokoska",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "Holand",
           "rating": 4,
           "date": "August 21, 2022",
@@ -2076,7 +2076,7 @@
       "reviews": [
         {
           "username": "Quinn Kokoska",
-          "userImage": "/src/assets/user profile photo 1.jpg",
+          "userImage": "avatars/user profile photo 1.jpg",
           "location": "USA",
           "rating": 4,
           "date": "August 21, 2022",
@@ -2085,7 +2085,7 @@
         },
         {
           "username": "Carmen Maidens",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "England",
           "rating": 5,
           "date": "August 21, 2023",
@@ -2094,7 +2094,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -2140,7 +2140,7 @@
       "reviews": [
         {
           "username": "Mose Pryde",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -2149,7 +2149,7 @@
         },
         {
           "username": "Deandre Fogelberg",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Senegal",
           "rating": 4,
           "date": "August 21, 2023",
@@ -2158,7 +2158,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -2204,7 +2204,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -2213,7 +2213,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -2222,7 +2222,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -2269,7 +2269,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -2278,7 +2278,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -2287,7 +2287,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -2333,7 +2333,7 @@
       "reviews": [
         {
           "username": "Yuriko Infantolino",
-          "userImage": "/src/assets/user profile photo 4 f.jpg",
+          "userImage": "avatars/user profile photo 4 f.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -2342,7 +2342,7 @@
         },
         {
           "username": "Amira Georgevich",
-          "userImage": "/src/assets/user profile photo 5 f.jpg",
+          "userImage": "avatars/user profile photo 5 f.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -2351,7 +2351,7 @@
         },
         {
           "username": "Chery Marinoff",
-          "userImage": "/src/assets/user profile photo 6 f.jpg",
+          "userImage": "avatars/user profile photo 6 f.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -2397,7 +2397,7 @@
       "reviews": [
         {
           "username": "Shae Laday",
-          "userImage": "/src/assets/user profile photo 8 f.jpg",
+          "userImage": "avatars/user profile photo 8 f.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -2406,7 +2406,7 @@
         },
         {
           "username": "Anjelica Eisenbarth",
-          "userImage": "/src/assets/user profile photo 7 f.jpg",
+          "userImage": "avatars/user profile photo 7 f.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -2415,7 +2415,7 @@
         },
         {
           "username": "Guadalupe Domina",
-          "userImage": "/src/assets/user profile photo 4 f.jpg",
+          "userImage": "avatars/user profile photo 4 f.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -2461,7 +2461,7 @@
       "reviews": [
         {
           "username": "Forrest Grazian",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Senegal",
           "rating": 1,
           "date": "January 31, 2022",
@@ -2470,7 +2470,7 @@
         },
         {
           "username": "Nathanial Vensel",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Portugal",
           "rating": 1,
           "date": "January 31, 2022",
@@ -2479,7 +2479,7 @@
         },
         {
           "username": "Sammy Canet",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Denmark",
           "rating": 2,
           "date": "February 21, 2022",
@@ -2525,7 +2525,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -2534,7 +2534,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -2543,7 +2543,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -2589,7 +2589,7 @@
       "reviews": [
         {
           "username": "Chery Marinoff",
-          "userImage": "/src/assets/user profile photo 4 f.jpg",
+          "userImage": "avatars/user profile photo 4 f.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -2598,7 +2598,7 @@
         },
         {
           "username": "Anjelica Eisenbarth",
-          "userImage": "/src/assets/user profile photo 5 f.jpg",
+          "userImage": "avatars/user profile photo 5 f.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -2607,7 +2607,7 @@
         },
         {
           "username": "Amira Georgevich",
-          "userImage": "/src/assets/user profile photo 6 f.jpg",
+          "userImage": "avatars/user profile photo 6 f.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -2653,7 +2653,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -2662,7 +2662,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -2671,7 +2671,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -2717,7 +2717,7 @@
       "reviews": [
         {
           "username": "Forrest Grazian",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Senegal",
           "rating": 1,
           "date": "January 31, 2022",
@@ -2726,7 +2726,7 @@
         },
         {
           "username": "Nathanial Vensel",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Portugal",
           "rating": 1,
           "date": "January 31, 2022",
@@ -2735,7 +2735,7 @@
         },
         {
           "username": "Sammy Canet",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Denmark",
           "rating": 2,
           "date": "February 21, 2022",
@@ -2779,7 +2779,7 @@
       "reviews": [
         {
           "username": "Korey Stevie",
-          "userImage": "/src/assets/user profile photo 10.jpg",
+          "userImage": "avatars/user profile photo 10.jpg",
           "location": "England",
           "rating": 2,
           "date": "January 31, 2022",
@@ -2788,7 +2788,7 @@
         },
         {
           "username": "Val Nak",
-          "userImage": "/src/assets/user profile photo 9.jpg",
+          "userImage": "avatars/user profile photo 9.jpg",
           "location": "Belgium",
           "rating": 3,
           "date": "Februrary 31, 2022",
@@ -2797,7 +2797,7 @@
         },
         {
           "username": "Omar Wolfendale",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Romania",
           "rating": 1,
           "date": "January 31, 2022",
@@ -2841,7 +2841,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -2850,7 +2850,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -2859,7 +2859,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -2903,7 +2903,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -2912,7 +2912,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -2921,7 +2921,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -2965,7 +2965,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -2974,7 +2974,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -2983,7 +2983,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -3027,7 +3027,7 @@
       "reviews": [
         {
           "username": "Antonetta Nesselrodt",
-          "userImage": "/src/assets/user profile photo 4 f.jpg",
+          "userImage": "avatars/user profile photo 4 f.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -3036,7 +3036,7 @@
         },
         {
           "username": "Shae Laday",
-          "userImage": "/src/assets/user profile photo 5 f.jpg",
+          "userImage": "avatars/user profile photo 5 f.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3045,7 +3045,7 @@
         },
         {
           "username": "Geralyn Ochwat",
-          "userImage": "/src/assets/user profile photo 6 f.jpg",
+          "userImage": "avatars/user profile photo 6 f.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -3090,7 +3090,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -3099,7 +3099,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -3108,7 +3108,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -3153,7 +3153,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -3162,7 +3162,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3171,7 +3171,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -3217,7 +3217,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -3226,7 +3226,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -3235,7 +3235,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -3279,7 +3279,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -3288,7 +3288,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3297,7 +3297,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -3341,7 +3341,7 @@
       "reviews": [
         {
           "username": "Etta Corner",
-          "userImage": "/src/assets/user profile photo 6 f.jpg",
+          "userImage": "avatars/user profile photo 6 f.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -3350,7 +3350,7 @@
         },
         {
           "username": "Jerri Liriano",
-          "userImage": "/src/assets/user profile photo 7 f.jpg",
+          "userImage": "avatars/user profile photo 7 f.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -3359,7 +3359,7 @@
         },
         {
           "username": "Marita Daya",
-          "userImage": "/src/assets/user profile photo 2 f.jpg",
+          "userImage": "avatars/user profile photo 2 f.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -3404,7 +3404,7 @@
       "reviews": [
         {
           "username": "Alline Smylie",
-          "userImage": "/src/assets/user profile photo 8 f.jpg",
+          "userImage": "avatars/user profile photo 8 f.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3413,7 +3413,7 @@
         },
         {
           "username": "Karie Timmermann",
-          "userImage": "/src/assets/user profile photo 7 f.jpg",
+          "userImage": "avatars/user profile photo 7 f.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -3422,7 +3422,7 @@
         },
         {
           "username": "Demetra Delappe",
-          "userImage": "/src/assets/user profile photo 4 f.jpg",
+          "userImage": "avatars/user profile photo 4 f.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -3466,7 +3466,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -3475,7 +3475,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -3484,7 +3484,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -3528,7 +3528,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -3537,7 +3537,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3546,7 +3546,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -3590,7 +3590,7 @@
       "reviews": [
         {
           "username": "Forrest Grazian",
-          "userImage": "/src/assets/user profile photo 3.jpg",
+          "userImage": "avatars/user profile photo 3.jpg",
           "location": "Senegal",
           "rating": 1,
           "date": "January 31, 2022",
@@ -3599,7 +3599,7 @@
         },
         {
           "username": "Nathanial Vensel",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Portugal",
           "rating": 1,
           "date": "January 31, 2022",
@@ -3608,7 +3608,7 @@
         },
         {
           "username": "Sammy Canet",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Denmark",
           "rating": 2,
           "date": "February 21, 2022",
@@ -3652,7 +3652,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -3661,7 +3661,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3670,7 +3670,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -3714,7 +3714,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -3723,7 +3723,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3732,7 +3732,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -3776,7 +3776,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -3785,7 +3785,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3794,7 +3794,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -3838,7 +3838,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -3847,7 +3847,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3856,7 +3856,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -3900,7 +3900,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -3909,7 +3909,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3918,7 +3918,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -3962,7 +3962,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -3971,7 +3971,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -3980,7 +3980,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -4024,7 +4024,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -4033,7 +4033,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4042,7 +4042,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4087,7 +4087,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -4096,7 +4096,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -4105,7 +4105,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -4150,7 +4150,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -4159,7 +4159,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -4168,7 +4168,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -4212,7 +4212,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -4221,7 +4221,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -4230,7 +4230,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -4275,7 +4275,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -4284,7 +4284,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -4293,7 +4293,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -4337,7 +4337,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -4346,7 +4346,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4355,7 +4355,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4371,7 +4371,7 @@
           "text": "$79.00"
         }
       },
-      "brandName": "AAPE BY A BATHING APE®",
+      "brandName": "AAPE BY A BATHING APE\u00ae",
       "productCode": 127283602,
       "imageUrl": "images.asos-media.com/products/aape-by-a-bathing-ape-baseball-t-shirt-in-gray/204453423-1-grey",
       "additionalImageUrls": [
@@ -4399,7 +4399,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -4408,7 +4408,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -4417,7 +4417,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -4433,7 +4433,7 @@
           "text": "$69.00"
         }
       },
-      "brandName": "AAPE BY A BATHING APE®",
+      "brandName": "AAPE BY A BATHING APE\u00ae",
       "productCode": 127283601,
       "imageUrl": "images.asos-media.com/products/aape-by-a-bathing-ape-baseball-t-shirt-in-black/204453531-1-black",
       "additionalImageUrls": [
@@ -4461,7 +4461,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -4470,7 +4470,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4479,7 +4479,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4495,7 +4495,7 @@
           "text": "$69.00"
         }
       },
-      "brandName": "AAPE BY A BATHING APE®",
+      "brandName": "AAPE BY A BATHING APE\u00ae",
       "productCode": 127283598,
       "imageUrl": "images.asos-media.com/products/aape-by-a-bathing-ape-baseball-t-shirt-in-navy/204453733-1-navy",
       "additionalImageUrls": [
@@ -4523,7 +4523,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -4532,7 +4532,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -4541,7 +4541,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -4587,7 +4587,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -4596,7 +4596,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4605,7 +4605,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4651,7 +4651,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -4660,7 +4660,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4669,7 +4669,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4713,7 +4713,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -4722,7 +4722,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4731,7 +4731,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4775,7 +4775,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -4784,7 +4784,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4793,7 +4793,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4837,7 +4837,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -4846,7 +4846,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -4855,7 +4855,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -4899,7 +4899,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -4908,7 +4908,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4917,7 +4917,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4963,7 +4963,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -4972,7 +4972,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -4981,7 +4981,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5025,7 +5025,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5034,7 +5034,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5043,7 +5043,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5087,7 +5087,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5096,7 +5096,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5105,7 +5105,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5149,7 +5149,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5158,7 +5158,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5167,7 +5167,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5211,7 +5211,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5220,7 +5220,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5229,7 +5229,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5273,7 +5273,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5282,7 +5282,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5291,7 +5291,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5335,7 +5335,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5344,7 +5344,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5353,7 +5353,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5399,7 +5399,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5408,7 +5408,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5417,7 +5417,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5464,7 +5464,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5473,7 +5473,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5482,7 +5482,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5528,7 +5528,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5537,7 +5537,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5546,7 +5546,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5592,7 +5592,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5601,7 +5601,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5610,7 +5610,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5656,7 +5656,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5665,7 +5665,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5674,7 +5674,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5720,7 +5720,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5729,7 +5729,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5738,7 +5738,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5784,7 +5784,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -5793,7 +5793,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -5802,7 +5802,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -5848,7 +5848,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -5857,7 +5857,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -5866,7 +5866,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -5912,7 +5912,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5921,7 +5921,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5930,7 +5930,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5976,7 +5976,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -5985,7 +5985,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -5994,7 +5994,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6040,7 +6040,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -6049,7 +6049,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6058,7 +6058,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6104,7 +6104,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -6113,7 +6113,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6122,7 +6122,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6168,7 +6168,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -6177,7 +6177,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6186,7 +6186,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6232,7 +6232,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -6241,7 +6241,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6250,7 +6250,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6296,7 +6296,7 @@
       "reviews": [
         {
           "username": "Daphne Binggeli",
-          "userImage": "/src/assets/user profile photo 6 f.jpg",
+          "userImage": "avatars/user profile photo 6 f.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -6305,7 +6305,7 @@
         },
         {
           "username": "Yolonda Doroteo",
-          "userImage": "/src/assets/user profile photo 7 f.jpg",
+          "userImage": "avatars/user profile photo 7 f.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6314,7 +6314,7 @@
         },
         {
           "username": "Shu Welland",
-          "userImage": "/src/assets/user profile photo 2 f.jpg",
+          "userImage": "avatars/user profile photo 2 f.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6360,7 +6360,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -6369,7 +6369,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6378,7 +6378,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6424,7 +6424,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -6433,7 +6433,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6442,7 +6442,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6488,7 +6488,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -6497,7 +6497,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6506,7 +6506,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6552,7 +6552,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -6561,7 +6561,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6570,7 +6570,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -6616,7 +6616,7 @@
       "reviews": [
         {
           "username": "Korey Stevie",
-          "userImage": "/src/assets/user profile photo 10.jpg",
+          "userImage": "avatars/user profile photo 10.jpg",
           "location": "England",
           "rating": 2,
           "date": "January 31, 2022",
@@ -6625,7 +6625,7 @@
         },
         {
           "username": "Val Nak",
-          "userImage": "/src/assets/user profile photo 9.jpg",
+          "userImage": "avatars/user profile photo 9.jpg",
           "location": "Belgium",
           "rating": 3,
           "date": "Februrary 31, 2022",
@@ -6634,7 +6634,7 @@
         },
         {
           "username": "Omar Wolfendale",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Romania",
           "rating": 1,
           "date": "January 31, 2022",
@@ -6680,7 +6680,7 @@
       "reviews": [
         {
           "username": "Jerri Liriano",
-          "userImage": "/src/assets/user profile photo 4 f.jpg",
+          "userImage": "avatars/user profile photo 4 f.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -6689,7 +6689,7 @@
         },
         {
           "username": "Daphne Binggeli",
-          "userImage": "/src/assets/user profile photo 5 f.jpg",
+          "userImage": "avatars/user profile photo 5 f.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -6698,7 +6698,7 @@
         },
         {
           "username": "Samira Mazar",
-          "userImage": "/src/assets/user profile photo 6 f.jpg",
+          "userImage": "avatars/user profile photo 6 f.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -6744,7 +6744,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -6753,7 +6753,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -6762,7 +6762,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -6808,7 +6808,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -6817,7 +6817,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -6826,7 +6826,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -6872,7 +6872,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -6881,7 +6881,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -6890,7 +6890,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -6936,7 +6936,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -6945,7 +6945,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -6954,7 +6954,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -7000,7 +7000,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -7009,7 +7009,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7018,7 +7018,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7064,7 +7064,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -7073,7 +7073,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -7082,7 +7082,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -7128,7 +7128,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -7137,7 +7137,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -7146,7 +7146,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -7192,7 +7192,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -7201,7 +7201,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -7210,7 +7210,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -7256,7 +7256,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -7265,7 +7265,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -7274,7 +7274,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -7320,7 +7320,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -7329,7 +7329,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -7338,7 +7338,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -7384,7 +7384,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -7393,7 +7393,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -7402,7 +7402,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -7448,7 +7448,7 @@
       "reviews": [
         {
           "username": "Jerri Liriano",
-          "userImage": "/src/assets/user profile photo 4 f.jpg",
+          "userImage": "avatars/user profile photo 4 f.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -7457,7 +7457,7 @@
         },
         {
           "username": "Marita Daya",
-          "userImage": "/src/assets/user profile photo 5 f.jpg",
+          "userImage": "avatars/user profile photo 5 f.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -7466,7 +7466,7 @@
         },
         {
           "username": "Shu Welland",
-          "userImage": "/src/assets/user profile photo 6 f.jpg",
+          "userImage": "avatars/user profile photo 6 f.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -7512,7 +7512,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -7521,7 +7521,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -7530,7 +7530,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -7576,7 +7576,7 @@
       "reviews": [
         {
           "username": "Demetra Delappe",
-          "userImage": "/src/assets/user profile photo 6 f.jpg",
+          "userImage": "avatars/user profile photo 6 f.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -7585,7 +7585,7 @@
         },
         {
           "username": "Shu Welland",
-          "userImage": "/src/assets/user profile photo 7 f.jpg",
+          "userImage": "avatars/user profile photo 7 f.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7594,7 +7594,7 @@
         },
         {
           "username": "Hedy Barwari",
-          "userImage": "/src/assets/user profile photo 2 f.jpg",
+          "userImage": "avatars/user profile photo 2 f.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7640,7 +7640,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -7649,7 +7649,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7658,7 +7658,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7705,7 +7705,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -7714,7 +7714,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7723,7 +7723,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7769,7 +7769,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -7778,7 +7778,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7787,7 +7787,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7834,7 +7834,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -7843,7 +7843,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7852,7 +7852,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7899,7 +7899,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -7908,7 +7908,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7917,7 +7917,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7963,7 +7963,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -7972,7 +7972,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -7981,7 +7981,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -8027,7 +8027,7 @@
       "reviews": [
         {
           "username": "Errol Grabber",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "USA",
           "rating": 1,
           "date": "January 31, 2022",
@@ -8036,7 +8036,7 @@
         },
         {
           "username": "Kristofer Comi",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Argentina",
           "rating": 5,
           "date": "January 31, 2022",
@@ -8045,7 +8045,7 @@
         },
         {
           "username": "Luciano Haarman",
-          "userImage": "/src/assets/user profile photo 2.jpg",
+          "userImage": "avatars/user profile photo 2.jpg",
           "location": "Greece",
           "rating": 5,
           "date": "January 31, 2022",
@@ -8091,7 +8091,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -8100,7 +8100,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -8109,7 +8109,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -8155,7 +8155,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -8164,7 +8164,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -8173,7 +8173,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -8219,7 +8219,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -8228,7 +8228,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -8237,7 +8237,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -8282,7 +8282,7 @@
       "reviews": [
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -8291,7 +8291,7 @@
         },
         {
           "username": "Kris Uebbing",
-          "userImage": "/src/assets/user profile photo 5.jpg",
+          "userImage": "avatars/user profile photo 5.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -8300,7 +8300,7 @@
         },
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 6.jpg",
+          "userImage": "avatars/user profile photo 6.jpg",
           "location": "Austria",
           "rating": 4,
           "date": "August 21, 2022",
@@ -8344,7 +8344,7 @@
       "reviews": [
         {
           "username": "Marion Mulvenna",
-          "userImage": "/src/assets/user profile photo 8.jpg",
+          "userImage": "avatars/user profile photo 8.jpg",
           "location": "Holand",
           "rating": 3,
           "date": "August 21, 2022",
@@ -8353,7 +8353,7 @@
         },
         {
           "username": "Alex Mulvenna",
-          "userImage": "/src/assets/user profile photo 7.jpg",
+          "userImage": "avatars/user profile photo 7.jpg",
           "location": "Holand",
           "rating": 5,
           "date": "August 21, 2022",
@@ -8362,7 +8362,7 @@
         },
         {
           "username": "Deandre Kuon",
-          "userImage": "/src/assets/user profile photo 4.jpg",
+          "userImage": "avatars/user profile photo 4.jpg",
           "location": "Nepal",
           "rating": 1,
           "date": "August 21, 2022",
@@ -8393,8 +8393,8 @@
     {
       "id": "EDVYu6rC_G9SL9Z7-H9tr",
       "name": "Aleksandar",
-      "lastname": "Kuzmanovic",
-      "email": "kuzma@gmail.com",
+      "lastname": "Rahman",
+      "email": "demo@sidra-clothing.example",
       "phone": "061123231",
       "adress": "Marka Markovica 252",
       "password": "1233214321",
@@ -8405,7 +8405,7 @@
           "image": "images.asos-media.com/products/aape-by-a-bathing-ape-baseball-t-shirt-in-black/204453531-1-black",
           "rating": 4,
           "price": 69,
-          "brandName": "AAPE BY A BATHING APE®",
+          "brandName": "AAPE BY A BATHING APE\u00ae",
           "amount": 1,
           "selectedSize": "XS",
           "isInWishList": false
@@ -8432,7 +8432,8 @@
           "selectedSize": "XS",
           "isInWishList": false
         }
-      ]
+      ],
+      "firstname": "Sidra"
     }
   ],
   "orders": [
@@ -8447,7 +8448,7 @@
           "image": "images.asos-media.com/products/aape-by-a-bathing-ape-baseball-t-shirt-in-black/204453531-1-black",
           "rating": 4,
           "price": 69,
-          "brandName": "AAPE BY A BATHING APE®",
+          "brandName": "AAPE BY A BATHING APE\u00ae",
           "amount": 3,
           "selectedSize": "S",
           "isInWishList": false
@@ -8477,7 +8478,7 @@
           "image": "images.asos-media.com/products/aape-by-a-bathing-ape-baseball-t-shirt-in-black/204453531-1-black",
           "rating": 4,
           "price": 69,
-          "brandName": "AAPE BY A BATHING APE®",
+          "brandName": "AAPE BY A BATHING APE\u00ae",
           "amount": 3,
           "selectedSize": "S",
           "isInWishList": false
@@ -8575,7 +8576,7 @@
           "image": "images.asos-media.com/products/aape-by-a-bathing-ape-baseball-t-shirt-in-black/204453531-1-black",
           "rating": 4,
           "price": 69,
-          "brandName": "AAPE BY A BATHING APE®",
+          "brandName": "AAPE BY A BATHING APE\u00ae",
           "amount": 10,
           "selectedSize": "M",
           "isInWishList": false
@@ -8594,7 +8595,7 @@
           "image": "images.asos-media.com/products/aape-by-a-bathing-ape-baseball-t-shirt-in-black/204453531-1-black",
           "rating": 4,
           "price": 69,
-          "brandName": "AAPE BY A BATHING APE®",
+          "brandName": "AAPE BY A BATHING APE\u00ae",
           "amount": 1,
           "selectedSize": "XS",
           "isInWishList": false
@@ -8613,7 +8614,7 @@
           "image": "images.asos-media.com/products/aape-by-a-bathing-ape-baseball-t-shirt-in-black/204453531-1-black",
           "rating": 4,
           "price": 69,
-          "brandName": "AAPE BY A BATHING APE®",
+          "brandName": "AAPE BY A BATHING APE\u00ae",
           "amount": 1,
           "selectedSize": "XS",
           "isInWishList": true

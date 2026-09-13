@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createHashRouter } from "react-router-dom";
 import {
   About,
   Cart,
@@ -20,7 +20,15 @@ import { singleProductLoader } from "./pages/SingleProduct";
 import { shopLoader } from "./pages/Shop";
 import { ToastContainer } from "react-toastify";
 
-const router = createBrowserRouter([
+/*
+ * Hash routing, because this is published as plain files inside the demo hub —
+ * several directories deep, on a static host with no rewrite rules. A path
+ * router there matches nothing: the app loads at /demos/sidra-clothing/ and
+ * react-router answers "404 Not Found" before a single screen renders, which
+ * is exactly what it did. The hash never reaches the host, so it works at any
+ * depth with nothing to configure.
+ */
+const router = createHashRouter([
   {
     path: "/",
     element: <HomeLayout />,

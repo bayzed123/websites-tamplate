@@ -136,6 +136,11 @@ async function readMeta(slug, dir, entryFile) {
     /* What this build costs, shown on the card. A demo a client cannot price
        is a demo they have to email about before they know if it is even in
        their range — and most of them simply do not email. */
+    /* A project can be in the repository without being fit to show a client.
+       Before this, the only way to hold one back was to delete it or let it
+       publish broken — and a broken demo fails the preview check, which blocks
+       the deploy for every other demo too. */
+    draft: meta.draft === true,
     price: typeof meta.price === 'string' ? meta.price : '',
     priceNote: typeof meta.priceNote === 'string' ? meta.priceNote : '',
     credentials: meta.credentials || null,
@@ -171,6 +176,10 @@ async function discoverDemos() {
       continue;
     }
     const meta = await readMeta(entry.name, sourceDir, entryFile);
+    if (meta.draft) {
+      console.log(`  – ${entry.name}: marked draft in demo.json, holding back`);
+      continue;
+    }
     demos.push({ ...meta, ...publishRoot(sourceDir, meta.entryFile) });
   }
   // Featured first, then alphabetical — the landing page leads with the deepest build.

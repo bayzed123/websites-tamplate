@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { removeItem, updateCartAmount } from "../features/cart/cartSlice";
+import { onImageError } from "../demo/imageFallback";
 
 
 const CartItem = ({ cartItem }) => {
@@ -15,7 +16,7 @@ const CartItem = ({ cartItem }) => {
     >
       {/* IMAGE */}
       <img
-        src={`https://${image}`}
+        src={`https://${image}`} onError={onImageError}
         alt={title}
         className="h-24 w-24 rounded-lg sm:h-32 sm:w-32 object-cover"
       />

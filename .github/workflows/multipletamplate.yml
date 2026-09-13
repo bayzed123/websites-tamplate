@@ -39,6 +39,11 @@ jobs:
         # before the hub goes looking for an index.html to publish.
         run: npm ci --prefix smartgadget-demo/web && npm run build --prefix smartgadget-demo/web
 
+      - name: Build the Sidra Clothing demo
+        # A Vite project like SmartGadget — built here so the hub has a dist/
+        # to publish rather than the source entry.
+        run: npm ci --prefix sidra-clothing && npm run build --prefix sidra-clothing
+
       - name: Check the demo leaks nothing from the live store
         run: node tests/demo-isolation.mjs
 
@@ -56,6 +61,9 @@ jobs:
 
       - name: Check the Bootstrap Fashion demo is completable
         run: node tests/bootstrap-fashion.mjs site
+
+      - name: Check the Sidra Clothing demo works with no server
+        run: node tests/sidra-clothing.mjs sidra-clothing/dist
 
       - name: Upload preview screenshots
         if: always()

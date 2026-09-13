@@ -2,13 +2,15 @@
   "private": true,
   "scripts": {
     "build:smartgadget": "npm ci --prefix smartgadget-demo/web && npm run build --prefix smartgadget-demo/web",
-    "build:demo-hub": "npm run build:smartgadget && node scripts/build-demo-hub.mjs site",
+    "build:demo-hub": "npm run build:smartgadget && npm run build:sidra-clothing && node scripts/build-demo-hub.mjs site",
     "thumbs": "node scripts/capture-thumbnails.mjs site",
     "test:preview": "node tests/live-preview.mjs site",
     "test:demo-isolation": "node tests/demo-isolation.mjs",
     "preview": "npm run build:demo-hub && npm run thumbs && python3 -m http.server 8000 --directory site",
     "test:hub-tracking": "node tests/hub-tracking.mjs site",
-    "test:bootstrap-fashion": "node tests/bootstrap-fashion.mjs site"
+    "test:bootstrap-fashion": "node tests/bootstrap-fashion.mjs site",
+    "build:sidra-clothing": "npm ci --prefix sidra-clothing && npm run build --prefix sidra-clothing",
+    "test:sidra-clothing": "node tests/sidra-clothing.mjs sidra-clothing/dist"
   },
   "devDependencies": {
     "playwright": "^1.62.1"
