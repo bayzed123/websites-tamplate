@@ -159,3 +159,19 @@ Bootstrap already has a comprehensive documentation site that will guide you in 
 ```
 
 
+
+## Credits
+
+The storefront demo published from this folder is branded **Bootstrap Fashion**
+and credited to [Sayad Bayezid](https://sayadbayezid.com), who customised and
+publishes it.
+
+The underlying HTML/SASS template is **[Bootstrap Fashion by Pixel
+Rocket](https://www.pixelrocket.store)**, released under the MIT licence. That
+attribution used to sit in the page footer; it lives here now that the footer
+credits the developer of the customised build, because MIT asks that the
+original notice be retained in copies and this is where the copy keeps it.
+
+Third-party components bundled by the template keep their own licences:
+Bootstrap 5, Remix Icon, Swiper, noUiSlider, SimpleBar, AOS, Choices.js,
+medium-zoom, Tippy.js and Typed.js.
