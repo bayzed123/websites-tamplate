@@ -60,13 +60,13 @@ const Header = () => {
           <li>
             <FaHeadphones className="text-2xl max-sm:text-lg text-accent-content" />
             <span className="text-2xl max-sm:text-lg text-accent-content">
-              +381 61/123-456
+              +880 1519 601517
             </span>
           </li>
           <li>
             <FaRegEnvelope className="text-2xl max-sm:text-lg text-accent-content" />{" "}
             <span className="text-2xl max-sm:text-lg text-accent-content">
-              support@test.com
+              Support@sayadbayezid.com
             </span>
           </li>
         </ul>
@@ -78,7 +78,7 @@ const Header = () => {
             className="btn btn-ghost normal-case text-2xl font-black text-accent-content"
           >
             <AiFillShopping />
-            Kuzma Clothing & Shoes
+            Sidra Clothing & Shoes
           </Link>
         </div>
         <div className="flex-none">

@@ -1,0 +1,8 @@
+{
+  "title": "Sidra Noor Fashion",
+  "tagline": "Vue 3 storefront with a NestJS backend",
+  "description": "A Vue 3 storefront with a NestJS API behind it. Not published yet \u2014 see draftReason.",
+  "category": "E-commerce",
+  "draft": true,
+  "draftReason": "Two things stop it publishing. (1) The client is a Vue Router history-mode app, so at a nested static path it renders its own 404 page instead of the shop \u2014 it needs hash routing, the same fix sidra-clothing needed. (2) Every screen reads from http://localhost:3000/api/, and unlike sidra-clothing there is no db.json to serve from: the data lives in the NestJS server and its database, so a fixture layer means inventing the whole catalogue first. It also only builds with CYPRESS_INSTALL_BINARY=0 and NODE_OPTIONS=--openssl-legacy-provider, because Vue CLI 4.5 predates modern Node."
+}

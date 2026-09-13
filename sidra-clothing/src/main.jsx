@@ -1,3 +1,7 @@
+// FIRST: installs the in-page json-server before App.jsx's module body runs
+// and creates the router. See src/demo/install.js.
+import "./demo/install";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";

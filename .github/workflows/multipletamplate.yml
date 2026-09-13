@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  # Every red deploy so far was discovered on main, after the fact, because
+  # nothing ran these checks before a merge. Pull requests build and run the
+  # full check suite; only the deploy job is skipped for them.
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -12,7 +18,9 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
+  # A pull request check must never cancel a deploy that is mid-flight, so PRs
+  # get their own group, one per branch.
+  group: ${{ github.event_name == 'pull_request' && format('demo-hub-pr-{0}', github.head_ref) || 'github-pages' }}
   cancel-in-progress: true
 
 jobs:
@@ -39,6 +47,11 @@ jobs:
         # before the hub goes looking for an index.html to publish.
         run: npm ci --prefix smartgadget-demo/web && npm run build --prefix smartgadget-demo/web
 
+      - name: Build the Sidra Clothing demo
+        # A Vite project like SmartGadget — built here so the hub has a dist/
+        # to publish rather than the source entry.
+        run: npm ci --prefix sidra-clothing && npm run build --prefix sidra-clothing
+
       - name: Check the demo leaks nothing from the live store
         run: node tests/demo-isolation.mjs
 
@@ -56,6 +69,9 @@ jobs:
 
       - name: Check the Bootstrap Fashion demo is completable
         run: node tests/bootstrap-fashion.mjs site
+
+      - name: Check the Sidra Clothing demo works with no server
+        run: node tests/sidra-clothing.mjs sidra-clothing/dist
 
       - name: Upload preview screenshots
         if: always()
@@ -91,9 +107,11 @@ jobs:
           NODE
 
       - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
@@ -101,6 +119,8 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     needs: build
+    # A pull request proves the build; it does not publish it.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

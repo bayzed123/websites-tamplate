@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart } from "../features/cart/cartSlice";
+import { onImageError } from "../demo/imageFallback";
 
 const ProductElement = ({ id, title, image, rating, price, brandName }) => {
   const product = {
@@ -13,7 +14,7 @@ const ProductElement = ({ id, title, image, rating, price, brandName }) => {
         <Link to={`/shop/product/${id}`} onClick={() => window.scrollTo(0, 0)}>
           <img
             className="rounded-t-lg p-8"
-            src={`https://${image}`}
+            src={`https://${image}`} onError={onImageError}
             alt="product image"
           />
         </Link>

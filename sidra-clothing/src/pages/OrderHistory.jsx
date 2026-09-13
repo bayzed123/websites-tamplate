@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { nanoid } from "nanoid";
+import { onImageError } from "../demo/imageFallback";
 
 const OrderHistory = () => {
   // cancelled, in progress, delivered
@@ -79,7 +80,7 @@ const OrderHistory = () => {
                         {order.cartItems.map((product, counter) => (
                           <tr className="text-accent-content" key={nanoid()}>
                             <th>{counter + 1}</th>
-                            <th><img src={`https://${product.image}`} alt="" className="w-10" /></th>
+                            <th><img src={`https://${product.image}`} onError={onImageError} alt="" className="w-10" /></th>
                             <td>{product.title}</td>
                             <td>{product.selectedSize}</td>
                             <td>{product.amount}</td>
