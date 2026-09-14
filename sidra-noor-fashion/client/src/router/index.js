@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import store from "../store";
 
 import UserLayout from "../layouts/UserLayout.vue";
@@ -176,16 +176,19 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  // Hash history: this is published at a nested static path with no server
+// able to rewrite /admin/dashboard back to index.html, and history mode
+// there renders the app's own 404 instead of the shop.
+  history: createWebHashHistory(),
   routes,
 });
 
 router.beforeEach((to, from, next) => {
   // ! Info: for change title
   if (to.meta.title) {
-    document.title = to.meta.title + " | Fashion Club";
+    document.title = to.meta.title + " | Sidra Noor Fashion";
   } else {
-    document.title = "Fashion Club";
+    document.title = "Sidra Noor Fashion";
   }
 
   // ! Info: for roles

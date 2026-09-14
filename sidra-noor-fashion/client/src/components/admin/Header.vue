@@ -86,7 +86,9 @@ export default {
   data() {
     return {
       dropdownOpen: false,
-      img: "https://flevix.com/wp-content/uploads/2019/07/Bubble-Loader-Icon-1.gif",
+      // Local asset. The template hotlinked this from a third-party host that
+// can go away, rate-limit, or simply see every visitor of this demo.
+      img: "demo-uploads/loader.svg",
     };
   },
   methods: {

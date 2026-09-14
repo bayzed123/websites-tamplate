@@ -7,20 +7,20 @@
           to="/"
           class="logo flex items-center justify-center lg:justify-start py-2"
         >
-          <img src="img/logo.png" alt="logo" class="w-10" />
+          <img src="@/assets/img/logo.png" alt="logo" class="w-10" />
           <div>
             <span class="uppercase text-4xl hover:rotate-45">Fashion</span>
           </div>
         </router-link>
 
         <span class="block text-sm text-gray-700 my-3"
-          >1234k Avenue, 4th block,</span
+          >House 12, Road 7, Banani</span
         >
-        <span class="block text-sm text-gray-700 my-3">Sousse Tunisia.</span>
+        <span class="block text-sm text-gray-700 my-3">Dhaka 1213, Bangladesh.</span>
         <a
-          href="mailto:myFashionClub@protonmail.com"
+          href="mailto:hello@sidranoor.demo"
           class="block text-sm text-gray-900 hover:text-primaryAdmin transform duration-500 my-3"
-          >myFashionClub@protonmail.com</a
+          >hello@sidranoor.demo</a
         >
       </div>
 
@@ -99,8 +99,8 @@
 
     <div class="text-center text-xs my-5 text-gray-600">
       <span
-        >© {{ new Date().getFullYear() }} Fashion Club . All rights reserved |
-        Created by Thamer Ayachi.</span
+        >© {{ new Date().getFullYear() }} Sidra Noor Fashion. All rights reserved |
+        Template by Thamer Ayachi. Demo build by Sayad Bayezid.</span
       >
     </div>
   </footer>

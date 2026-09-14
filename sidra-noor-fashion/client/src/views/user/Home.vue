@@ -14,7 +14,7 @@
         <span
           class="block text-gray-300 text-sm my-2 md:my-5 mr-14 tracking-wide leading-7"
         >
-          Fashion club is one of the best online shopping stores in Tunisia. We
+          Sidra Noor is one of the best online shopping stores in Bangladesh. We
           provide a large variety of international products across the globe.
         </span>
         <router-link
@@ -114,17 +114,20 @@ export default {
     return {
       baseUrl: this.$store.state.baseUrl,
       solds: [
-        { id: 1, persent: 50, img: "/img/bb2.jpg", path: "/shoes", s: "2" },
-        { id: 2, persent: 55, img: "/img/bb3.jpg", path: "/watches", s: "3" },
-        { id: 3, persent: 65, img: "/img/bb4.jpg", path: "/jewellery", s: "4" },
-        { id: 4, persent: 60, img: "/img/bb5.jpg", path: "/handbags", s: "5" },
+        { id: 1, persent: 50, img: require("@/assets/img/bb2.jpg"), path: "/shoes", s: "2" },
+        { id: 2, persent: 55, img: require("@/assets/img/bb3.jpg"), path: "/watches", s: "3" },
+        { id: 3, persent: 65, img: require("@/assets/img/bb4.jpg"), path: "/jewellery", s: "4" },
+        { id: 4, persent: 60, img: require("@/assets/img/bb5.jpg"), path: "/handbags", s: "5" },
       ],
+      // Local wordmarks. The template hotlinked five real brand logos from
+      // free image hosts — images this repo has no licence to, on hosts that
+      // can expire, served to every visitor of the demo.
       brands: [
-        "https://i.ibb.co/zNtfXKS/7.png",
-        "https://i.postimg.cc/3xLmhFym/46.jpg",
-        "https://i.postimg.cc/brTdTqkk/4.png",
-        "https://i.postimg.cc/15735CHm/5.png",
-        "https://i.postimg.cc/wBjKygTn/6.png",
+        "demo-uploads/brands/brand-1.svg",
+        "demo-uploads/brands/brand-2.svg",
+        "demo-uploads/brands/brand-3.svg",
+        "demo-uploads/brands/brand-4.svg",
+        "demo-uploads/brands/brand-5.svg",
       ],
       products: [],
     };
@@ -187,13 +190,13 @@ export default {
 
 <style>
 .banner {
-  background-image: url("/img/banner2.jpg");
+  background-image: url("~@/assets/img/banner2.jpg");
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
 }
 .sold-1 {
-  background-image: url("/img/bb1.jpg");
+  background-image: url("~@/assets/img/bb1.jpg");
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;

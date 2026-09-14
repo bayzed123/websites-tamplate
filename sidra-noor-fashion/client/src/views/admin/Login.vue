@@ -3,7 +3,7 @@
     <div class="flex items-center justify-center h-screen px-6 bg-gray-100">
       <div class="w-full max-w-sm p-6 bg-white rounded-md shadow-md">
         <div class="flex items-center justify-center space-x-1">
-          <img src="img/logo.png" alt="logo" class="w-10" />
+          <img src="@/assets/img/logo.png" alt="logo" class="w-10" />
           <span class="text-2xl font-semibold text-gray-700"
             >Admin Fashion</span
           >

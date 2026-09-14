@@ -75,14 +75,32 @@ function paginate<T>(rows: T[], query: URLSearchParams, per = 24) {
   return { slice: rows.slice((page - 1) * limit, page * limit), page, pages, total: rows.length };
 }
 
+/**
+ * Read a filter the way the real API does: as a narrowing, not a match.
+ *
+ * A dropdown's "everything" option still has to have a value, and this app
+ * spells it `all` (Orders' status tabs, Products' status select). The server
+ * this stands in for reads that as "do not filter". Comparing it literally
+ * instead — `o.status !== 'all'` — is true for every row, so the screen goes
+ * empty while the dashboard, which takes no such filter, still reports the
+ * full count. That contradiction is the symptom to look for.
+ */
+function filterParam(query: URLSearchParams, key: string): string {
+  const value = (query.get(key) ?? '').trim();
+  return value === 'all' || value === 'any' ? '' : value;
+}
+
 function filterProducts(query: URLSearchParams, pool: AdminProduct[]): AdminProduct[] {
   const q = (query.get('q') ?? '').trim().toLowerCase();
-  const category = query.get('category') ?? '';
-  const brand = query.get('brand') ?? '';
-  // The catalogue URL carries taka because a shopper reads it; the data is in
-  // poisha. Converting here keeps that difference in one place.
-  const min = query.get('price_min') ? Number(query.get('price_min')) * 100 : null;
-  const max = query.get('price_max') ? Number(query.get('price_max')) * 100 : null;
+  const category = filterParam(query, 'category');
+  const brand = filterParam(query, 'brand');
+  const status = filterParam(query, 'status');
+  const stockState = filterParam(query, 'stock_state');
+  // Both sides of this are poisha. Catalog.tsx keeps taka in the URL a shopper
+  // reads and converts on the way out, so converting again here would compare
+  // a price against a bound a hundred times too large and empty the grid.
+  const min = query.get('price_min') ? Number(query.get('price_min')) : null;
+  const max = query.get('price_max') ? Number(query.get('price_max')) : null;
   return pool.filter((p) => {
     if (q && !`${p.name} ${p.brand} ${p.sku}`.toLowerCase().includes(q)) return false;
     if (category && p.category?.slug !== category) return false;
@@ -90,7 +108,8 @@ function filterProducts(query: URLSearchParams, pool: AdminProduct[]): AdminProd
     if (query.get('in_stock') === '1' && !p.in_stock) return false;
     if (min !== null && p.price < min) return false;
     if (max !== null && p.price > max) return false;
-    if (query.get('status') && p.status !== query.get('status')) return false;
+    if (status && p.status !== status) return false;
+    if (stockState && p.stock_state !== stockState) return false;
     return true;
   });
 }
@@ -440,7 +459,7 @@ const ROUTES: [string, string, Handler][] = [
   /* admin orders */
   ['GET', '/api/admin/orders', ({ query }) => {
     const q = (query.get('q') ?? '').trim().toLowerCase();
-    const status = query.get('status') ?? '';
+    const status = filterParam(query, 'status');
     const rows = ORDERS.filter((o) => {
       if (status && o.status !== status) return false;
       if (q && !`${o.order_no} ${o.customer_name} ${o.customer_phone}`.toLowerCase().includes(q)) return false;

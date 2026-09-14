@@ -1,6 +1,6 @@
 {
   "title": "Sidra Clothing & Shoes",
-  "tagline": "A full React storefront with 132 products",
+  "tagline": "A React storefront with the admin behind it",
   "description": "A working fashion storefront built in React: a catalogue of 132 products with brand, category, gender and price filters, sorting, search with pagination, product pages with size picker and customer reviews, wishlist, cart, checkout and order history. Accounts work too \u2014 register, sign in, and your wishlist and orders follow you.",
   "category": "E-commerce",
   "featured": false,
@@ -14,15 +14,16 @@
     "From $100"
   ],
   "highlights": [
-    "132 products, filterable by brand, category, gender and price",
-    "Search with pagination, and sorting by name or price",
-    "Wishlist, cart, checkout and order history that all persist while you browse",
-    "Register and sign in \u2014 the account keeps your wishlist and orders",
+    "Four admin screens: dashboard, products, orders and customers",
+    "Admin opens with no password \u2014 nothing sits behind it to protect",
+    "Its totals are computed from the same catalogue the shop serves, so the two cannot disagree",
+    "132 products, filterable by brand, category, gender and price, with search and sorting",
+    "Wishlist, cart, checkout and order history that persist while you browse",
     "Runs with no server at all: the whole API answers inside the page"
   ],
   "entry": "dist/index.html",
   "access": {
-    "label": "Demo account",
-    "note": "No sign-in needed to browse. Register any email to try the account screens \u2014 it is stored in your browser only and resets on reload."
+    "label": "Admin dashboard",
+    "note": "Linked from the footer of every shop page. No sign-in: this build has no database and no API, so there is nothing behind it for a password to protect. Register any email on the shop and the new account shows up in Customers."
   }
 }

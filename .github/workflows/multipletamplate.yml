@@ -52,6 +52,18 @@ jobs:
         # to publish rather than the source entry.
         run: npm ci --prefix sidra-clothing && npm run build --prefix sidra-clothing
 
+      - name: Build the Sidra Noor Fashion demo
+        # Vue CLI 4.5 predates modern Node and npm's strict peer resolution, so
+        # this one needs both escape hatches. Cypress is skipped because its
+        # postinstall downloads a binary this build never runs.
+        env:
+          CYPRESS_INSTALL_BINARY: '0'
+          NODE_OPTIONS: '--openssl-legacy-provider'
+        run: |
+          cd sidra-noor-fashion/client
+          npm install --legacy-peer-deps --no-audit --no-fund
+          npm run build
+
       - name: Check the demo leaks nothing from the live store
         run: node tests/demo-isolation.mjs
 
@@ -70,8 +82,24 @@ jobs:
       - name: Check the Bootstrap Fashion demo is completable
         run: node tests/bootstrap-fashion.mjs site
 
+      - name: Check the Bootstrap Fashion admin agrees with the shop
+        # dist/ is committed for this template, so the admin is checked against
+        # the committed output the hub actually publishes.
+        run: node tests/bootstrap-fashion-admin.mjs bootstrap-fashion/dist
+
       - name: Check the Sidra Clothing demo works with no server
         run: node tests/sidra-clothing.mjs sidra-clothing/dist
+
+      - name: Check the Sidra Clothing admin agrees with the shop
+        run: node tests/sidra-clothing-admin.mjs sidra-clothing/dist
+
+      - name: Check the Sidra Noor shop and admin both work
+        run: node tests/sidra-noor-fashion.mjs sidra-noor-fashion/client/dist
+
+      - name: Check the SmartGadget admin agrees with itself
+        # A screen that renders "0 orders" passes a does-it-render check. This
+        # one compares the list screens against the dashboard's own totals.
+        run: node tests/smartgadget-admin.mjs smartgadget-demo/web/dist
 
       - name: Upload preview screenshots
         if: always()

@@ -16,7 +16,7 @@
 
       <!-- price -->
       <div class="flex justify-center text-gray-700 font-semibold text-lg">
-        <span>{{ price }} TND</span>
+        <span>{{ price }} BDT</span>
       </div>
     </div>
     <!-- <fa-layer class="text-gray-600 fa-3x absolute top-1 right-1">

@@ -2,7 +2,7 @@
   <div>
     <!-- banner -->
     <div class="overflow-hidden md:h-72">
-      <img src="/img/menbanner.jpg" alt="" />
+      <img src="@/assets/img/menbanner.jpg" alt="" />
     </div>
 
     <div class="grid sm:grid-cols-3 grid-cols-1 lg:mx-32 mx-5 my-10">

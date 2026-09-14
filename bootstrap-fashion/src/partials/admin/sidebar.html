@@ -1,0 +1,50 @@
+<!-- Admin sidebar -->
+{{!-- `ifEquals` is the block helper this template registers in
+      webpack.config.js; there is no `eq` subexpression helper, so the active
+      state is written as a block rather than as an if with a subexpression.
+
+      Note this is a Handlebars comment, not an HTML one: Handlebars parses
+      inside <!-- --> too, so helper syntax written there is compiled, and an
+      unclosed example block fails the build. --}}
+<nav class="bg-dark text-white d-flex flex-column flex-shrink-0 p-3 admin-sidebar" aria-label="Admin sections">
+    <a class="navbar-brand fw-bold fs-4 text-white text-decoration-none d-flex align-items-center mb-4"
+        href="{{webRoot}}/admin.html">
+        {{> logo/logo-icon }}
+    </a>
+    <span class="text-uppercase small fw-bold text-white-50 mb-2">Shop admin</span>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item mb-1">
+            <a href="{{webRoot}}/admin.html"
+               class="nav-link {{#ifEquals active 'dashboard'}}active bg-white text-dark fw-bold{{else}}text-white-50{{/ifEquals}}"
+               {{#ifEquals active 'dashboard'}}aria-current="page"{{/ifEquals}}>
+                <i class="ri-dashboard-line align-bottom me-2" aria-hidden="true"></i> Dashboard
+            </a>
+        </li>
+        <li class="nav-item mb-1">
+            <a href="{{webRoot}}/admin-products.html"
+               class="nav-link {{#ifEquals active 'products'}}active bg-white text-dark fw-bold{{else}}text-white-50{{/ifEquals}}"
+               {{#ifEquals active 'products'}}aria-current="page"{{/ifEquals}}>
+                <i class="ri-price-tag-3-line align-bottom me-2" aria-hidden="true"></i> Products
+            </a>
+        </li>
+        <li class="nav-item mb-1">
+            <a href="{{webRoot}}/admin-orders.html"
+               class="nav-link {{#ifEquals active 'orders'}}active bg-white text-dark fw-bold{{else}}text-white-50{{/ifEquals}}"
+               {{#ifEquals active 'orders'}}aria-current="page"{{/ifEquals}}>
+                <i class="ri-shopping-bag-3-line align-bottom me-2" aria-hidden="true"></i> Orders
+            </a>
+        </li>
+        <li class="nav-item mb-1">
+            <a href="{{webRoot}}/admin-customers.html"
+               class="nav-link {{#ifEquals active 'customers'}}active bg-white text-dark fw-bold{{else}}text-white-50{{/ifEquals}}"
+               {{#ifEquals active 'customers'}}aria-current="page"{{/ifEquals}}>
+                <i class="ri-user-3-line align-bottom me-2" aria-hidden="true"></i> Customers
+            </a>
+        </li>
+    </ul>
+    <hr class="text-white-50">
+    <a href="{{webRoot}}/index.html" class="nav-link text-white-50 px-3">
+        <i class="ri-store-2-line align-bottom me-2" aria-hidden="true"></i> View the shop
+    </a>
+</nav>
+<!-- / Admin sidebar -->

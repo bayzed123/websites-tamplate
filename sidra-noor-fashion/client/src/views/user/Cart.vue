@@ -67,7 +67,7 @@
                       <td
                         class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
                       >
-                        {{ p.price }} TND
+                        {{ p.price }} BDT
                       </td>
 
                       <td
@@ -100,7 +100,7 @@
           <div class="space-y-3 font-bold border-b pb-3">
             <div class="flex justify-between text-sm">
               <p class="">Subtotal</p>
-              <p class="text-gray-500">{{ total }} TND</p>
+              <p class="text-gray-500">{{ total }} BDT</p>
             </div>
             <div class="flex justify-between text-sm">
               <p class="">Shipping Fee:</p>
@@ -108,7 +108,7 @@
             </div>
             <div class="flex justify-between text-sm">
               <p class="">Estimated Total:</p>
-              <p class="">{{ total }} TND</p>
+              <p class="">{{ total }} BDT</p>
             </div>
           </div>
 
@@ -343,31 +343,21 @@ export default {
     return {
       v$: useValidate(),
       open: false,
+      // Delivery destinations matching the rest of the demo. The template
+      // shipped Tunisian governorates, which contradicted every address,
+      // phone number and price on the surrounding screens.
       states: [
-        { value: "Ariana", name: "Ariana" },
-        { value: "Beja", name: "Béja" },
-        { value: "Ben Arous", name: "Ben Arous" },
-        { value: "Bizerte", name: "Bizerte" },
-        { value: "Gabes", name: "Gabès" },
-        { value: "Gafsa", name: "Gafsa" },
-        { value: "Jendouba", name: "Jendouba" },
-        { value: "Kairouan", name: "Kairouan" },
-        { value: "Kasserine", name: "Kasserine" },
-        { value: "Kebili", name: "Kebili" },
-        { value: "Kef", name: "Kef" },
-        { value: "Mahdia", name: "Mahdia" },
-        { value: "Manouba", name: "Manouba" },
-        { value: "Medenine", name: "Medenine" },
-        { value: "Monastir", name: "Monastir" },
-        { value: "Nabeul", name: "Nabeul" },
-        { value: "Sfax", name: "Sfax" },
-        { value: "Sidi Bouzid", name: "Sidi Bouzid" },
-        { value: "Siliana", name: "Siliana" },
-        { value: "Sousse", name: "Sousse" },
-        { value: "Tataouine", name: "Tataouine" },
-        { value: "Tozeur", name: "Tozeur" },
-        { value: "Tunis", name: "Tunis" },
-        { value: "Zaghouan", name: "Zaghouan" },
+        { value: "Barishal", name: "Barishal" },
+        { value: "Chattogram", name: "Chattogram" },
+        { value: "Cumilla", name: "Cumilla" },
+        { value: "Dhaka", name: "Dhaka" },
+        { value: "Gazipur", name: "Gazipur" },
+        { value: "Khulna", name: "Khulna" },
+        { value: "Mymensingh", name: "Mymensingh" },
+        { value: "Narayanganj", name: "Narayanganj" },
+        { value: "Rajshahi", name: "Rajshahi" },
+        { value: "Rangpur", name: "Rangpur" },
+        { value: "Sylhet", name: "Sylhet" },
       ],
       orderData: {
         fullName: "",

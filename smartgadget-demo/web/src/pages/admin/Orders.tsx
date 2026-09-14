@@ -10,6 +10,7 @@ import {
   ORDER_STATUS_TONE,
   percent,
 } from '../../lib/format';
+import { useSearchParams } from 'react-router-dom';
 import { useToast } from '../../lib/store';
 import type { AdminOrder, CourierConnection, OrderDetail, OrderItem } from '../../lib/types';
 import { Empty, Spinner } from '../../components/ui';
@@ -46,8 +47,14 @@ export function Orders() {
   // Seeded from ?status= once on mount, so a link from the notification bell
   // ("3 orders waiting to be confirmed") lands on the filtered tab directly
   // instead of the unfiltered "All" view.
+  //
+  // Read through react-router, not window.location.search. The demo build is
+  // hash-routed — a static host cannot rewrite /admin/orders — and in a hash
+  // URL the query sits inside the fragment, leaving location.search empty. So
+  // the bell's link silently landed on "All" in the very build a prospect sees.
+  const [searchParams] = useSearchParams();
   const [status, setStatus] = useState(() => {
-    const fromUrl = new URLSearchParams(window.location.search).get('status');
+    const fromUrl = searchParams.get('status');
     return fromUrl && STATUSES.includes(fromUrl) ? fromUrl : 'all';
   });
   const [q, setQ] = useState('');

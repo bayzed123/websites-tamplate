@@ -28,6 +28,13 @@ import { ToastContainer } from "react-toastify";
  * is exactly what it did. The hash never reaches the host, so it works at any
  * depth with nothing to configure.
  */
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminCustomers from "./pages/admin/AdminCustomers";
+import { adminLoader } from "./pages/admin/adminData";
+
 const router = createHashRouter([
   {
     path: "/",
@@ -93,6 +100,24 @@ const router = createHashRouter([
         path:"order-history",
         element: <OrderHistory />
       }
+    ],
+  },
+  {
+    /* The admin sits beside the shop rather than inside it: it has its own
+       chrome, and nesting it under HomeLayout would wrap every screen in the
+       storefront header, footer and newsletter strip.
+
+       One loader for all four screens, so every number on every screen is
+       read from the same fetch of the same catalogue the shop serves. */
+    path: "/admin",
+    element: <AdminLayout />,
+    loader: adminLoader,
+    id: "admin",
+    children: [
+      { index: true, element: <AdminDashboard />, loader: adminLoader },
+      { path: "products", element: <AdminProducts />, loader: adminLoader },
+      { path: "orders", element: <AdminOrders />, loader: adminLoader },
+      { path: "customers", element: <AdminCustomers />, loader: adminLoader },
     ],
   },
 ]);

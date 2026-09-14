@@ -75,8 +75,8 @@
                     <td
                       class="px-5 py-5 text-sm bg-white border-b border-gray-200"
                     >
-                      <a class="text-blue-400" :href="`tel:+216${u.telephone}`"
-                        >+216 {{ _phoneNumberFormat(u.telephone) }}</a
+                      <a class="text-blue-400" :href="`tel:+880${u.telephone}`"
+                        >+880 {{ _phoneNumberFormat(u.telephone) }}</a
                       >
                     </td>
 
@@ -201,8 +201,8 @@
                     {{ order.fullName }}
                   </div>
 
-                  <a class="text-blue-400" :href="`tel:+216${order.telephone}`"
-                    >+216 {{ _phoneNumberFormat(order.telephone) }}</a
+                  <a class="text-blue-400" :href="`tel:+880${order.telephone}`"
+                    >+880 {{ _phoneNumberFormat(order.telephone) }}</a
                   >
                 </div>
                 <div>
@@ -292,7 +292,7 @@
                           class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
                         >
                           <!-- price -->
-                          {{ p.price }} TND
+                          {{ p.price }} BDT
                         </td>
                       </tr>
                     </tbody>

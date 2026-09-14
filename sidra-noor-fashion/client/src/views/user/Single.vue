@@ -16,7 +16,7 @@
         </p>
         <hr />
         <div class="my-3 flex items-center">
-          <h2 class="text-2xl px-2 text-blue-400">{{ product.price }} TND</h2>
+          <h2 class="text-2xl px-2 text-blue-400">{{ product.price }} BDT</h2>
           <p class="px-2 text-sm">Start on: {{ product.createAt }}</p>
         </div>
         <p class="text-sm my-2 leading-5 tracking-wide">
@@ -200,7 +200,7 @@ export default {
     return {
       product: {
         imgUrl:
-          "https://i.pinimg.com/originals/f5/a7/e5/f5a7e5849ba31101a60c242ed6f857e6.gif",
+          "demo-uploads/loader.svg",
       },
       baseUrl: this.$store.state.baseUrl,
       products: [],

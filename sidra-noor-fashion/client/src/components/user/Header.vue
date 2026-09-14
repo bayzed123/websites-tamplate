@@ -4,9 +4,9 @@
       <nav class="px-3  flex justify-between">
           <!-- logo -->
           <router-link to="/" class="logo flex items-center md:px-6 p-2">
-              <img src="img/logo.png" alt="logo" class="w-10">
+              <img src="@/assets/img/logo.png" alt="logo" class="w-10">
               <div>
-                  <span class="uppercase text-4xl hover:rotate-45">Fashion</span>
+                  <span class="uppercase text-4xl hover:rotate-45">Sidra Noor</span>
               </div>
           </router-link>
             <!-- menu -->
