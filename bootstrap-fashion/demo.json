@@ -6,6 +6,7 @@
   "featured": false,
   "tags": [
     "Storefront",
+    "Admin dashboard",
     "Bootstrap 5",
     "Responsive",
     "Checkout flow",
@@ -28,8 +29,9 @@
   },
   "price": "From $100",
   "priceNote": "setup included \u00b7 your branding, products and copy",
-  "access": {
+  "admin": {
     "label": "Admin dashboard",
-    "note": "Linked from the footer of every shop page, or open admin.html directly. No sign-in: this is a static build with no database, so there is nothing behind it for a password to protect."
+    "path": "admin.html",
+    "note": "No sign-in. 4 screens \u2014 dashboard, products, orders, customers."
   }
 }
