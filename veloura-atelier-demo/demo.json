@@ -1,20 +1,30 @@
 {
   "title": "Veloura Atelier",
   "tagline": "A full beauty storefront with its own admin",
-  "description": "A complete beauty and skincare shop for the Bangladeshi market: browse, product detail, cart, checkout, order tracking, customer accounts, printable invoices and a journal — plus the admin dashboard the owner actually runs it from.",
+  "description": "A complete beauty and skincare shop for the Bangladeshi market: browse, product detail, cart, checkout, order tracking, customer accounts, printable invoices and a journal \u2014 plus the admin dashboard the owner actually runs it from.",
   "category": "E-commerce",
   "featured": true,
-  "tags": ["Storefront", "Admin dashboard", "Checkout", "Cloudflare Workers"],
+  "tags": [
+    "Storefront",
+    "Admin dashboard",
+    "Checkout",
+    "Cloudflare Workers"
+  ],
   "highlights": [
     "Ten customer-facing screens, from catalogue to order tracking",
     "Admin dashboard with orders, catalogue and courier booking",
     "Printable invoices and customer accounts",
-    "Mobile-first — built for phones before desktop"
+    "Mobile-first \u2014 built for phones before desktop"
   ],
   "credentials": {
     "label": "Admin dashboard sign-in",
     "username": "admin",
     "password": "demo123",
-    "note": "The dashboard runs in static demo mode here — every order, customer and metric is fictional."
+    "note": "The dashboard runs in static demo mode here \u2014 every order, customer and metric is fictional."
+  },
+  "admin": {
+    "label": "Admin dashboard",
+    "path": "web/admin.html",
+    "note": "Sign in with the demo username and password shown on the card."
   }
 }

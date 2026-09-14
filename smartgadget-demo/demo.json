@@ -17,9 +17,10 @@
     "Edits stick while you browse \u2014 change a price and the revenue and margin move with it",
     "Mobile-first \u2014 built for phones before desktop"
   ],
-  "access": {
+  "entry": "web/dist/index.html",
+  "admin": {
     "label": "Admin dashboard",
-    "note": "No sign-in. This demo has no database and no API: the whole backend is a file in the browser, so an open dashboard shows exactly what reading the source would. Anything you change lives in your tab and resets on reload."
-  },
-  "entry": "web/dist/index.html"
+    "path": "index.html#/admin",
+    "note": "No sign-in. 14 screens \u2014 products, orders, stock, customers, analytics."
+  }
 }

@@ -8,6 +8,7 @@
   "priceNote": "setup included \u00b7 your branding, products and copy",
   "tags": [
     "Storefront",
+    "Admin dashboard",
     "React",
     "Redux",
     "Tailwind",
@@ -22,8 +23,9 @@
     "Runs with no server at all: the whole API answers inside the page"
   ],
   "entry": "dist/index.html",
-  "access": {
+  "admin": {
     "label": "Admin dashboard",
-    "note": "Linked from the footer of every shop page. No sign-in: this build has no database and no API, so there is nothing behind it for a password to protect. Register any email on the shop and the new account shows up in Customers."
+    "path": "index.html#/admin",
+    "note": "No sign-in. 4 screens \u2014 dashboard, products, orders, customers."
   }
 }

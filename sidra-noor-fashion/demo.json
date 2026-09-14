@@ -1,11 +1,11 @@
 {
   "title": "Sidra Noor Fashion",
   "tagline": "A storefront with the back office behind it",
-  "description": "A Vue 3 fashion storefront with the admin dashboard its owner runs it from. The shop side has category pages, product pages, a cart and a checkout; the admin side has eight screens — dashboard, products, orders, customers, messages, staff, profile and a single-product editor. The dashboard opens with no sign-in so you can look straight through it, and every product, order, customer and message in it is invented.",
+  "description": "A Vue 3 fashion storefront with the admin dashboard its owner runs it from. The shop side has category pages, product pages, a cart and a checkout; the admin side has eight screens \u2014 dashboard, products, orders, customers, messages, staff, profile and a single-product editor. The dashboard opens with no sign-in so you can look straight through it, and every product, order, customer and message in it is invented.",
   "category": "E-commerce",
   "featured": true,
   "price": "From $100",
-  "priceNote": "setup included · your branding, products and copy",
+  "priceNote": "setup included \u00b7 your branding, products and copy",
   "tags": [
     "Storefront",
     "Admin dashboard",
@@ -15,14 +15,15 @@
   ],
   "highlights": [
     "Eight admin screens: dashboard, products, orders, customers, messages, staff, profile, product editor",
-    "Admin opens with no password — there is no database behind it to protect",
-    "Edit a product, confirm an order, delete a message — changes stick while you browse",
+    "Admin opens with no password \u2014 there is no database behind it to protect",
+    "Edit a product, confirm an order, delete a message \u2014 changes stick while you browse",
     "Storefront and admin share one catalogue, so what you change in one shows in the other",
     "Runs with no server at all: the whole API answers inside the page"
   ],
   "entry": "client/dist/index.html",
-  "access": {
+  "admin": {
     "label": "Admin dashboard",
-    "note": "No sign-in needed. The Login screen still works if you want to see it, but the dashboard is open — this build has no database and no API, so there is nothing behind it for a password to protect. Anything you change lives in your tab and resets on reload."
+    "path": "index.html#/dashboard",
+    "note": "No sign-in. 8 screens \u2014 products, orders, customers, messages, staff."
   }
 }

@@ -144,6 +144,10 @@ async function readMeta(slug, dir, entryFile) {
     price: typeof meta.price === 'string' ? meta.price : '',
     priceNote: typeof meta.priceNote === 'string' ? meta.priceNote : '',
     credentials: meta.credentials || null,
+    // An admin dashboard a visitor would otherwise never find. The
+    // storefront links to it from its own footer, but nothing on this hub
+    // did, so from the grid the dashboards may as well not have existed.
+    admin: meta.admin && meta.admin.path ? meta.admin : null,
     featured: Boolean(meta.featured),
   };
 }
@@ -399,6 +403,11 @@ p{margin:0;line-height:1.65;color:var(--soft)}
 .card-open{color:var(--emerald);font-weight:600;font-size:.88rem;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
 .card-raw{color:var(--dim);font-size:.82rem;text-decoration:none}
 .card-raw:hover{color:var(--paper)}
+/* Gold, like the credentials pill, because it is the same kind of information:
+   a way in that a visitor would not guess from the storefront. */
+.card-admin{color:var(--gold);font-size:.82rem;text-decoration:none;border:1px solid rgba(212,175,106,.32);
+  border-radius:7px;padding:4px 10px;white-space:nowrap;transition:all .2s}
+.card-admin:hover{border-color:var(--gold);background:rgba(212,175,106,.1)}
 .empty{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:.85rem}
 
 /* footer */
@@ -531,6 +540,15 @@ function renderCard(demo) {
     ? `<p class="price"><b>${htmlEscape(demo.price)}</b>${demo.priceNote ? ` <span>${htmlEscape(demo.priceNote)}</span>` : ''}</p>`
     : '';
 
+  // Opened raw, in a new tab, NOT through /d/<slug>/. Every one of these admins
+  // is hash-routed, and the viewer shows the demo in an iframe — a hash on the
+  // outer page never reaches the frame, so a viewer link would land on the shop
+  // rather than the dashboard.
+  const adminLink = demo.admin
+    ? `<a class="card-admin" href="/demos/${demo.slug}/${demo.admin.path}" target="_blank" rel="noopener"
+         title="${htmlEscape(demo.admin.note || '')}">${htmlEscape(demo.admin.label || 'Admin dashboard')} ↗</a>`
+    : '';
+
   return `<article class="card${featured}" data-category="${htmlEscape(demo.category)}" data-search="${htmlEscape(`${demo.title} ${demo.category} ${demo.tags.join(' ')} ${demo.description}`.toLowerCase())}">
   <a class="shot" href="${viewer}" aria-label="Open the ${htmlEscape(demo.title)} demo">
     <span class="fallback">${htmlEscape(demo.title)}</span>
@@ -548,6 +566,7 @@ function renderCard(demo) {
     ${creds}
     <div class="card-foot">
       <a class="card-open" href="${viewer}">Open demo <span class="arrow">→</span></a>
+      ${adminLink}
       <a class="card-raw" href="${raw}" target="_blank" rel="noopener">Open raw ↗</a>
     </div>
   </div>
@@ -669,6 +688,11 @@ function renderViewer(demo, pages, slugs, current) {
   const pageName = pageLabel(current, demo.entryFile);
   const creds = demo.credentials
     ? `<span class="vb-creds mono" title="${htmlEscape(demo.credentials.note || '')}">${htmlEscape(demo.credentials.username || '')} / ${htmlEscape(demo.credentials.password || '')}</span>` : '';
+  // Same reasoning as the card: raw and in a new tab, because the demo runs in
+  // an iframe here and a hash route cannot be driven from the page around it.
+  const adminBtn = demo.admin
+    ? `<a class="vb-btn" href="/demos/${demo.slug}/${demo.admin.path}" target="_blank" rel="noopener"
+         title="${htmlEscape(demo.admin.note || '')}">${htmlEscape(demo.admin.label || 'Admin dashboard')} ↗</a>` : '';
 
   return `<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -722,6 +746,7 @@ html,body{height:100%;overflow:hidden}
     <span class="vb-right">
       <button class="vb-btn" id="deskBtn" aria-pressed="true">Desktop</button>
       <button class="vb-btn" id="mobBtn" aria-pressed="false">Mobile</button>
+      ${adminBtn}
       <a class="vb-btn" id="rawLink" href="${src}" target="_blank" rel="noopener">Open raw ↗</a>
       <a class="vb-btn vb-order" href="${SITE.order}&amp;utm_content=${encodeURIComponent(demo.slug)}" data-order="viewer-bar" data-order-item="${htmlEscape(demo.title)}">Order this</a>
     </span>
