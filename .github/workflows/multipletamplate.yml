@@ -81,6 +81,14 @@ jobs:
         # the path a visitor takes: card link, then what the link opens.
         run: node tests/hub-admin-links.mjs site
 
+      - name: Check the rating panel is wired and hidden
+        # Only the half that needs no backend — CI does not run the Worker, so
+        # the rating and comment round-trips are skipped here and run locally.
+        # What this catches is the bug that actually shipped: display:flex beats
+        # the hidden attribute, so the panel covered 470px of every viewer and
+        # swallowed the clicks that landed on it.
+        run: node tests/demo-feedback.mjs
+
       - name: Check the hub measures nobody without permission
         run: node tests/hub-tracking.mjs site
 

@@ -68,6 +68,52 @@ function reset() {
     console.log('  note: could not reset the local tables (set WORKER_DIR).');
   }
 }
+
+/* --------------------------------------------------------------------------
+   The half that needs no backend.
+
+   CI builds the hub but does not run the Worker, so everything below the
+   divider would have to be skipped there — and a suite that skips everything
+   in CI protects nothing. These checks are about the published markup and CSS,
+   which is where the worst bug so far actually lived: the panel was covering
+   470px of every viewer and eating the clicks that landed on it, and no API
+   was involved in that at all.
+   -------------------------------------------------------------------------- */
+{
+  const { readFileSync } = await import('node:fs');
+  const home = readFileSync('site/index.html', 'utf8');
+  const viewer = readFileSync(`site/d/${SLUG}/index.html`, 'utf8');
+
+  console.log('\n== the published pages carry the widget ==');
+  ok('the home grid loads the script', home.includes('/assets/demo-feedback.js'));
+  ok('and every card has a slot for its rating',
+    (home.match(/data-demo-rating="/g) || []).length >= 5,
+    `found ${(home.match(/data-demo-rating="/g) || []).length}`);
+  ok('the viewer loads it too', viewer.includes('/assets/demo-feedback.js'));
+  ok('and offers a way to rate', viewer.includes('data-demo-feedback='));
+
+  // The regression that cost the most. Without this rule display:flex beats
+  // the hidden attribute and the panel is open on every page load.
+  ok('a hidden panel is actually hidden',
+    /\.df-panel\[hidden\][^}]*display:\s*none\s*!important/.test(viewer),
+    'the [hidden] override is missing from the viewer stylesheet');
+
+  ok('the honeypot is off-screen, not display:none',
+    /\.df-hp\{[^}]*left:-9999px/.test(viewer),
+    'a bot that skips display:none fields walks past a honeypot it cannot see');
+}
+
+if (!(await fetch(`${LOCAL_API}/api/console/health`).then((r) => r.ok).catch(() => false))) {
+  console.log('\n  skip the rating and comment checks need the Worker running:');
+  console.log('       cd ../bayezid-agency-worker && npx wrangler dev --local --port 8787');
+  console.log(`\n${pass} passed, ${fail} failed, backend checks skipped`);
+  process.exit(fail ? 1 : 0);
+}
+
+// Only now, with the Worker confirmed up. Calling it earlier would run
+// `npx wrangler` in CI, where wrangler is not installed and npx would try to
+// fetch it — a test that reaches the network to set up a check it is about to
+// skip.
 reset();
 
 const browser = await chromium.launch(
