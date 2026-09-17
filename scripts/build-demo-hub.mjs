@@ -408,6 +408,83 @@ p{margin:0;line-height:1.65;color:var(--soft)}
 .card-admin{color:var(--gold);font-size:.82rem;text-decoration:none;border:1px solid rgba(212,175,106,.32);
   border-radius:7px;padding:4px 10px;white-space:nowrap;transition:all .2s}
 .card-admin:hover{border-color:var(--gold);background:rgba(212,175,106,.1)}
+
+/* The card's rating. Hidden until the number arrives and left hidden if it
+   never does — a card showing "0.0" reads as a bad demo rather than a demo
+   nobody has rated yet, which is the opposite of true and worse than silent. */
+.card-rating{margin-left:auto;display:inline-flex;align-items:center;gap:5px;
+  font-size:.76rem;color:var(--paper);font-family:'JetBrains Mono',monospace}
+.card-rating .dr-star{color:var(--gold)}
+.card-rating .dr-count{color:var(--dim)}
+
+/* --- the feedback panel -------------------------------------------------
+   Used on the viewer, where the demo fills the screen in an iframe and there
+   is nowhere to put a form. A panel that slides in over it is the only shape
+   that does not either shrink the demo or push it off the page. */
+.df-scrim{position:fixed;inset:0;background:rgba(5,9,7,.72);backdrop-filter:blur(3px);z-index:300}
+.df-panel{position:fixed;top:0;right:0;bottom:0;width:min(470px,100%);z-index:301;
+  background:var(--surface);border-left:1px solid var(--line);
+  display:flex;flex-direction:column;gap:22px;padding:22px;overflow-y:auto;
+  box-shadow:-24px 0 60px rgba(0,0,0,.5)}
+/* The hidden ATTRIBUTE is only display:none from the user-agent stylesheet,
+   and ANY author display rule outranks it. (No backticks in this comment: the
+   whole stylesheet is a JS template literal, and one would end it.)
+   Without this line the
+   flex rule above wins and the panel is permanently open — covering the right
+   470px of the viewer and swallowing every click that lands there, including
+   the button meant to open it. Caught by tests/demo-feedback.mjs, which could
+   not click "Rate" because the panel it was supposed to open was already in
+   front of it. */
+.df-panel[hidden],.df-scrim[hidden]{display:none!important}
+body.df-open{overflow:hidden}
+.df-head{display:flex;align-items:flex-start;gap:14px}
+.df-head h2{font-size:1.12rem;line-height:1.35}
+.df-close{margin-left:auto;background:none;border:0;color:var(--soft);font-size:1.7rem;
+  line-height:1;cursor:pointer;padding:0 4px}
+.df-close:hover{color:var(--paper)}
+
+.df-rate{display:flex;flex-direction:column;gap:9px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.df-stars{display:flex;gap:4px}
+.df-star{background:none;border:0;cursor:pointer;padding:2px;font-size:1.85rem;line-height:1;
+  color:var(--line);transition:color .15s,transform .15s var(--ease)}
+.df-star.on{color:var(--gold)}
+.df-star.preview{transform:translateY(-2px)}
+.df-summary{font-size:.84rem;color:var(--soft);margin:0}
+
+.df-comments h3{font-family:Fraunces,Georgia,serif;font-size:1rem;margin:0 0 12px}
+.df-list{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:14px}
+.df-comment{border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:var(--raised)}
+.df-meta{display:flex;align-items:baseline;gap:9px;margin-bottom:5px}
+.df-meta strong{font-size:.86rem}
+.df-meta time{font-size:.7rem;color:var(--dim);font-family:'JetBrains Mono',monospace}
+.df-comment p{font-size:.86rem;margin:0}
+/* An owner reply is the most persuasive thing on this panel — the person who
+   built it answered — so it is marked rather than left to look like another
+   visitor's comment. */
+.df-reply{margin-top:10px;padding-left:12px;border-left:2px solid var(--emerald)}
+.df-reply strong{font-size:.78rem;color:var(--emerald);display:block;margin-bottom:3px}
+.df-empty{font-size:.84rem;color:var(--dim);margin:0 0 14px}
+
+.df-form{display:flex;flex-direction:column;gap:12px}
+.df-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:460px){.df-row{grid-template-columns:1fr}}
+.df-field{display:flex;flex-direction:column;gap:5px}
+.df-field label{font-size:.74rem;color:var(--soft)}
+.df-field input,.df-field textarea{background:var(--void);color:var(--paper);
+  border:1px solid var(--line);border-radius:9px;padding:9px 11px;font:inherit;font-size:.86rem;width:100%}
+.df-field textarea{min-height:92px;resize:vertical}
+.df-field input:focus,.df-field textarea:focus{outline:none;border-color:var(--emerald)}
+.df-hint{font-size:.7rem;color:var(--dim)}
+/* Off-screen rather than display:none — a bot that skips hidden fields would
+   walk straight past a honeypot it cannot see. */
+.df-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.df-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.df-submit{background:var(--emerald);color:var(--void);border:0;border-radius:9px;
+  padding:9px 20px;font-weight:600;font-size:.86rem;cursor:pointer}
+.df-submit:disabled{opacity:.55;cursor:not-allowed}
+.df-status{font-size:.8rem;margin:0}
+.df-status.ok{color:var(--emerald)}
+.df-status.warn{color:#E5735F}
 .empty{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:.85rem}
 
 /* footer */
@@ -556,7 +633,7 @@ function renderCard(demo) {
          onerror="this.style.display='none'">
   </a>
   <div class="card-body">
-    <div class="card-top"><span class="pill">Live</span><span class="cat">${htmlEscape(demo.category)}</span></div>
+    <div class="card-top"><span class="pill">Live</span><span class="cat">${htmlEscape(demo.category)}</span><span class="card-rating" data-demo-rating="${demo.slug}" hidden></span></div>
     <h2>${htmlEscape(demo.title)}</h2>
     ${tagline}
     ${price}
@@ -655,6 +732,7 @@ ${footer()}
   setCount(cards.length);
 })();
 </script>
+<script src="/assets/demo-feedback.js" defer></script>
 </body></html>`;
 }
 
@@ -747,6 +825,7 @@ html,body{height:100%;overflow:hidden}
       <button class="vb-btn" id="deskBtn" aria-pressed="true">Desktop</button>
       <button class="vb-btn" id="mobBtn" aria-pressed="false">Mobile</button>
       ${adminBtn}
+      <button class="vb-btn vb-rate" data-demo-feedback="${demo.slug}" data-demo-title="${htmlEscape(demo.title)}">★ Rate</button>
       <a class="vb-btn" id="rawLink" href="${src}" target="_blank" rel="noopener">Open raw ↗</a>
       <a class="vb-btn vb-order" href="${SITE.order}&amp;utm_content=${encodeURIComponent(demo.slug)}" data-order="viewer-bar" data-order-item="${htmlEscape(demo.title)}">Order this</a>
     </span>
@@ -785,6 +864,7 @@ html,body{height:100%;overflow:hidden}
   if(new URLSearchParams(location.search).get('view')==='mobile')mode(true);
 })();
 </script>
+<script src="/assets/demo-feedback.js" defer></script>
 </body></html>`;
 }
 
