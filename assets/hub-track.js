@@ -1,23 +1,37 @@
 /**
- * Demo hub behaviour tracking, behind a permission banner.
+ * Demo hub behaviour tracking.
  *
- * Two jobs, in this order:
+ * THE TWO VENDORS ARE GATED DIFFERENTLY, AND THAT IS THE POINT OF THIS FILE.
  *
- *   1. ASK. Nothing reaches Google or Meta until the banner is answered —
- *      not a beacon, not a script, not a DNS lookup. No tag is loaded at all
- *      until then; loadTags() below injects them at the moment consent is
- *      granted, and never otherwise.
+ *   META runs on arrival. The Pixel and the Conversions API are how this
+ *   business finds out whether the demos produce work — which demo someone
+ *   opened, how long they stayed, whether they went on to ask for a build.
+ *   A banner that most visitors dismiss without reading does not produce
+ *   consent; it produces a measurement gap that makes every campaign decision
+ *   worse. It is loaded from boot(), never from the banner, so the banner can
+ *   never delay it.
  *
- *      Loading them up front with Consent Mode set to denied is the more
- *      common build and is NOT good enough: GA4 still sends a cookieless ping
- *      on every page so Google can model the conversions it is not allowed to
- *      measure. Our own test caught that happening after a visitor pressed
- *      "No thanks".
+ *   GOOGLE still waits for a yes. Nothing is lost by asking: GA4 answers
+ *   "how many and from where", which is useful and is not what an ad campaign
+ *   is optimised against. And loading gtag.js up front with Consent Mode set
+ *   to denied is NOT good enough — GA4 still sends a cookieless ping on every
+ *   page so Google can model the conversions it is not allowed to measure.
+ *   Our own test caught that happening after a visitor pressed "No thanks".
  *
- *   2. MEASURE. Once allowed, report what a visitor actually did here —
- *      which demos they opened, how long they stayed inside one, whether they
- *      clicked through to order. A page_view alone cannot tell you whether
- *      the hub sells anything.
+ * WHAT MAKES THE FIRST HALF DEFENSIBLE IS THE WAY OUT.
+ * "Always on" with no way to stop it is surveillance with a privacy policy
+ * attached. So there is a real one: a link in the banner, a permanent link in
+ * the footer, #stop-tracking on any hub URL, and hubTrack.optOut(). It stops
+ * the Pixel AND the server events, removes the script elements from the page
+ * so nothing else can reach Meta through them, and is remembered with no
+ * expiry — a consent answer goes stale after six months so it can be asked
+ * again, a refusal does not.
+ *
+ * Under EU/UK ePrivacy an advertising pixel needs consent before it loads, and
+ * Meta's Business Tools Terms put that obligation on the site owner. This
+ * arrangement assumes an audience that is not primarily in those
+ * jurisdictions; TRACKING.metaAlwaysOn in scripts/hub-tracking.mjs is the one
+ * switch that puts Meta back behind the banner.
  *
  * ORGANIC AND ADS ARE MEASURED THE SAME WAY. Same events, same parameters,
  * one code path. They are told apart by `traffic_type`, worked out once from
@@ -25,8 +39,11 @@
  * who lands from an ad and then clicks four internal links is still "ads" on
  * the fourth click, which is the only way the numbers mean anything.
  *
- * Declining is honoured, not worked around: with consent denied this file
- * sends nothing at all. There is no "anonymous" fallback stream.
+ * Every Meta event also goes server-side through the backend's /api/track
+ * under the same event_id, so the pair is collapsed into one action and an
+ * ad-blocked visitor is still measured. browser_fired reports whether fbq()
+ * really ran, which is the only thing that distinguishes "blocked" from
+ * "fine" — the server half succeeds either way.
  */
 (function () {
   'use strict';
@@ -142,9 +159,37 @@
     return stored.granted;
   }
 
+  /* ---------------------------------------------------------------- opt-out
+     The one switch that turns everything off, including Meta.
+
+     "Measurement runs by default" is only defensible if there is a real way
+     out, so this is it: a link in the banner, a permanent link in the footer,
+     the #stop-tracking hash on any hub URL, and hubTrack.optOut(). Choosing it
+     stops the Pixel and the server events immediately — not at the next page
+     load — and is remembered with no expiry. A consent answer goes stale after
+     six months on purpose; a refusal does not, because asking someone again
+     and again until they say yes is the thing this is supposed to not be. */
+
+  var OPTOUT_KEY = 'hub.optout.v1';
+
+  function optedOut() {
+    var stored = read(OPTOUT_KEY);
+    return Boolean(stored && stored.out === true);
+  }
+
+  var refused = optedOut();
+
+  /** Whether Meta may run at all: configured, not switched off by the visitor,
+   *  and either always-on or covered by a granted consent answer. */
+  function metaAllowed() {
+    if (refused || !CFG.pixel) return false;
+    return CFG.metaAlwaysOn === true || consentState() === true;
+  }
+
   var allowed = consentState() === true;
 
-  var tagsLoaded = false;
+  var googleLoaded = false;
+  var metaLoaded = false;
 
   function inject(src) {
     var el = document.createElement('script');
@@ -154,16 +199,16 @@
   }
 
   /**
-   * Fetch the tag libraries. Only ever called with consent in hand.
+   * Google's libraries. Only ever called with consent in hand.
    *
    * gtag() already exists as the standard stub that queues into dataLayer, so
    * the consent update, the config and any events pushed here are replayed in
    * order the moment gtag.js finishes loading. That is what lets an event
    * raised while the banner was open still arrive correctly attributed.
    */
-  function loadTags() {
-    if (tagsLoaded) return;
-    tagsLoaded = true;
+  function loadGoogle() {
+    if (googleLoaded) return;
+    googleLoaded = true;
 
     if (CFG.ga4) {
       window.gtag('js', new Date());
@@ -177,28 +222,59 @@
       window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
       inject('https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(CFG.gtm));
     }
+  }
 
-    if (CFG.pixel) {
-      /* Meta's own loader stub, minus the script injection it normally does —
-         inject() does that — so fbq queues until fbevents.js arrives. */
-      if (!window.fbq) {
-        var n = (window.fbq = function () {
-          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-        });
-        if (!window._fbq) window._fbq = n;
-        n.push = n;
-        n.loaded = true;
-        n.version = '2.0';
-        n.queue = [];
-        inject('https://connect.facebook.net/en_US/fbevents.js');
-      }
-      window.fbq('init', CFG.pixel);
+  /**
+   * Meta's library, loaded on arrival rather than on an answer.
+   *
+   * Two details matter here and neither is cosmetic.
+   *
+   * The script comes from the backend's /api/pixel.js, not from
+   * connect.facebook.net, because every mainstream blocklist carries a rule
+   * for that hostname — and when it matches, fbq() stays a stub and the
+   * browser half of every event disappears with no error anywhere. If our
+   * proxy is unreachable the page falls back to Meta's own copy, which is
+   * where every site starts.
+   *
+   * And this is called from boot(), never from the banner, so the banner
+   * cannot delay it. A consent dialog that holds the Pixel for 900ms while it
+   * waits to be dismissed is a measurement gap dressed as a privacy control.
+   */
+  function loadMeta() {
+    if (metaLoaded || !metaAllowed()) return;
+    metaLoaded = true;
+
+    /* Meta's own loader stub, minus the script injection it normally does —
+       inject() does that — so fbq queues until fbevents.js arrives. */
+    if (!window.fbq) {
+      var n = (window.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      });
+      if (!window._fbq) window._fbq = n;
+      n.push = n;
+      n.loaded = true;
+      n.version = '2.0';
+      n.queue = [];
+
+      var el = document.createElement('script');
+      el.async = true;
+      el.src = (CFG.apiBase || '') + '/api/pixel.js';
+      el.onerror = function () { inject('https://connect.facebook.net/en_US/fbevents.js'); };
+      document.head.appendChild(el);
     }
+    window.fbq('init', CFG.pixel);
+  }
+
+  /** Is the real library running, or is it still our stub? The stub above
+   *  deliberately does not define callMethod; fbevents.js does. That is the
+   *  only honest way to tell an ad-blocker from a healthy page. */
+  function pixelIsLive() {
+    return typeof window.fbq === 'function' && typeof window.fbq.callMethod === 'function';
   }
 
   function applyConsent(granted) {
     allowed = granted;
-    if (!granted) return; // nothing is loaded, so there is nothing to tell
+    if (!granted) return; // nothing Google-side is loaded, so nothing to tell
 
     window.gtag('consent', 'update', {
       ad_storage: 'granted',
@@ -206,7 +282,41 @@
       ad_personalization: 'granted',
       analytics_storage: 'granted',
     });
-    loadTags();
+    loadGoogle();
+  }
+
+  /**
+   * Turn everything off, now and in future.
+   *
+   * Removes the script elements as well as setting the flag. Leaving
+   * fbevents.js in the page after someone asked to be left alone would mean
+   * the next fbq() call in any other code still reached Meta — the flag would
+   * be a promise this file made and could not keep.
+   */
+  function optOut() {
+    refused = true;
+    write(OPTOUT_KEY, { out: true, at: Date.now(), v: 1 });
+    write(CONSENT_KEY, { granted: false, at: Date.now(), v: 1 });
+    allowed = false;
+    // `queue` is declared below and hoisted, so it exists but may still be
+    // undefined if this somehow ran before the events section was evaluated.
+    if (queue) queue.length = 0;
+
+    try {
+      var scripts = document.querySelectorAll(
+        'script[src*="fbevents.js"],script[src*="/api/pixel.js"],' +
+        'script[src*="googletagmanager.com"]');
+      for (var i = 0; i < scripts.length; i++) {
+        if (scripts[i].parentNode) scripts[i].parentNode.removeChild(scripts[i]);
+      }
+      // fbq stays defined so unrelated code calling it does not throw — it
+      // simply stops doing anything.
+      window.fbq = function () {};
+      window.fbq.queue = [];
+    } catch (err) {
+      /* a page that will not let us tidy up is still opted out */
+    }
+    return true;
   }
 
   /* ---------------------------------------------------------------- events */
@@ -249,11 +359,30 @@
     if (ATTR.utm_campaign) payload.utm_campaign = ATTR.utm_campaign;
     payload.event_id = payload.event_id || uuid();
 
+    /* Meta first, and independently of the banner.
+       The two destinations are gated differently now: Meta runs on arrival
+       (unless the visitor opted out), Google waits for a yes. Handling them in
+       one branch was what made the old version hold BOTH behind the answer. */
+    var metaName = META_NAMES[name];
+    if (metaName && metaAllowed()) {
+      try {
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', metaName, payload, { eventID: payload.event_id });
+        }
+      } catch (err) {
+        /* a blocked tag is not the visitor's problem */
+      }
+      // The server half, under the same id, so Meta collapses the pair into
+      // one action. This is what keeps an ad-blocked visitor measurable — the
+      // browser call above is exactly the one a blocker stops.
+      sendServerCopy(metaName, payload);
+    }
+
     if (!allowed) {
-      // Held, not dropped: if the banner is accepted a moment later, the
-      // page_view that happened before the click still gets reported, which
-      // is what makes the first session's funnel complete. Nothing is on the
-      // wire in the meantime — the libraries are not even loaded.
+      // Google only. Held, not dropped: if the banner is accepted a moment
+      // later, the page_view that happened before the click still gets
+      // reported, which is what makes the first session's funnel complete.
+      // Nothing Google-side is on the wire meanwhile — gtag.js is not loaded.
       if (queue.length < 40) queue.push([name, payload]);
       return;
     }
@@ -263,12 +392,48 @@
       if (window.dataLayer && typeof window.dataLayer.push === 'function') {
         window.dataLayer.push({ event: 'hub_' + name, hub: payload });
       }
-      var metaName = META_NAMES[name];
-      if (metaName && typeof window.fbq === 'function') {
-        window.fbq('track', metaName, payload, { eventID: payload.event_id });
-      }
     } catch (err) {
       /* a blocked tag is not the visitor's problem */
+    }
+  }
+
+  /** Read a cookie this page can see. fbevents.js writes _fbp and _fbc on this
+   *  domain; the Worker cannot read them across origins, so they travel in the
+   *  body instead. */
+  function cookie(name) {
+    var parts = ('; ' + document.cookie).split('; ' + name + '=');
+    return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  }
+
+  /**
+   * The Conversions API half of a hub event.
+   *
+   * Never throws into the page and never blocks it. browser_fired reports
+   * whether fbq() really ran, which is the difference between "this visitor
+   * had an ad-blocker" and "everything is fine" — indistinguishable from the
+   * server side alone, because the server half succeeds either way.
+   */
+  function sendServerCopy(metaName, payload) {
+    if (!CFG.apiBase || refused) return;
+    try {
+      fetch(CFG.apiBase + '/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // The request may outlive the page: order_click is a click that
+        // navigates away, and it is the event that matters most.
+        keepalive: true,
+        body: JSON.stringify({
+          event_name: metaName,
+          event_id: payload.event_id,
+          event_source_url: location.href,
+          custom_data: payload,
+          user_data: { fbp: cookie('_fbp'), fbc: cookie('_fbc') },
+          browser_fired: pixelIsLive(),
+          source: 'browser'
+        })
+      }).catch(function () {});
+    } catch (err) {
+      /* no fetch, or a CSP that blocks it */
     }
   }
 
@@ -300,6 +465,29 @@
     if (el && el.parentNode) el.parentNode.removeChild(el);
   }
 
+  /**
+   * Say that the opt-out took effect.
+   *
+   * A control that silently does nothing visible is indistinguishable from one
+   * that is broken, and this is the control a sceptical visitor is most likely
+   * to be testing. It says what stopped, and it goes away on its own.
+   */
+  function confirmOptOut() {
+    var note = document.createElement('div');
+    note.id = 'hub-optout-note';
+    note.setAttribute('role', 'status');
+    note.textContent = 'Measurement is off for this browser. Nothing more is sent.';
+    note.style.cssText =
+      'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:9999;' +
+      'background:#0A0F0D;color:#E6EFEA;border:1px solid rgba(0,208,132,.4);border-radius:10px;' +
+      'padding:11px 18px;font:500 14px/1.4 system-ui,-apple-system,Segoe UI,sans-serif;' +
+      'box-shadow:0 10px 30px rgba(0,0,0,.4);max-width:calc(100% - 32px);text-align:center';
+    document.body.appendChild(note);
+    setTimeout(function () {
+      if (note.parentNode) note.parentNode.removeChild(note);
+    }, 6000);
+  }
+
   function decide(granted) {
     write(CONSENT_KEY, { granted: granted, at: Date.now(), v: 1 });
     applyConsent(granted);
@@ -320,15 +508,25 @@
     wrap.setAttribute('role', 'dialog');
     wrap.setAttribute('aria-live', 'polite');
     wrap.setAttribute('aria-label', 'Cookies and measurement');
+    /* The copy has to match what actually happens, or the banner is a lie
+       with buttons on it. Advertising measurement is already running by the
+       time this appears, so it says so, and it offers the switch that turns it
+       off rather than implying "No thanks" would. */
+    var metaLine = CFG.metaAlwaysOn
+      ? 'Advertising measurement is already on, so we can tell which demos lead to real work. ' +
+        'You can switch it off completely, any time.'
+      : 'Analytics and advertising cookies only — say no and the site works exactly the same.';
+
     wrap.innerHTML =
       '<div class="hub-consent-in">' +
       '<p class="hub-consent-text"><strong>Can we see how you use these demos?</strong> ' +
       'We measure which demos get opened and how long people stay, so we know which builds are worth making. ' +
-      'Analytics and advertising cookies only — say no and the site works exactly the same.' +
+      metaLine +
       (CFG.privacyUrl ? ' <a class="hub-consent-link" href="' + CFG.privacyUrl + '" target="_blank" rel="noopener">What we collect</a>' : '') +
+      ' <a class="hub-consent-link" href="#" data-consent="off">Stop all measurement</a>' +
       '</p>' +
       '<div class="hub-consent-actions">' +
-      '<button type="button" class="hub-consent-btn hub-consent-no" data-consent="no">No thanks</button>' +
+      '<button type="button" class="hub-consent-btn hub-consent-no" data-consent="no">No analytics</button>' +
       '<button type="button" class="hub-consent-btn hub-consent-yes" data-consent="yes">Allow</button>' +
       '</div></div>';
 
@@ -355,7 +553,15 @@
     wrap.addEventListener('click', function (event) {
       var btn = event.target.closest ? event.target.closest('[data-consent]') : null;
       if (!btn) return;
-      decide(btn.getAttribute('data-consent') === 'yes');
+      var answer = btn.getAttribute('data-consent');
+      if (answer === 'off') {
+        event.preventDefault();
+        optOut();
+        dismissBanner();
+        confirmOptOut();
+        return;
+      }
+      decide(answer === 'yes');
     });
 
     document.head.appendChild(style);
@@ -440,8 +646,49 @@
 
   /* ------------------------------------------------------------------ boot */
 
+  /**
+   * The permanent way out, for someone who dismissed the banner months ago.
+   *
+   * An opt-out that only exists inside a banner shown for 900ms on a first
+   * visit is not a way out, it is a formality. Any hub URL ending
+   * #stop-tracking does it, so the link can be put in a footer, an email, or a
+   * privacy page and it will work from all three.
+   */
+  function wireOptOutLink() {
+    var hash = CFG.optOutHash || '#stop-tracking';
+
+    function maybeOptOut() {
+      if (location.hash !== hash) return;
+      optOut();
+      confirmOptOut();
+      // Clear the hash so a refresh does not re-fire the confirmation, and so
+      // the URL a visitor might share does not silently opt out whoever opens
+      // it — that would be the same disrespect in the other direction.
+      if (window.history && history.replaceState) {
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+    }
+
+    maybeOptOut();
+    window.addEventListener('hashchange', maybeOptOut);
+
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest ? event.target.closest('a[href$="' + hash + '"]') : null;
+      if (!link) return;
+      event.preventDefault();
+      optOut();
+      confirmOptOut();
+    }, true);
+  }
+
   function boot() {
+    /* Meta first, and before anything that could delay it — not from the
+       banner, not after a timer. If the visitor has opted out, metaAllowed()
+       is false and nothing loads at all. */
+    loadMeta();
+
     applyConsent(allowed);
+    wireOptOutLink();
 
     var base = { page_type: PAGE.page_type, page_path: location.pathname };
     if (PAGE.demo_slug) base.demo_slug = PAGE.demo_slug;
@@ -451,7 +698,8 @@
 
     wireBehaviour();
 
-    if (consentState() === null) {
+    // Nothing to ask someone who has already said no to everything.
+    if (!refused && consentState() === null) {
       // Let the page finish painting first. A banner that appears on top of a
       // half-drawn page reads as an error, and it is the first thing a client
       // sees when they open the hub.
@@ -464,5 +712,18 @@
 
   // Exposed so a page can report something the generic wiring cannot see, and
   // so the tests have something to call.
-  window.hubTrack = { fire: fire, attribution: function () { return ATTR; }, page: PAGE, consent: consentState };
+  window.hubTrack = {
+    fire: fire,
+    attribution: function () { return ATTR; },
+    page: PAGE,
+    consent: consentState,
+    /** Turns everything off, including Meta, and remembers it. */
+    optOut: optOut,
+    optedOut: function () { return refused; },
+    /** What is actually running right now, for the tests and for anyone
+     *  checking that the page does what the banner says it does. */
+    state: function () {
+      return { meta: metaAllowed(), google: allowed, optedOut: refused, pixelLive: pixelIsLive() };
+    }
+  };
 })();

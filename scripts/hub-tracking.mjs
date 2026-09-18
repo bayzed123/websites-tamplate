@@ -65,6 +65,50 @@ export const TRACKING = {
   privacyUrl: 'https://sayadbayezid.com/privacy-policy.html',
 
   /**
+   * The backend. Used for the server half of every Meta event, so a visitor
+   * whose Pixel is blocked is still measured.
+   */
+  apiBase: 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev',
+
+  /**
+   * MEASUREMENT RUNS BY DEFAULT. Google still asks.
+   *
+   * This is a deliberate split, and the reasoning is worth writing down
+   * because the two halves are not the same kind of thing.
+   *
+   * Meta's Pixel and the Conversions API are how this business finds out
+   * whether the demos produce work — which demo someone opened, how long they
+   * stayed, whether they went on to ask for a build. A banner that most
+   * visitors dismiss without reading does not produce consent; it produces a
+   * measurement gap that makes every campaign decision worse. So Meta runs on
+   * arrival, and anyone who does not want it has a real way out (below) rather
+   * than a checkbox they had to answer in the first 900ms of a visit.
+   *
+   * Google Analytics stays behind the banner. Nothing is lost by asking: GA4
+   * answers "how many and from where", which is useful and is not what an ad
+   * campaign is optimised against.
+   *
+   * WHAT THIS ASSUMES, STATED PLAINLY. Under EU/UK ePrivacy, advertising
+   * pixels need consent before they load, and Meta's Business Tools Terms put
+   * that obligation on the site owner rather than on Meta. This setting is
+   * right for an audience that is not primarily in those jurisdictions. To
+   * restore the gate, set this to false: the banner then covers Meta again and
+   * nothing else needs changing.
+   */
+  metaAlwaysOn: true,
+
+  /**
+   * How a visitor turns it off.
+   *
+   * "Always on" is only defensible with a working way out, so there is one —
+   * a link in the banner, a permanent link in the footer, and
+   * hubTrack.optOut() for anything else. It stops the Pixel, stops the server
+   * events, and is remembered. It is not a dark pattern in the shape of a
+   * choice: choosing it removes the tags from the page immediately.
+   */
+  optOutHash: '#stop-tracking',
+
+  /**
    * How long a consent answer is honoured before the banner asks again.
    * Six months: long enough not to nag, short enough that a stale "yes" from
    * a year ago is not treated as a current one.
@@ -81,24 +125,30 @@ export const hasGtm = () => isSet(TRACKING.gtmContainerId);
 /**
  * Everything that runs before the page paints — and it reaches no network.
  *
- * WHY NO TAG LOADS HERE. The obvious build of this sets Google Consent Mode to
- * denied, loads gtag.js anyway, and lets the consent signal do the rest. That
- * is "advanced" consent mode, and it is not what "we do not track you unless
- * you say yes" means: with consent denied GA4 still sends a cookieless ping to
- * google-analytics.com on every page, carrying no identifier but telling
- * Google the visit happened so conversions can be modelled. Our own test
- * caught exactly that — a /g/collect with gcs=G100 after the visitor had
- * pressed "No thanks".
+ * WHY NO GOOGLE TAG LOADS HERE. The obvious build of this sets Google Consent
+ * Mode to denied, loads gtag.js anyway, and lets the consent signal do the
+ * rest. That is "advanced" consent mode, and it is not what "we do not track
+ * you unless you say yes" means: with consent denied GA4 still sends a
+ * cookieless ping to google-analytics.com on every page, carrying no
+ * identifier but telling Google the visit happened so conversions can be
+ * modelled. Our own test caught exactly that — a /g/collect with gcs=G100
+ * after the visitor had pressed "No thanks".
  *
- * So nothing is loaded until the banner is answered. No gtag.js, no GTM, no
- * fbevents.js, and no preconnect either — a preconnect opens a TCP connection
- * and hands over an IP address before anyone agreed to anything, and for a
- * visitor who declines it is pure waste. assets/hub-track.js injects the tags
- * at the moment consent is granted, and never otherwise.
+ * So no Google tag is loaded until the banner is answered. No gtag.js, no GTM,
+ * and no preconnect to them either — a preconnect opens a TCP connection and
+ * hands over an IP address before anyone agreed to anything, and for a visitor
+ * who declines it is pure waste.
  *
  * The cost is real and worth naming: Google gets no modelled conversions for
  * visitors who decline. The alternative is measuring them anyway and calling
  * it consent.
+ *
+ * META IS DIFFERENT, AND IT IS A CHOICE. With metaAlwaysOn the Pixel and the
+ * Conversions API run on arrival rather than waiting for the banner — see the
+ * note on that setting above for why, and for the jurisdiction it assumes.
+ * They are still not loaded from THIS snippet: assets/hub-track.js does it on
+ * boot, so the banner can never delay them and a visitor who has opted out
+ * never loads them at all.
  *
  * What does run here is the dataLayer stub and the denied default. Both are
  * local — the stub only queues commands for a library that may never arrive,
@@ -123,6 +173,9 @@ export function headSnippet() {
     siteSection: TRACKING.siteSection,
     privacyUrl: TRACKING.privacyUrl,
     consentDays: TRACKING.consentDays,
+    apiBase: TRACKING.apiBase,
+    metaAlwaysOn: TRACKING.metaAlwaysOn === true,
+    optOutHash: TRACKING.optOutHash,
   };
   parts.push(`<script>window.HUB_TRACKING=${JSON.stringify(config)};</script>`);
   parts.push(`<script src="/assets/hub-track.js" defer></script>`);

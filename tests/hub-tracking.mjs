@@ -59,6 +59,9 @@ const VENDOR = /googletagmanager\.com|google-analytics\.com|analytics\.google\.c
  * not allowed to measure, which is how the first version of this failed.
  */
 const isBeacon = (url) => /\/collect|\/g\/collect|facebook\.com\/tr/.test(url);
+/** Google's hosts specifically. Meta is allowed before the banner now;
+ *  Google still is not, and only a per-vendor test can tell them apart. */
+const isGoogle = (url) => /googletagmanager\.com|google-analytics\.com|analytics\.google\.com/.test(url);
 
 function watchWire(page) {
   const hits = [];
@@ -66,26 +69,54 @@ function watchWire(page) {
   return { all: hits, beacons: () => hits.filter(isBeacon) };
 }
 
-console.log('== nothing is measured before the banner is answered ==');
+console.log('== Meta runs on arrival; Google waits to be asked ==');
 {
+  // THE CONTRACT CHANGED, AND THIS IS WHERE IT IS WRITTEN DOWN.
+  //
+  // It used to be "nothing reaches anyone until the banner is answered". It
+  // is now split, because the two vendors are not the same kind of thing:
+  //
+  //   Meta   runs on arrival. It is how this business finds out whether the
+  //          demos produce work, and a banner most people dismiss without
+  //          reading produces a measurement gap, not consent.
+  //   Google still waits. Nothing is lost by asking — GA4 answers "how many
+  //          and from where", which is not what a campaign is optimised on.
+  //
+  // What makes that defensible is the opt-out below, so these two sections
+  // are one contract, not two independent ones.
   const ctx = await fresh();
   const page = await ctx.newPage();
   const wire = watchWire(page);
   await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(2600);
-  check('the banner appears', (await page.locator('#hub-consent').count()) === 1);
-  check('no beacon reached Google or Meta', wire.beacons().length === 0, wire.beacons().slice(0, 3).join('\n       '));
-  check('no tag library was even requested', wire.all.length === 0, wire.all.slice(0, 3).join('\n       '));
+
+  check('the banner still appears', (await page.locator('#hub-consent').count()) === 1);
+  check('the Pixel library was requested without being asked',
+    wire.all.some((u) => /pixel\.js|fbevents/.test(u)), wire.all.slice(0, 4).join('\n       '));
+  check('nothing Google-side was requested',
+    !wire.all.some(isGoogle), wire.all.filter(isGoogle).slice(0, 3).join('\n       '));
+
   const state = await page.evaluate(() => ({
+    hub: window.hubTrack.state(),
     consent: window.hubTrack.consent(),
     consentCalls: (window.dataLayer || []).filter((e) => e && e[0] === 'consent').map((e) => [e[1], e[2] && e[2].analytics_storage]),
   }));
+  check('the page says Meta is on', state.hub.meta === true, JSON.stringify(state.hub));
+  check('and that Google is not', state.hub.google === false, JSON.stringify(state.hub));
   check('consent starts unanswered', state.consent === null, JSON.stringify(state.consent));
-  check('Consent Mode defaults to denied', JSON.stringify(state.consentCalls).includes('["default","denied"]'), JSON.stringify(state.consentCalls));
+  check('Consent Mode still defaults to denied',
+    JSON.stringify(state.consentCalls).includes('["default","denied"]'), JSON.stringify(state.consentCalls));
+
+  // The banner must not be the thing that starts Meta — if it were, a visitor
+  // who never answers would never be measured, which is the gap this is meant
+  // to close. Checked by timing: the library is already requested above, and
+  // the banner does not appear for 900ms.
+  check('the banner did not have to be answered first',
+    wire.all.some((u) => /pixel\.js|fbevents/.test(u)));
   await ctx.close();
 }
 
-console.log('\n== declining is honoured, not worked around ==');
+console.log('\n== declining analytics leaves Meta alone, and is remembered ==');
 {
   const ctx = await fresh();
   const page = await ctx.newPage();
@@ -96,12 +127,82 @@ console.log('\n== declining is honoured, not worked around ==');
   await page.waitForTimeout(300);
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await page.waitForTimeout(1200);
+
   check('the banner closes', (await page.locator('#hub-consent').count()) === 0);
-  check('still nothing on the wire after scrolling the whole page', wire.all.length === 0, wire.all.slice(0, 3).join('\n       '));
+  check('still nothing Google-side after scrolling the whole page',
+    !wire.all.some(isGoogle), wire.all.filter(isGoogle).slice(0, 3).join('\n       '));
   check('the refusal is remembered', (await page.evaluate(() => window.hubTrack.consent())) === false);
+  check('but Meta is still running — "no analytics" is not "no measurement"',
+    (await page.evaluate(() => window.hubTrack.state().meta)) === true);
+
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(2000);
   check('and the banner does not ask again', (await page.locator('#hub-consent').count()) === 0);
+  await ctx.close();
+}
+
+console.log('\n== stopping all measurement really stops it ==');
+{
+  // The part that makes always-on defensible. If this section is ever allowed
+  // to fail, the banner is making a promise the page does not keep.
+  const ctx = await fresh();
+  const page = await ctx.newPage();
+  await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(1700);
+
+  check('the banner offers the way out',
+    (await page.locator('#hub-consent [data-consent="off"]').count()) === 1);
+  await page.click('#hub-consent [data-consent="off"]');
+  await page.waitForTimeout(400);
+
+  check('it says so, rather than doing nothing visible',
+    (await page.locator('#hub-optout-note').count()) === 1);
+  const after = await page.evaluate(() => window.hubTrack.state());
+  check('Meta is off', after.meta === false, JSON.stringify(after));
+  check('Google is off', after.google === false, JSON.stringify(after));
+  check('and it is recorded as an opt-out, not just a refusal', after.optedOut === true);
+
+  // Removing the flag is not enough: a script element left in the page means
+  // the next fbq() call from anywhere still reaches Meta.
+  const scripts = await page.evaluate(() =>
+    Array.from(document.querySelectorAll('script[src]')).map((s) => s.src)
+      .filter((s) => /fbevents|pixel\.js|googletagmanager/.test(s)));
+  check('the tag scripts are gone from the page', scripts.length === 0, scripts.join('\n       '));
+
+  // And nothing new goes out afterwards, including the server half.
+  const ctxWire = [];
+  page.on('request', (r) => { if (VENDOR.test(r.url()) || /\/api\/track/.test(r.url())) ctxWire.push(r.url()); });
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForTimeout(1200);
+  check('nothing is sent after opting out, not even server-side',
+    ctxWire.length === 0, ctxWire.slice(0, 3).join('\n       '));
+
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(2200);
+  const reloaded = await page.evaluate(() => window.hubTrack.state());
+  check('it survives a reload', reloaded.meta === false && reloaded.optedOut === true, JSON.stringify(reloaded));
+  check('and the banner does not come back to ask again',
+    (await page.locator('#hub-consent').count()) === 0);
+  await ctx.close();
+}
+
+console.log('\n== the way out is reachable after the banner is long gone ==');
+{
+  // An opt-out that exists only inside a banner shown once, for 900ms, on a
+  // first visit is a formality rather than a control.
+  const ctx = await fresh();
+  const page = await ctx.newPage();
+  await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(1200);
+  check('there is a permanent link in the footer',
+    (await page.locator('a[href$="#stop-tracking"]').count()) >= 1);
+
+  await page.goto(`${BASE}/#stop-tracking`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(1600);
+  const viaHash = await page.evaluate(() => window.hubTrack.state());
+  check('the URL alone does it', viaHash.optedOut === true, JSON.stringify(viaHash));
+  check('and the hash is cleared, so a shared link does not opt someone else out',
+    !(await page.evaluate(() => location.hash)));
   await ctx.close();
 }
 
