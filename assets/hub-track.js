@@ -179,10 +179,38 @@
 
   var refused = optedOut();
 
-  /** Whether Meta may run at all: configured, not switched off by the visitor,
-   *  and either always-on or covered by a granted consent answer. */
+  /**
+   * Is this a real visit, or somebody running the hub on their own machine?
+   *
+   * Local page views are not customers. They are a developer with the site
+   * open, a test suite driving a browser, or CI building a preview — and every
+   * one of them lands in the same Meta dataset the campaigns are optimised
+   * against, tagged as a real person who looked at a demo and left.
+   *
+   * This was found the hard way: the CI run for this very change posted live
+   * PageView and ViewContent events into the production pixel from 127.0.0.1,
+   * because the server-side call added here talks to the deployed Worker from
+   * wherever it runs. A handful of phantom visits per push is small and it is
+   * also permanent — Meta does not offer a delete-by-origin.
+   *
+   * The tests need the measurement path to actually run, so they opt back in
+   * with __HUB_ALLOW_LOCAL, set before any page script. That is deliberately
+   * the only way past this: a flag a test sets explicitly, not a hostname
+   * pattern that could match something real.
+   */
+  function isLocalVisit() {
+    if (window.__HUB_ALLOW_LOCAL === true) return false;
+    var host = location.hostname;
+    return host === 'localhost' || host === '127.0.0.1' || host === '::1' ||
+      host === '' || /\.local$/i.test(host);
+  }
+
+  var local = isLocalVisit();
+
+  /** Whether Meta may run at all: configured, a real visit, not switched off
+   *  by the visitor, and either always-on or covered by a granted answer. */
   function metaAllowed() {
-    if (refused || !CFG.pixel) return false;
+    if (local || refused || !CFG.pixel) return false;
     return CFG.metaAlwaysOn === true || consentState() === true;
   }
 
@@ -273,8 +301,10 @@
   }
 
   function applyConsent(granted) {
-    allowed = granted;
-    if (!granted) return; // nothing Google-side is loaded, so nothing to tell
+    allowed = granted && !local;
+    // Same rule as Meta: a local run pressing Allow must not put gtag.js and a
+    // page_view into the live GA4 property.
+    if (!allowed) return; // nothing Google-side is loaded, so nothing to tell
 
     window.gtag('consent', 'update', {
       ad_storage: 'granted',
@@ -414,7 +444,7 @@
    * server side alone, because the server half succeeds either way.
    */
   function sendServerCopy(metaName, payload) {
-    if (!CFG.apiBase || refused) return;
+    if (!CFG.apiBase || refused || local) return;
     try {
       fetch(CFG.apiBase + '/api/track', {
         method: 'POST',

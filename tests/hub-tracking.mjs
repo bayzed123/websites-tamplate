@@ -47,11 +47,57 @@ const launch = { args: ['--no-sandbox'] };
 if (process.env.CHROMIUM_PATH) launch.executablePath = process.env.CHROMIUM_PATH;
 const browser = await chromium.launch(launch);
 
-/** A fresh context per case: consent lives in localStorage, and a leaked
- *  "yes" from an earlier case would make every later one pass for free. */
-const fresh = () => browser.newContext({ viewport: { width: 1280, height: 900 } });
+/** The backend's own origin. The Pixel library is served from here, and the
+ *  server half of every event is posted here. */
+const WORKER = 'bayezid-agency-api.sayadmdbayezidhosan.workers.dev';
 
-const VENDOR = /googletagmanager\.com|google-analytics\.com|analytics\.google\.com|facebook\.(com|net)/;
+/**
+ * A fresh context per case: consent lives in localStorage, and a leaked "yes"
+ * from an earlier case would make every later one pass for free.
+ *
+ * TWO THINGS EVERY CONTEXT NEEDS, AND BOTH WERE LEARNED FROM ONE CI RUN.
+ *
+ * 1. __HUB_ALLOW_LOCAL. hub-track.js now refuses to measure a visit to
+ *    localhost at all, because a test run is not a customer. Without this the
+ *    whole suite would be asserting against a page that deliberately does
+ *    nothing. addInitScript runs it before any page script, which is the only
+ *    point where it can still take effect.
+ *
+ * 2. The Worker route. Nothing here may reach the deployed backend. The CI run
+ *    for this change did: it loaded the real /api/pixel.js and POSTed real
+ *    PageView and ViewContent events into the production dataset from
+ *    127.0.0.1, because this origin was neither watched nor routed. Meta has
+ *    no delete-by-origin, so those events are permanent.
+ *
+ *    /api/pixel.js is answered with a stub that does the one thing the real
+ *    library does that this suite can observe: define fbq.callMethod. That is
+ *    how the page tells a live Pixel from the stub it installed on load.
+ */
+function fresh() {
+  return browser.newContext({ viewport: { width: 1280, height: 900 } }).then(async (ctx) => {
+    await ctx.addInitScript(() => { window.__HUB_ALLOW_LOCAL = true; });
+    await ctx.route(`**://${WORKER}/**`, (route) => {
+      const path = new URL(route.request().url()).pathname;
+      if (path === '/api/pixel.js') {
+        return route.fulfill({
+          status: 200,
+          contentType: 'application/javascript',
+          body: 'if(window.fbq){window.fbq.callMethod=function(){};}',
+        });
+      }
+      route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+    });
+    return ctx;
+  });
+}
+
+/* The Worker origin is IN this pattern now. Leaving it out is what let the
+   pixel-library check assert on the fallback to connect.facebook.net instead
+   of the real request — it passed locally, where the sandbox blocks the
+   proxy and forces that fallback, and failed in CI where the proxy works. */
+const VENDOR = new RegExp(
+  `googletagmanager\\.com|google-analytics\\.com|analytics\\.google\\.com|facebook\\.(com|net)|${WORKER.replace(/\./g, '\\.')}`,
+);
 /**
  * Before consent, NOTHING to these hosts is acceptable — not a beacon and not
  * a script. Loading gtag.js with Consent Mode denied still pings
@@ -62,6 +108,9 @@ const isBeacon = (url) => /\/collect|\/g\/collect|facebook\.com\/tr/.test(url);
 /** Google's hosts specifically. Meta is allowed before the banner now;
  *  Google still is not, and only a per-vendor test can tell them apart. */
 const isGoogle = (url) => /googletagmanager\.com|google-analytics\.com|analytics\.google\.com/.test(url);
+/** The Pixel library under any of the names it can arrive as: our proxied
+ *  copy, Meta's own, or the signals/config call a running fbevents.js makes. */
+const isPixelLib = (url) => /\/api\/pixel\.js|fbevents|facebook\.net\/signals/.test(url);
 
 function watchWire(page) {
   const hits = [];
@@ -69,7 +118,45 @@ function watchWire(page) {
   return { all: hits, beacons: () => hits.filter(isBeacon) };
 }
 
-console.log('== Meta runs on arrival; Google waits to be asked ==');
+console.log('== a local visit is not a customer, and is not measured ==');
+{
+  /**
+   * The guard that stops CI and development traffic reaching the live pixel.
+   *
+   * This exists because it already happened: the CI run for this change loaded
+   * the real /api/pixel.js and POSTed live PageView and ViewContent events
+   * into the production dataset from 127.0.0.1. Meta has no delete-by-origin,
+   * so those events are there for good.
+   *
+   * Deliberately the ONE context in this file without __HUB_ALLOW_LOCAL — it
+   * is what every other case sets to opt back in, so this is the only place
+   * the real default is exercised. Nothing is routed here either: if the guard
+   * fails, the request leaves for real and this check sees it.
+   */
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await ctx.newPage();
+  /* Measurement specifically, not "anything that leaves".
+     The rating widget reads /api/engagement from the same backend to fill in
+     each card's average. That is a GET, it writes nothing, and it reaches no
+     vendor — so it is not what this guard is for, and counting it would make
+     the check fail for a reason that has nothing to do with the pixel. */
+  const isMeasurementCall = (url) =>
+    isGoogle(url) || /facebook\.(com|net)/.test(url) ||
+    /\/api\/pixel\.js|\/api\/track/.test(url);
+
+  const escaped = [];
+  page.on('request', (r) => { if (isMeasurementCall(r.url())) escaped.push(r.url()); });
+  await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(3000);
+
+  check('no measurement call leaves a localhost visit',
+    escaped.length === 0, escaped.slice(0, 4).join('\n       '));
+  const state = await page.evaluate(() => window.hubTrack.state());
+  check('and the page reports Meta as off', state.meta === false, JSON.stringify(state));
+  await ctx.close();
+}
+
+console.log('\n== Meta runs on arrival; Google waits to be asked ==');
 {
   // THE CONTRACT CHANGED, AND THIS IS WHERE IT IS WRITTEN DOWN.
   //
@@ -92,7 +179,7 @@ console.log('== Meta runs on arrival; Google waits to be asked ==');
 
   check('the banner still appears', (await page.locator('#hub-consent').count()) === 1);
   check('the Pixel library was requested without being asked',
-    wire.all.some((u) => /pixel\.js|fbevents/.test(u)), wire.all.slice(0, 4).join('\n       '));
+    wire.all.some(isPixelLib), wire.all.slice(0, 4).join('\n       '));
   check('nothing Google-side was requested',
     !wire.all.some(isGoogle), wire.all.filter(isGoogle).slice(0, 3).join('\n       '));
 
@@ -112,7 +199,7 @@ console.log('== Meta runs on arrival; Google waits to be asked ==');
   // to close. Checked by timing: the library is already requested above, and
   // the banner does not appear for 900ms.
   check('the banner did not have to be answered first',
-    wire.all.some((u) => /pixel\.js|fbevents/.test(u)));
+    wire.all.some(isPixelLib));
   await ctx.close();
 }
 
@@ -241,12 +328,22 @@ console.log('\n== and accepting actually loads the tags ==');
   const wire = watchWire(page);
   await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(1700);
+
+  // Snapshot before the click, so "on accept" means something. Under the new
+  // contract the Pixel is ALREADY here — it loads at boot — and only Google
+  // is waiting on the answer.
+  const beforeAccept = wire.all.slice();
+  check('the Pixel was already fetched, before any answer',
+    beforeAccept.some(isPixelLib), beforeAccept.join('\n       '));
+  check('and Google was not', !beforeAccept.some(isGoogle), beforeAccept.filter(isGoogle).join('\n       '));
+
   await page.click('#hub-consent [data-consent="yes"]');
   await page.waitForTimeout(2500);
   // Without this, a bug that loaded nothing ever would sail through every
   // check above — silence is what they all assert.
   check('gtag.js is fetched on accept', wire.all.some((u) => /googletagmanager\.com\/gtag\/js/.test(u)), wire.all.join('\n       '));
-  check('the Pixel is fetched on accept', wire.all.some((u) => /connect\.facebook\.net/.test(u)), wire.all.join('\n       '));
+  check('and it was the accept that did it, not the page load',
+    !beforeAccept.some((u) => /googletagmanager\.com\/gtag\/js/.test(u)));
   // Deliberately NOT asserting that a beacon goes out: that needs gtag.js to
   // download and run, which makes the check depend on Google being reachable.
   // The request for the library is the part this code controls.
