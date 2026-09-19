@@ -553,6 +553,11 @@ function footer() {
       <a href="${SITE.repo}" target="_blank" rel="noopener">This repository</a>
       <a href="mailto:${SITE.email}">${SITE.email}</a>
       <a href="${SITE.privacy}" target="_blank" rel="noopener">Privacy &amp; cookies</a>
+      <!-- Advertising measurement runs on arrival here rather than waiting for
+           the banner, so the way out has to be permanent and easy to find —
+           not a link inside a banner that appears once and is dismissed in a
+           second. hub-track.js handles this href wherever it appears. -->
+      <a href="#stop-tracking">Stop tracking me</a>
     </div>
   </div>
   <div class="legal"><span>© <span id="yr"></span> ${SITE.owner}</span><span class="mono">Demos are fictional data. Nothing here is a live production system.</span></div>
