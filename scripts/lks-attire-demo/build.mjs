@@ -114,8 +114,9 @@ const PEOPLE = [
   ["Ayesha Siddika", "01355667788"], ["Tasnim Ahmed", "01766778899"], ["Lamia Hossain", "01877889900"], ["Moushumi Das", "01988990011"],
   ["Sumaiya Karim", "01799001122"], ["Rehana Parvin", "01611223355"], ["Afsana Mimi", "01512233466"], ["Nabila Tabassum", "01313344577"],
 ];
-const AREAS = [["Tangail", "Akurtakur Para"], ["Tangail", "Sabalia"], ["Tangail", "Kagmari Road"], ["Dhaka", "Dhanmondi 27"], ["Dhaka", "Mirpur 10"], ["Dhaka", "Uttara Sector 7"],
-  ["Gazipur", "Tongi Station Road"], ["Chattogram", "GEC Circle"], ["Sylhet", "Zindabazar"], ["Rajshahi", "Shaheb Bazar"], ["Mymensingh", "Ganginarpar"], ["Tangail", "Mirzapur Bazar"]];
+// Districts weighted toward the shop's own area; street text stays neutral so it always fits the upazila.
+const DISTRICTS = ["Tangail", "Tangail", "Tangail", "Dhaka", "Dhaka", "Gazipur", "Chattogram", "Sylhet", "Rajshahi", "Mymensingh"];
+const STREETS = ["College Road", "Bazar Road", "Station Road", "Main Road", "School Para", "Masjid Lane", "Hospital Road"];
 
 // Extra stock so the order history below doesn't sell the shelves empty (a few stay low for the alerts).
 db.exec("UPDATE product_variants SET stock = stock + 12 WHERE stock > 2");
@@ -129,7 +130,8 @@ log("placing demo orders through the storefront API");
 const placed = [];
 for (let i = 0; i < 46; i++) {
   const [name, phone] = PEOPLE[i % PEOPLE.length];
-  const [district, area] = pick(AREAS);
+  const district = pick(DISTRICTS);
+  const area = pick(STREETS);
   const lines = [];
   const n = rnd() < 0.7 ? 1 : 2;
   for (let k = 0; k < n; k++) {
@@ -289,7 +291,10 @@ for (const f of walk(SHOP).filter((f) => /\.(js|json|webmanifest)$/.test(f) && !
     s = must(s, `const path = location.pathname.replace(/\\/+$/, "") || "/";\n  const q = new URL(location.href).searchParams;`, `const vu = __lksDemo.virtual();\n  const path = vu.pathname.replace(/\\/+$/, "") || "/";\n  const q = vu.searchParams;`, "router read");
     s = must(s, `if (!location.hash) window.scrollTo({ top: 0 });`, `window.scrollTo({ top: 0 });`, "scroll");
   }
-  if (f.endsWith("views/shop.js")) s = must(s, `location.pathname === "/search"`, `__lksDemo.virtual().pathname === "/search"`, "search page");
+  if (f.endsWith("views/shop.js")) {
+    s = must(s, `location.pathname === "/search"`, `__lksDemo.virtual().pathname === "/search"`, "search page");
+    s = must(s, 'history.replaceState({}, "", `${path}${q.toString() ? "?" + q : ""}`);', 'history.replaceState({}, "", __lksDemo.toUrl(`${path}${q.toString() ? "?" + q : ""}`));', "shop filters in the URL");
+  }
   if (f.endsWith("views/product.js")) s = must(s, `const url = location.origin + location.pathname;`, `const url = location.href;`, "share link");
   if (s !== before) writeFileSync(f, s);
 }
