@@ -53,7 +53,7 @@ export default async function shop(main, { params, query, navigate }) {
   const sync = () => {
     const q = new URLSearchParams(Object.entries(state).filter(([k, v]) => v && k !== "category"));
     const path = isSearch ? "/search" : category ? `/shop/${category}` : "/shop";
-    history.replaceState({}, "", `${path}${q.toString() ? "?" + q : ""}`);
+    history.replaceState({}, "", __lksDemo.toUrl(`${path}${q.toString() ? "?" + q : ""}`));
   };
 
   async function load(append = false) {
