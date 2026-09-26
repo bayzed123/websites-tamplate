@@ -83,6 +83,13 @@ A folder with no `index.html` is skipped and logged — a client never sees a
 broken card. `demu-material-docs-tamplate` and `demu-skincare-e-commerce` are
 currently empty placeholders and are skipped for that reason.
 
+### Demos generated from a real project
+
+`lks-attire-shop/` and `lks-attire-admin/` are built from the Lk's Attire store's
+source and run its real backend code in the browser (SQLite in WebAssembly), so
+every feature works on this static host and the two share their data. See
+[`scripts/lks-attire-demo/README.md`](scripts/lks-attire-demo/README.md) to rebuild them.
+
 ## What never reaches the public site
 
 The hub is public and indexed, so everything published is world-readable. The

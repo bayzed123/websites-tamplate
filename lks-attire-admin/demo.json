@@ -1,0 +1,30 @@
+{
+  "title": "Lk's Attire — Admin Dashboard",
+  "tagline": "The back office that runs the Lk's Attire shop",
+  "description": "The admin dashboard behind the Lk's Attire shop, in its Soft-UI purple and pink design: today's sales and orders, the order pipeline from pending to delivered with invoice and shipping-label printing, products with variants, SKUs, discounts, free delivery and a live shop preview, stock, customers, coupons, homepage banners, reviews, delivery zones, staff roles, reports and the activity log — in Bangla and English. It is the real admin code running in the browser, sharing its data with the shop demo.",
+  "category": "Admin dashboard",
+  "featured": true,
+  "tags": [
+    "Orders & invoices",
+    "Products & SKUs",
+    "Inventory",
+    "Coupons & banners",
+    "Staff roles",
+    "Reports"
+  ],
+  "highlights": [
+    "Opens straight into the dashboard — no sign-in needed",
+    "Search a customer by invoice no, phone, name, TrxID or SKU",
+    "Order pipeline: confirm, pack, ship with courier tracking, deliver, return, refund",
+    "Product editor with % or ৳ discounts, free or fixed delivery, and a live shop preview",
+    "Change the logo, top banner, offer strip, bKash/Nagad numbers and SMS texts without code",
+    "Low-stock alerts, reviews to approve and new-order notifications",
+    "46 fictional orders over ten weeks, so the charts and reports have something to show"
+  ],
+  "credentials": {
+    "label": "Admin dashboard sign-in",
+    "username": "demo",
+    "password": "demo12345",
+    "note": "Opens already signed in. After Sign out, sign back in with these (they are filled in for you). Everything is fictional demo data kept in your browser — change anything; add ?demo-reset to the address to start fresh."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "title": "Lk's Attire — Online Shop",
+  "tagline": "A bilingual women's fashion store, fully working in your browser",
+  "description": "The customer side of Lk's Attire, a women's clothing brand from Tangail: real product photos, Bangla/English switch, filters, product pages with sizes and colours, cart, and a checkout where typing a postcode fills in Division, District and Upazila. Place an order with Cash on Delivery, bKash, Nagad or Rocket, get an invoice number, and track it. This is the real store code running in the browser — orders you place here appear in the Lk's Attire admin demo.",
+  "category": "E-commerce",
+  "featured": true,
+  "tags": [
+    "Storefront",
+    "Bangla / English",
+    "Cash on Delivery",
+    "bKash · Nagad · Rocket",
+    "Mobile-first",
+    "Cloudflare Workers"
+  ],
+  "highlights": [
+    "Real product photos, categories, filters and sorting",
+    "Checkout that fills the address from a postcode or area name, with live delivery fee by zone",
+    "Discounts, free-delivery products and coupon LK10 work at checkout",
+    "Every order gets an invoice number (INV-…) and a tracking page",
+    "Customer accounts, wishlist, reviews and WhatsApp ordering",
+    "Orders you place show up in the admin demo — it is one working system",
+    "Optional shopper sign-in: 01700000001 / demo12345 — nothing is charged or delivered, and ?demo-reset starts fresh"
+  ],
+  "admin": {
+    "label": "Admin dashboard",
+    "path": "../lks-attire-admin/index.html",
+    "note": "Opens signed in (demo / demo12345). Orders you place in the shop appear here."
+  }
+}

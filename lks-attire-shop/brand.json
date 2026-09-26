@@ -1,0 +1,73 @@
+{
+  "id": "lks-attire",
+  "name": {
+    "en": "Lk's Attire",
+    "bn": "এলকে'স অ্যাটায়ার"
+  },
+  "shortName": "Lk's",
+  "tagline": {
+    "en": "Style With A Signature",
+    "bn": "স্টাইল, নিজস্ব সিগনেচারে"
+  },
+  "description": {
+    "en": "Lk's Attire — party wear, organza three-pieces, kurtis, sarees and festive outfits for women. Hand-picked in Tangail, delivered across Bangladesh with Cash on Delivery.",
+    "bn": "এলকে'স অ্যাটায়ার — নারীদের পার্টি ওয়্যার, অর্গানজা থ্রি-পিস, কুর্তি, শাড়ি ও উৎসবের পোশাক। টাঙ্গাইল থেকে বাছাই করা, সারা বাংলাদেশে ক্যাশ অন ডেলিভারি।"
+  },
+  "logo": {
+    "wordmark": "LK'S ATTIRE",
+    "monogram": "LK",
+    "image": "assets/brand/logo-160.webp",
+    "imageLarge": "assets/brand/logo.webp"
+  },
+  "orderPrefix": "LKS",
+  "domain": "lksattire.com",
+  "locale": {
+    "default": "bn",
+    "supported": [
+      "bn",
+      "en"
+    ],
+    "currency": "BDT",
+    "currencySymbol": "৳"
+  },
+  "palette": "signature-noir",
+  "design": {
+    "heroStyle": "noir",
+    "motif": "taant",
+    "cardStyle": "arch"
+  },
+  "contact": {
+    "phone": "+8801700000000",
+    "whatsapp": "8801700000000",
+    "email": "hello@lksattire.com",
+    "hours": {
+      "en": "Sat–Thu, 10am–9pm",
+      "bn": "শনি–বৃহস্পতি, সকাল ১০টা–রাত ৯টা"
+    }
+  },
+  "location": {
+    "street": {
+      "en": "Akurtakur Para",
+      "bn": "আকুরটাকুর পাড়া"
+    },
+    "city": {
+      "en": "Tangail",
+      "bn": "টাঙ্গাইল"
+    },
+    "region": {
+      "en": "Dhaka Division",
+      "bn": "ঢাকা বিভাগ"
+    },
+    "postalCode": "1900",
+    "country": "BD",
+    "lat": 24.2513,
+    "lng": 89.9167,
+    "mapEmbedUrl": "https://www.google.com/maps?q=Akurtakur+Para,+Tangail&output=embed"
+  },
+  "social": {
+    "facebook": "https://www.facebook.com/profile.php?id=61579789955802",
+    "instagram": "",
+    "tiktok": "",
+    "youtube": ""
+  }
+}
