@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2A9BE"/><stop offset=".5" stop-color="#D46A8A"/><stop offset="1" stop-color="#A84466"/></linearGradient></defs>
+<rect width="512" height="512" rx="120" fill="#FFF6F4"/>
+<circle cx="256" cy="276" r="176" fill="#FBE4EA"/>
+<circle cx="256" cy="276" r="176" fill="none" stroke="url(#g)" stroke-width="8"/>
+<circle cx="256" cy="276" r="158" fill="none" stroke="url(#g)" stroke-width="2.5" opacity=".6"/>
+<text x="256" y="362" text-anchor="middle" font-family="'Cormorant Garamond','Playfair Display',Georgia,serif" font-size="250" font-weight="600" fill="url(#g)">S</text>
+<g transform="translate(256 88)"><path d="M-6 26 C-58 18 -66 -22 -40 -46 C-26 -18 -10 -2 -6 26 Z" fill="#8FAE95"/><path d="M-6 26 C-24 -2 -32 -20 -40 -46" fill="none" stroke="#F3F8F3" stroke-width="3" stroke-linecap="round"/>
+<path d="M30 -40 C30 -40 54 -12 54 4 A24 24 0 0 1 6 4 C6 -12 30 -40 30 -40 Z" fill="url(#g)"/><path d="M20 4 a10 10 0 0 0 10 10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/></g>
+</svg>

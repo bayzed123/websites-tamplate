@@ -1,0 +1,30 @@
+{
+  "title": "Sidra Jewellery & Fashion — Jewellery Shop",
+  "tagline": "A luxe dark & gold jewellery store, fully working in your browser",
+  "description": "The customer side of Sidra Jewellery & Fashion: earrings, necklaces, bangles, rings and bridal sets with macro product photos, shop by occasion (everyday, festive, bridal), curated collections with \"Shop the set\", ring and bangle size guides, gift wrap at checkout, and Cash on Delivery with bKash, Nagad and Rocket. This is the shop's real code running in the browser — orders you place here appear in the Sidra Jewellery admin demo.",
+  "category": "E-commerce",
+  "featured": true,
+  "tags": [
+    "Storefront",
+    "Jewellery",
+    "Bangla / English",
+    "Gift wrap",
+    "Cash on Delivery",
+    "Cloudflare Workers"
+  ],
+  "highlights": [
+    "Shop by occasion, collections and \"Complete the look\"",
+    "Ring and bangle size guides, material and plating on every piece",
+    "Checkout fills Division → District → Upazila with a live delivery fee by zone",
+    "Phone check at checkout: the SMS code appears on screen in the demo",
+    "Every confirmed order gets an invoice number and a PDF invoice",
+    "Coupons WELCOME150 and BRIDE10 work at checkout",
+    "Orders you place show up in the admin demo — it is one working system",
+    "Optional shopper sign-in: 01700000001 / demo12345 — nothing is charged or delivered, and ?demo-reset starts fresh"
+  ],
+  "admin": {
+    "label": "Admin dashboard",
+    "path": "../sidra-jewellery-admin/index.html",
+    "note": "Opens signed in (demo / demo12345). Orders you place in the shop appear here."
+  }
+}

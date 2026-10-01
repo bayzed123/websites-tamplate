@@ -90,6 +90,21 @@ source and run its real backend code in the browser (SQLite in WebAssembly), so
 every feature works on this static host and the two share their data. See
 [`scripts/lks-attire-demo/README.md`](scripts/lks-attire-demo/README.md) to rebuild them.
 
+Four more shops built on the Zamil Shop BD platform get the same treatment, a storefront and an
+admin demo each, sharing their data:
+
+| Shop | Storefront | Admin |
+|---|---|---|
+| Zamil Shop BD — baby & kids | `zamil-shop-bd/` | `zamil-shop-bd-admin/` |
+| Sidra Jewellery & Fashion | `sidra-jewellery/` | `sidra-jewellery-admin/` |
+| Sidra Glow Studio — skincare & studio bookings | `sidra-glow-studio/` | `sidra-glow-studio-admin/` |
+| Prakriti Herbal — herbal & natural products | `prakriti-herbal/` | `prakriti-herbal-admin/` |
+
+They run each shop's real Worker in the browser: checkout with an on-screen SMS code, invoice PDFs,
+and an admin that opens signed in as `demo` / `demo12345`. See
+[`scripts/shop-demos/README.md`](scripts/shop-demos/README.md) to rebuild them. `tests/shop-demos.mjs`
+checks each pair end to end in CI.
+
 ## What never reaches the public site
 
 The hub is public and indexed, so everything published is world-readable. The
