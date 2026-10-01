@@ -1,0 +1,28 @@
+{
+  "title": "Prakriti Herbal — Admin Dashboard",
+  "tagline": "The back office that runs the herbal shop",
+  "description": "The admin dashboard behind the Prakriti Herbal demo: \"Needs your attention today\" with orders waiting for a confirmation call, the order pipeline from pending to delivered with invoice PDFs, fake-order protection (🟢 Trusted / 🟡 New / 🔴 Verify), abandoned checkouts, products and wellness kits with SKUs, batches with expiry dates packed first-expiry-first-out, certifications, the wellness journal, and a product-copy check that refuses medical claims, coupons, banners, reviews, delivery zones, staff roles, reports and the activity log — in Bangla and English. It is the real admin code running in the browser, sharing its data with the shop demo.",
+  "category": "Admin dashboard",
+  "featured": false,
+  "tags": [
+    "Orders & invoices",
+    "Products, kits & SKUs (HRB-…)",
+    "Batches & expiry",
+    "Certifications",
+    "Journal",
+    "Reports"
+  ],
+  "highlights": [
+    "Opens straight into the dashboard — no sign-in needed",
+    "COD orders can't be confirmed until the customer's call is logged — try it on a pending order",
+    "Invoice PDF, call and WhatsApp buttons on every order",
+    "Search by order no, invoice no, phone or SKU; CSV export on every list",
+    "42 fictional orders over nine weeks, so the charts and reports have something to show"
+  ],
+  "credentials": {
+    "label": "Admin dashboard sign-in",
+    "username": "demo",
+    "password": "demo12345",
+    "note": "Opens already signed in. After Sign out, sign back in with these (they are filled in for you). Staff can also sign in by phone: 01899999999 — the SMS code shows on screen. Everything is fictional demo data kept in your browser; add ?demo-reset to the address to start fresh."
+  }
+}

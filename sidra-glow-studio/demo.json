@@ -1,0 +1,30 @@
+{
+  "title": "Sidra Glow Studio — Skincare & Beauty Studio",
+  "tagline": "A skincare shop with online studio bookings, fully working in your browser",
+  "description": "The customer side of Sidra Glow Studio, a skincare shop and beauty-treatment studio in Tangail: filter by skin type and concern, ingredient lists and best-before dates on every product, a skin quiz that builds a routine within your budget, routine sets, and facials you can book online for a free time slot. This is the shop's real code running in the browser — orders and bookings you make here appear in the Sidra Glow Studio admin demo.",
+  "category": "E-commerce",
+  "featured": true,
+  "tags": [
+    "Storefront",
+    "Skincare",
+    "Studio bookings",
+    "Bangla / English",
+    "Cash on Delivery",
+    "Cloudflare Workers"
+  ],
+  "highlights": [
+    "Skin quiz → a routine from products in stock, within your budget",
+    "Book a facial: pick a day and a free time, get a booking number",
+    "Checkout fills Division → District → Upazila with a live delivery fee by zone",
+    "Phone check at checkout: the SMS code appears on screen in the demo",
+    "Every confirmed order gets an invoice number and a PDF invoice",
+    "Coupons GLOW100 and ROUTINE10 work at checkout",
+    "Orders you place show up in the admin demo — it is one working system",
+    "Optional shopper sign-in: 01700000001 / demo12345 — nothing is charged or delivered, and ?demo-reset starts fresh"
+  ],
+  "admin": {
+    "label": "Admin dashboard",
+    "path": "../sidra-glow-studio-admin/index.html",
+    "note": "Opens signed in (demo / demo12345). Orders you place in the shop appear here."
+  }
+}

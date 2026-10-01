@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 630" width="1200" height="630"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2A9BE"/><stop offset=".5" stop-color="#D46A8A"/><stop offset="1" stop-color="#A84466"/></linearGradient><radialGradient id="r" cx=".8" cy=".5" r=".8"><stop offset="0" stop-color="#FBE4EA"/><stop offset="1" stop-color="#FFF8F6"/></radialGradient></defs>
+<rect width="1200" height="630" fill="url(#r)"/>
+<rect x="18" y="18" width="1164" height="594" rx="22" fill="none" stroke="url(#g)" stroke-width="2" opacity=".6"/>
+<clipPath id="c"><rect x="700" y="70" width="450" height="490" rx="20"/></clipPath><rect x="700" y="70" width="450" height="490" rx="20" fill="none" stroke="url(#g)" stroke-width="2" opacity=".6"/>
+<g transform="translate(70 70) scale(.24)">
+<rect width="512" height="512" rx="120" fill="#FFF6F4"/>
+<circle cx="256" cy="276" r="176" fill="#FBE4EA"/>
+<circle cx="256" cy="276" r="176" fill="none" stroke="url(#g)" stroke-width="8"/>
+<circle cx="256" cy="276" r="158" fill="none" stroke="url(#g)" stroke-width="2.5" opacity=".6"/>
+<text x="256" y="362" text-anchor="middle" font-family="'Cormorant Garamond','Playfair Display',Georgia,serif" font-size="250" font-weight="600" fill="url(#g)">S</text>
+<g transform="translate(256 88)"><path d="M-6 26 C-58 18 -66 -22 -40 -46 C-26 -18 -10 -2 -6 26 Z" fill="#8FAE95"/><path d="M-6 26 C-24 -2 -32 -20 -40 -46" fill="none" stroke="#F3F8F3" stroke-width="3" stroke-linecap="round"/>
+<path d="M30 -40 C30 -40 54 -12 54 4 A24 24 0 0 1 6 4 C6 -12 30 -40 30 -40 Z" fill="url(#g)"/><path d="M20 4 a10 10 0 0 0 10 10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/></g>
+</g>
+<text x="70" y="270" font-family="'Cormorant Garamond',Georgia,serif" font-size="68" font-weight="600" fill="url(#g)">Sidra</text><text x="70" y="340" font-family="'Cormorant Garamond',Georgia,serif" font-size="68" font-weight="600" fill="url(#g)">Glow Studio</text>
+<text x="72" y="408" font-family="'Cormorant Garamond',Georgia,serif" font-size="35" font-style="italic" fill="#3A2A30" opacity=".9">Skincare &amp; beauty treatments, Tangail</text>
+<text x="72" y="470" font-family="Nunito,Arial,sans-serif" font-size="22" font-weight="700" fill="#A84466" letter-spacing="2">SKINCARE · FACIALS · TANGAIL</text>
+<text x="72" y="514" font-family="Nunito,Arial,sans-serif" font-size="24" fill="#3A2A30" opacity=".75">Cash on Delivery across Bangladesh</text>
+</svg>

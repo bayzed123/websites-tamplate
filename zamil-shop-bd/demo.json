@@ -1,0 +1,30 @@
+{
+  "title": "Zamil Shop BD — Baby & Kids Shop",
+  "tagline": "A bilingual baby & kids store, fully working in your browser",
+  "description": "The customer side of Zamil Shop BD, a baby and kids shop from Dhaka: shop by age (0–6 months to 5 years), a gift finder, a gift registry for new parents, ride-on toys with real product photos, Bangla/English switch, cart and Cash on Delivery checkout with bKash, Nagad and Rocket. This is the shop's real code running in the browser — orders you place here appear in the Zamil Shop BD admin demo.",
+  "category": "E-commerce",
+  "featured": true,
+  "tags": [
+    "Storefront",
+    "Baby & kids",
+    "Bangla / English",
+    "Cash on Delivery",
+    "bKash · Nagad · Rocket",
+    "Cloudflare Workers"
+  ],
+  "highlights": [
+    "Shop by age, gift finder and a gift registry parents can share",
+    "Safety badges show only with a certificate attached",
+    "Checkout fills Division → District → Upazila with a live delivery fee by zone",
+    "Phone check at checkout: the SMS code appears on screen in the demo",
+    "Every confirmed order gets an invoice number and a PDF invoice",
+    "Coupon WELCOME100 works on a first order over ৳1,500",
+    "Orders you place show up in the admin demo — it is one working system",
+    "Optional shopper sign-in: 01700000001 / demo12345 — nothing is charged or delivered, and ?demo-reset starts fresh"
+  ],
+  "admin": {
+    "label": "Admin dashboard",
+    "path": "../zamil-shop-bd-admin/index.html",
+    "note": "Opens signed in (demo / demo12345). Orders you place in the shop appear here."
+  }
+}

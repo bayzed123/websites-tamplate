@@ -81,6 +81,11 @@ jobs:
         # the path a visitor takes: card link, then what the link opens.
         run: node tests/hub-admin-links.mjs site
 
+      - name: Check the four shop demos work as one system
+        # Zamil Shop BD, Sidra Jewellery, Sidra Glow Studio, Prakriti Herbal: order in the shop with
+        # the admin open in another tab, see it in the admin, open an invoice PDF — all with no server.
+        run: node tests/shop-demos.mjs site
+
       - name: Check the rating panel is wired and hidden
         # Only the half that needs no backend — CI does not run the Worker, so
         # the rating and comment round-trips are skipped here and run locally.
