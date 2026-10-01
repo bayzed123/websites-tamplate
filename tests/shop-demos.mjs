@@ -46,7 +46,7 @@ const check = (n, c, d = '') => {
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH });
 for (const slug of SHOPS) {
   console.log(`\n${slug}`);
-  const ctx = await browser.newContext({ viewport: { width: 1366, height: 900 } });
+  const ctx = await browser.newContext({ viewport: { width: 1366, height: 900 }, acceptDownloads: true });
   const errors = [];
   ctx.on('weberror', (e) => errors.push(e.error().message));
   try {
@@ -94,10 +94,28 @@ for (const slug of SHOPS) {
     await admin.locator('[data-open]').first().click();
     const inv = admin.getByRole('link', { name: /Invoice PDF/i }).first();
     await inv.waitFor({ timeout: 15000 });
-    const [pdf] = await Promise.all([ctx.waitForEvent('page'), inv.click()]);
-    await pdf.waitForURL(/^blob:/, { timeout: 20000 }).catch(() => {});
-    const type = await pdf.evaluate(async () => (await (await fetch(location.href)).blob()).type).catch((e) => String(e));
-    check('a delivered order opens its invoice PDF', type === 'application/pdf', type);
+    // Listen for the download before clicking: the PDF can be ready before the click resolves.
+    const download = new Promise((res, rej) => {
+      ctx.once('page', (p) => p.once('download', res));
+      setTimeout(() => rej(new Error('no download within 20s')), 20000);
+    });
+    download.catch(() => {}); // unused when the PDF opens in the tab instead
+    const [tab] = await Promise.all([ctx.waitForEvent('page'), inv.click()]);
+    // A browser that shows PDFs opens it in the new tab; one that downloads PDFs (headless Chromium
+    // in CI does) saves it instead. Either way the file must really be the invoice PDF.
+    // Promise.any: when the PDF downloads, the tab's navigation aborts — that must not end the wait.
+    const got = await Promise.any([
+      tab.waitForURL(/^blob:/, { timeout: 20000 }).then(() => admin.evaluate(async (u) => {
+        const b = await (await fetch(u)).blob();
+        return { type: b.type, head: await b.slice(0, 5).text() };
+      }, tab.url())),
+      download.then(async (d) => {
+        const { readFile } = await import('node:fs/promises');
+        return { type: 'download', head: (await readFile(await d.path())).subarray(0, 5).toString() };
+      }),
+    ]).catch((e) => ({ type: (e.errors ?? [e]).map((x) => String(x).split('\n')[0]).join(' / '), head: '' }));
+    check('a delivered order opens its invoice PDF', got.head === '%PDF-', `${got.type} ${got.head}`);
+    await tab.close().catch(() => {});
   } catch (e) {
     check('the walk-through finished', false, e.message.split('\n')[0]);
   }

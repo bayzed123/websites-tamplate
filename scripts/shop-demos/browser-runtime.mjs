@@ -182,7 +182,8 @@ function appPath(url) {
 window.fetch = async (input, init) => {
   const isReq = input instanceof Request;
   const url = new URL(isReq ? input.url : String(input), location.href);
-  if (url.origin !== location.origin) return realFetch(input, init);
+  // blob: and data: URLs report this page's origin too, but they are files in the browser, not on the site.
+  if (url.origin !== location.origin || !/^https?:$/.test(url.protocol)) return realFetch(input, init);
   const inside = url.pathname === BASE || url.pathname.startsWith(BASE + "/");
   const path = appPath(url);
   if (path.startsWith("/api/")) {
