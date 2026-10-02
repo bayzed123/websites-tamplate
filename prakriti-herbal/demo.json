@@ -27,5 +27,6 @@
     "label": "Admin dashboard",
     "path": "../prakriti-herbal-admin/index.html",
     "note": "Opens signed in (demo / demo12345). Orders you place in the shop appear here."
-  }
+  },
+  "showcase": "prakriti-herbal"
 }

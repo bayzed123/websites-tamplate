@@ -1,7 +1,7 @@
 {
   "title": "SmartGadget",
   "tagline": "A wholesale gadget shop with an open admin dashboard",
-  "description": "A complete wholesale electronics storefront for the Bangladeshi market \u2014 catalogue, tiered wholesale pricing, product pages, cart, checkout and order tracking \u2014 plus the admin dashboard the owner runs it from: products, stock, orders, customers, reviews, content and analytics. The dashboard opens with no sign-in so a prospect can look straight through it, and every product, order, customer and figure in it is generated rather than real.",
+  "description": "A complete wholesale electronics storefront for the Bangladeshi market — catalogue, tiered wholesale pricing, product pages, cart, checkout and order tracking — plus the admin dashboard the owner runs it from: products, stock, orders, customers, reviews, content and analytics. The dashboard opens with no sign-in so a prospect can look straight through it, and every product, order, customer and figure in it is generated rather than real.",
   "category": "E-commerce",
   "featured": true,
   "tags": [
@@ -12,15 +12,16 @@
   ],
   "highlights": [
     "Volume pricing that steps down as quantity rises, shown per product",
-    "Admin dashboard with no password \u2014 nothing sits behind it to protect",
+    "Admin dashboard with no password — nothing sits behind it to protect",
     "Every number agrees: the dashboard totals are summed from the same orders the order list shows",
-    "Edits stick while you browse \u2014 change a price and the revenue and margin move with it",
-    "Mobile-first \u2014 built for phones before desktop"
+    "Edits stick while you browse — change a price and the revenue and margin move with it",
+    "Mobile-first — built for phones before desktop"
   ],
   "entry": "web/dist/index.html",
   "admin": {
     "label": "Admin dashboard",
     "path": "index.html#/admin",
-    "note": "No sign-in. 14 screens \u2014 products, orders, stock, customers, analytics."
-  }
+    "note": "No sign-in. 14 screens — products, orders, stock, customers, analytics."
+  },
+  "showcase": "smartgadget-demo"
 }
