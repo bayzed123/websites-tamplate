@@ -1,7 +1,7 @@
 {
   "title": "Bootstrap Fashion",
   "tagline": "A Bootstrap 5 storefront with the admin behind it",
-  "description": "A complete fashion retail front end: homepage, category listing with live filters and a price slider, product page with gallery and reviews, cart, and a three-step checkout with shipping and payment. Built on Bootstrap 5, so your colours, type and logo go in without rewriting anything. Front end only \u2014 it drops onto whatever commerce backend you already use, or we wire one up.",
+  "description": "A complete fashion retail front end: homepage, category listing with live filters and a price slider, product page with gallery and reviews, cart, and a three-step checkout with shipping and payment. Built on Bootstrap 5, so your colours, type and logo go in without rewriting anything. Front end only — it drops onto whatever commerce backend you already use, or we wire one up.",
   "category": "E-commerce",
   "featured": false,
   "tags": [
@@ -14,24 +14,25 @@
   ],
   "highlights": [
     "Four admin screens: dashboard, products, orders and customers",
-    "Admin opens with no password \u2014 nothing sits behind it to protect",
-    "The product table is the shop\u2019s own catalogue, so the two can never disagree",
+    "Admin opens with no password — nothing sits behind it to protect",
+    "The product table is the shop’s own catalogue, so the two can never disagree",
     "Category listings with working filters, product pages, cart and a three-step checkout",
     "Every required field marked, 197 countries at checkout, alt text on every product image",
-    "Plain HTML, CSS and JavaScript \u2014 no framework to learn or licence to renew"
+    "Plain HTML, CSS and JavaScript — no framework to learn or licence to renew"
   ],
   "entry": "dist/index.html",
   "credit": {
     "name": "Pixel Rocket",
     "url": "https://www.pixelrocket.store",
     "licence": "MIT",
-    "note": "A third-party template, shown as a starting point we customise \u2014 not as our own build."
+    "note": "A third-party template, shown as a starting point we customise — not as our own build."
   },
   "price": "From $100",
-  "priceNote": "setup included \u00b7 your branding, products and copy",
+  "priceNote": "setup included · your branding, products and copy",
   "admin": {
     "label": "Admin dashboard",
     "path": "admin.html",
-    "note": "No sign-in. 4 screens \u2014 dashboard, products, orders, customers."
-  }
+    "note": "No sign-in. 4 screens — dashboard, products, orders, customers."
+  },
+  "showcase": "bootstrap-fashion"
 }

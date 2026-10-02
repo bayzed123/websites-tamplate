@@ -26,5 +26,6 @@
     "label": "Admin dashboard",
     "path": "../zamil-shop-bd-admin/index.html",
     "note": "Opens signed in (demo / demo12345). Orders you place in the shop appear here."
-  }
+  },
+  "showcase": "zamil-shop-bd"
 }

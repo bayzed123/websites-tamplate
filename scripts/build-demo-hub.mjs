@@ -153,6 +153,17 @@ async function readMeta(slug, dir, entryFile) {
     draft: meta.draft === true,
     price: typeof meta.price === 'string' ? meta.price : '',
     priceNote: typeof meta.priceNote === 'string' ? meta.priceNote : '',
+    /* The showcase page on the main site that argues for this build —
+       screenshots, feature breakdown, why-choose. A demo answers "does it
+       work"; the showcase answers "why this one, and what does it cost me to
+       be wrong". Someone who has clicked through the demo and is still
+       deciding needs the second page, and without this link the only way to
+       it was the site's own navigation, two hops away.
+
+       Explicit in demo.json, never derived from the slug: a derived link to a
+       page that does not exist is a 404 on the exact journey this is for, and
+       it would appear the moment a demo is added. No key, no link. */
+    showcase: typeof meta.showcase === 'string' && meta.showcase ? meta.showcase : null,
     credentials: meta.credentials || null,
     // An admin dashboard a visitor would otherwise never find. The
     // storefront links to it from its own footer, but nothing on this hub
@@ -413,6 +424,10 @@ p{margin:0;line-height:1.65;color:var(--soft)}
 .card-open{color:var(--emerald);font-weight:600;font-size:.88rem;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
 .card-raw{color:var(--dim);font-size:.82rem;text-decoration:none}
 .card-raw:hover{color:var(--paper)}
+/* The way deeper into the main site. Quiet, like "Open raw": it is for the
+   visitor who has seen enough of the demo and now wants the argument. */
+.card-case{color:var(--dim);font-size:.82rem;text-decoration:none;border-bottom:1px dashed var(--line)}
+.card-case:hover{color:var(--emerald);border-bottom-color:var(--emerald)}
 /* Gold, like the credentials pill, because it is the same kind of information:
    a way in that a visitor would not guess from the storefront. */
 .card-admin{color:var(--gold);font-size:.82rem;text-decoration:none;border:1px solid rgba(212,175,106,.32);
@@ -684,6 +699,7 @@ function renderCard(demo) {
       <a class="card-open" href="${viewer}">Open demo <span class="arrow">→</span></a>
       ${adminLink}
       <a class="card-raw" href="${raw}" target="_blank" rel="noopener">Open raw ↗</a>
+      ${demo.showcase ? `<a class="card-case" href="${SITE.portfolio}/showcase/${demo.showcase}.html" target="_blank" rel="noopener">Why this build</a>` : ''}
       <!-- Ordering happens INSIDE the demo, so this opens the demo with the
            order panel already up rather than ordering from a card. Someone who
            orders having only seen a thumbnail is someone who will change their
@@ -898,6 +914,7 @@ html,body{height:100%;overflow:hidden}
       <button class="vb-btn" id="mobBtn" aria-pressed="false">Mobile</button>
       ${adminBtn}
       <button class="vb-btn vb-rate" data-demo-feedback="${demo.slug}" data-demo-title="${htmlEscape(demo.title)}">★ Rate</button>
+      ${demo.showcase ? `<a class="vb-btn" href="${SITE.portfolio}/showcase/${demo.showcase}.html" target="_blank" rel="noopener">Why this build ↗</a>` : ''}
       <a class="vb-btn" id="rawLink" href="${src}" target="_blank" rel="noopener">Open raw ↗</a>
       <a class="vb-btn vb-order" href="${SITE.order}&amp;utm_content=${encodeURIComponent(demo.slug)}" data-order-open="viewer-bar" data-order-item="${htmlEscape(demo.title)}">Order this</a>
     </span>

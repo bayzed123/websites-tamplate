@@ -26,5 +26,6 @@
     "label": "Admin dashboard",
     "path": "../sidra-glow-studio-admin/index.html",
     "note": "Opens signed in (demo / demo12345). Orders you place in the shop appear here."
-  }
+  },
+  "showcase": "sidra-glow-studio"
 }
