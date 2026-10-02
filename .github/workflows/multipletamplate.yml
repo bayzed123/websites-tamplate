@@ -86,6 +86,13 @@ jobs:
         # the admin open in another tab, see it in the admin, open an invoice PDF — all with no server.
         run: node tests/shop-demos.mjs site
 
+      - name: Check every demo screen can be found in search
+        # The failure this catches never shows on the page: a demo renders, the
+        # build is green, and the file says noindex. 36 of the 54 pages here
+        # were invisible to search for months — every checkout, every admin
+        # dashboard — and nothing reported it.
+        run: npm run test:indexable
+
       - name: Check the rating panel is wired and hidden
         # Only the half that needs no backend — CI does not run the Worker, so
         # the rating and comment round-trips are skipped here and run locally.

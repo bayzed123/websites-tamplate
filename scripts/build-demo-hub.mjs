@@ -597,6 +597,8 @@ function footer() {
     </div>
     <div class="foot-links">
       <span class="foot-head">Elsewhere</span>
+      <a href="/sitemap.html">Every demo screen</a>
+      <a href="${SITE.portfolio}/showcase.html" target="_blank" rel="noopener">Why these builds</a>
       <a href="${SITE.portfolio}" target="_blank" rel="noopener">sayadbayezid.com</a>
       <a href="${SITE.portfolio}/projects.html" target="_blank" rel="noopener">All projects</a>
       <a href="${SITE.repo}" target="_blank" rel="noopener">This repository</a>
@@ -838,6 +840,18 @@ ${footer()}
  * anyone — the link always reopened on Home. Now each page has its own wrapper,
  * and the dropdown also rewrites the address bar as you switch.
  */
+/**
+ * A demo's own error page is still an error page.
+ *
+ * Opening indexing to every screen swept one of these in with the rest: a
+ * wrapper around the demo's 404. Being found in search is the one thing an
+ * error page must not be, whoever's 404 it is — so it keeps the exclusion the
+ * hub's own 404 has always had, and stays out of the sitemap with it.
+ */
+function isErrorPage(page) {
+  return /(^|\/)(404|500|error|not-found)(\.html|\/|$)/i.test(page);
+}
+
 function renderViewer(demo, pages, slugs, current) {
   const currentSlug = slugs.get(current) ?? '';
   const base = `/d/${demo.slug}/`;
@@ -864,8 +878,18 @@ function renderViewer(demo, pages, slugs, current) {
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${htmlEscape(isEntry ? demo.title : `${pageName} · ${demo.title}`)} — ${htmlEscape(SITE.name)}</title>
 <meta name="description" content="${htmlEscape(demo.description)}">
-<meta name="robots" content="${isEntry ? 'index, follow, max-image-preview:large' : 'noindex, follow'}">
-<link rel="canonical" href="${SITE.url}/d/${demo.slug}/">
+<!-- Every demo page is indexable.
+     It used to be the entry page only, which meant 36 of the 54 pages here —
+     the checkout, the admin dashboard, the order tracking, the product page,
+     every screen that is actually the thing a client is searching for — could
+     never appear in a result. They are not thin duplicates of each other; they
+     are different screens with different titles doing different jobs.
+
+     Each one therefore carries its OWN canonical. Indexing a page while its
+     canonical points at a different one is the same as not indexing it: Google
+     takes the canonical and drops the page. The pair has to move together. -->
+<meta name="robots" content="${isErrorPage(current) ? 'noindex, follow' : 'index, follow, max-image-preview:large'}">
+<link rel="canonical" href="${SITE.url}${base}${currentSlug ? `${currentSlug}/` : ''}">
 <meta property="og:type" content="website"><meta property="og:url" content="${SITE.url}/d/${demo.slug}/">
 <meta property="og:title" content="${htmlEscape(demo.title)}"><meta property="og:description" content="${htmlEscape(demo.description)}">
 <meta name="theme-color" content="#0A0F0D">
@@ -1019,12 +1043,104 @@ ${footer()}
 </body></html>`;
 }
 
+/**
+ * Every published page, not just every demo.
+ *
+ * The old version listed the hub and the 18 entry pages — 19 URLs for a site
+ * of 54 pages. The 35 it left out were the screens worth finding: the
+ * checkouts, the admin dashboards, the order tracking. They are listed now,
+ * each carrying the demo's screenshot so the result can show one.
+ *
+ * The entry page keeps the higher priority: it is the one that introduces the
+ * product, and the others are rooms inside it.
+ */
 function renderSitemap(demos) {
   const today = new Date().toISOString().split('T')[0];
-  const urls = [`${SITE.url}/`, ...demos.map((d) => `${SITE.url}/d/${d.slug}/`)];
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
-    .map((loc, i) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${i === 0 ? '1.0' : '0.8'}</priority>\n  </url>`)
-    .join('\n')}\n</urlset>\n`;
+  const entries = [{ loc: `${SITE.url}/`, priority: '1.0', image: null, title: SITE.name }];
+
+  for (const demo of demos) {
+    const image = `${SITE.url}/assets/thumbs/${demo.slug}.webp`;
+    for (const { page, slug } of demo.pageSlugs || []) {
+      if (isErrorPage(page)) continue;
+      const isEntry = page === demo.entryFile;
+      entries.push({
+        loc: `${SITE.url}/d/${demo.slug}/${slug ? `${slug}/` : ''}`,
+        priority: isEntry ? '0.9' : '0.6',
+        image,
+        title: isEntry ? demo.title : `${pageLabel(page, demo.entryFile)} · ${demo.title}`,
+      });
+    }
+  }
+
+  entries.push({ loc: `${SITE.url}/sitemap.html`, priority: '0.3', image: null, title: 'Sitemap' });
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${entries.map((e) => `  <url>
+    <loc>${e.loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>${e.priority}</priority>${e.image ? `
+    <image:image>
+      <image:loc>${e.image}</image:loc>
+      <image:title>${htmlEscape(e.title)}</image:title>
+    </image:image>` : ''}
+  </url>`).join('\n')}
+</urlset>
+`;
+}
+
+/**
+ * The same list, for people — and for crawl depth.
+ *
+ * A demo's inner screens are reachable only through a <select> in the viewer
+ * bar, which a crawler does not operate. Without this page they have no
+ * in-site link at all, and a URL in a sitemap with no link pointing at it is
+ * the weakest thing you can submit.
+ */
+function renderSitemapPage(demos) {
+  return `<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sitemap — every demo screen | ${htmlEscape(SITE.name)}</title>
+<meta name="description" content="Every page on the demo hub: ${demos.length} live demos and every screen inside them, from storefronts to admin dashboards.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="${SITE.url}/sitemap.html">
+<meta name="theme-color" content="#0A0F0D">
+${FONTS}${FAVICON}${TRACKING}
+<style>${STYLES}
+.sm-wrap{max-width:1100px;margin:0 auto;padding:0 20px 70px}
+.sm-demo{border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:14px;background:var(--surface)}
+.sm-demo h2{font-size:1.05rem;margin:0 0 3px}
+.sm-demo h2 a{color:var(--paper);text-decoration:none}
+.sm-demo h2 a:hover{color:var(--emerald)}
+.sm-meta{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--dim)}
+.sm-pages{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.sm-pages a{display:inline-block;padding:5px 12px;border:1px solid var(--line);border-radius:100px;
+  font-size:.79rem;color:var(--soft);text-decoration:none;transition:all .2s}
+.sm-pages a:hover{border-color:var(--emerald);color:var(--emerald)}
+</style></head><body>
+${header('')}
+<main>
+  <section class="wrap" style="padding-top:46px">
+    <p class="eyebrow">Sitemap</p>
+    <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:12px">Every screen, in one list.</h1>
+    <p class="lede">${demos.length} live demos and every page inside them. Crawlers want
+      <a href="/sitemap.xml">sitemap.xml</a>; the portfolio that explains these builds is at
+      <a href="${SITE.portfolio}/showcase.html">sayadbayezid.com/showcase</a>.</p>
+  </section>
+  <section class="sm-wrap">
+${demos.map((demo) => `    <article class="sm-demo">
+      <h2><a href="/d/${demo.slug}/">${htmlEscape(demo.title)}</a></h2>
+      <span class="sm-meta">${htmlEscape(demo.category)} · ${(demo.pageSlugs || []).filter(({ page }) => !isErrorPage(page)).length} page(s)</span>
+      <ul class="sm-pages">
+${(demo.pageSlugs || []).filter(({ page }) => !isErrorPage(page)).map(({ page, slug }) => `        <li><a href="/d/${demo.slug}/${slug ? `${slug}/` : ''}">${htmlEscape(pageLabel(page, demo.entryFile))}</a></li>`).join('\n')}
+      </ul>
+    </article>`).join('\n')}
+  </section>
+</main>
+${footer()}
+</body></html>`;
 }
 
 const demos = await discoverDemos();
@@ -1066,8 +1182,16 @@ for (const demo of demos) {
 
 await writeFile(join(outputDir, 'index.html'), renderHome(demos));
 await writeFile(join(outputDir, 'sitemap.xml'), renderSitemap(demos));
+await writeFile(join(outputDir, 'sitemap.html'), renderSitemapPage(demos));
 await writeFile(join(outputDir, '404.html'), render404());
-await writeFile(join(outputDir, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xml\n`);
+/* Nothing is disallowed. Every demo screen is meant to be found — that is the
+   entire point of publishing them — and the only page held back is the 404,
+   which says so in its own meta rather than here, where a Disallow would stop
+   a crawler even reading the tag. */
+await writeFile(
+  join(outputDir, 'robots.txt'),
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xml\n\n# The portfolio that explains these builds has its own.\nSitemap: ${SITE.portfolio}/sitemap.xml\n`,
+);
 await writeFile(join(outputDir, '.nojekyll'), '');
 await writeFile(
   join(outputDir, 'demos', 'manifest.json'),

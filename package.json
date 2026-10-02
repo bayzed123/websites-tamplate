@@ -19,7 +19,8 @@
     "test:sidra-clothing-admin": "node tests/sidra-clothing-admin.mjs sidra-clothing/dist",
     "test:hub-admin-links": "node tests/hub-admin-links.mjs site",
     "build:shop-demos": "node scripts/shop-demos/build.mjs",
-    "test:shop-demos": "node tests/shop-demos.mjs site"
+    "test:shop-demos": "node tests/shop-demos.mjs site",
+    "test:indexable": "node tests/indexable.mjs site"
   },
   "devDependencies": {
     "playwright": "^1.62.1"
