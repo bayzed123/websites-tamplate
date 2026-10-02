@@ -23,5 +23,9 @@
   },
   "devDependencies": {
     "playwright": "^1.62.1"
+  },
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "sql.js": "^1.14.2"
   }
 }
