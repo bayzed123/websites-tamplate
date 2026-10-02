@@ -42,6 +42,16 @@ const SITE = {
      for consent. */
   privacy: 'https://sayadbayezid.com/privacy-policy.html',
   whatsapp: 'https://wa.me/message/TDYG575YENF6F1',
+  /* The same WhatsApp account, reached by number rather than by short link.
+     Both are needed: a wa.me/message/ short link opens a chat carrying the
+     message preset in WhatsApp Business and ignores a `text` parameter, so a
+     per-demo message ("I want Lk's Attire, with bKash and the admin") is only
+     possible through click-to-chat with the number. The short link stays on
+     the generic Chat buttons, where no per-demo text is wanted. */
+  whatsappNumber: '8801519601517',
+  /* Where an order placed inside a demo is written down. The other door is
+     WhatsApp, which leaves no row — see assets/demo-order.js. */
+  api: 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev',
   email: 'Support@sayadbayezid.com',
   repo: 'https://github.com/bayzed123/websites-tamplate',
   /* Where "Order now" goes. The utm values are read by the landing page and
@@ -408,6 +418,30 @@ p{margin:0;line-height:1.65;color:var(--soft)}
 .card-admin{color:var(--gold);font-size:.82rem;text-decoration:none;border:1px solid rgba(212,175,106,.32);
   border-radius:7px;padding:4px 10px;white-space:nowrap;transition:all .2s}
 .card-admin:hover{border-color:var(--gold);background:rgba(212,175,106,.1)}
+/* The order action carries the ad funnel's flame gradient everywhere it
+   appears — hero, card, viewer bar, popup. One colour, one meaning: somebody
+   who pressed it on the offer page recognises it on a demo card without
+   reading the label. It sits last in the footer and pushes right, so it reads
+   as the end of the row rather than competing with "Open demo". */
+.card-order{margin-left:auto;border-radius:100px;padding:7px 15px;font-size:.82rem;font-weight:700;
+  text-decoration:none;color:#fff;background:linear-gradient(100deg,#FF6A2B,#FF3D6E);
+  white-space:nowrap;transition:filter .2s,transform .2s}
+.card-order:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* Search. Eighteen demos is past the point where a grid plus five category
+   chips is navigation — someone who wants "the one with the booking diary"
+   has to read every card to find it. The box searches the title, category,
+   tags and description, which is what a person is actually remembering. */
+.search{flex:1 1 220px;min-width:180px;position:relative;display:flex;align-items:center}
+.search input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:100px;
+  color:var(--paper);font:inherit;font-size:.84rem;padding:9px 34px 9px 16px}
+.search input::placeholder{color:var(--dim)}
+.search input:focus{outline:2px solid var(--emerald);outline-offset:1px;border-color:transparent}
+.search .clear{position:absolute;right:10px;background:none;border:0;color:var(--dim);cursor:pointer;
+  font-size:1.05rem;line-height:1;padding:2px 4px}
+.search .clear:hover{color:var(--paper)}
+.empty{padding:34px 4px;color:var(--dim);font-size:.92rem}
+.empty b{color:var(--paper)}
 
 /* The card's rating. Hidden until the number arrives and left hidden if it
    never does — a card showing "0.0" reads as a bad demo rather than a demo
@@ -650,6 +684,12 @@ function renderCard(demo) {
       <a class="card-open" href="${viewer}">Open demo <span class="arrow">→</span></a>
       ${adminLink}
       <a class="card-raw" href="${raw}" target="_blank" rel="noopener">Open raw ↗</a>
+      <!-- Ordering happens INSIDE the demo, so this opens the demo with the
+           order panel already up rather than ordering from a card. Someone who
+           orders having only seen a thumbnail is someone who will change their
+           mind; thirty seconds in the real thing is what makes the order
+           stick, and they are one tap from the panel either way. -->
+      <a class="card-order" href="${viewer}?order=1" data-order-item="${htmlEscape(demo.title)}">Order this →</a>
     </div>
   </div>
 </article>`;
@@ -713,8 +753,16 @@ ${header('demos')}
   </div></section>
 
   <section id="demos"><div class="wrap">
-    <div class="toolbar" id="toolbar">${chips}<span class="count" id="count" aria-live="polite"></span></div>
+    <div class="toolbar" id="toolbar">
+      <label class="search">
+        <input type="search" id="q" placeholder="Search demos — shop, admin, booking, bKash…" aria-label="Search the demos">
+        <button class="clear" type="button" id="qClear" hidden aria-label="Clear the search">&times;</button>
+      </label>
+      ${chips}<span class="count" id="count" aria-live="polite"></span>
+    </div>
     <div class="grid" id="grid">${cards}</div>
+    <p class="empty" id="empty" hidden>Nothing matches that. <b>Clear the search</b> to see all ${demos.length} demos — or
+      <a href="${SITE.contact}">tell me what you need</a> and it gets built.</p>
   </div></section>
 
   <section id="how"><div class="wrap" style="padding-bottom:70px">
@@ -724,17 +772,36 @@ ${header('demos')}
 </main>
 ${footer()}
 <script>
-/* Category filter + count. Cards are real HTML in the document — the filter
-   only shows and hides what the crawler has already seen. */
+/* Category filter AND search, over the same cards. They combine rather than
+   override: a search inside "E-commerce" is a reasonable thing to want, and a
+   filter that silently resets the other one feels broken.
+
+   Cards are real HTML in the document — this only shows and hides what the
+   crawler has already seen, so nothing here affects what is indexed. */
 (function(){
   var grid=document.getElementById('grid'),chips=[].slice.call(document.querySelectorAll('#toolbar .chip'));
   var cards=[].slice.call(grid.querySelectorAll('.card')),count=document.getElementById('count');
-  function setCount(n){count.textContent=n+' demo'+(n===1?'':'s')+' shown';}
-  function apply(f){var shown=0;cards.forEach(function(c){
-    var ok=(f==='All'||c.dataset.category===f);c.style.display=ok?'':'none';if(ok)shown++;});setCount(shown);}
+  var q=document.getElementById('q'),clear=document.getElementById('qClear'),empty=document.getElementById('empty');
+  var cat='All';
+  function apply(){
+    var term=(q.value||'').trim().toLowerCase(),shown=0;
+    cards.forEach(function(c){
+      var ok=(cat==='All'||c.dataset.category===cat)&&(!term||c.dataset.search.indexOf(term)>-1);
+      c.style.display=ok?'':'none';if(ok)shown++;
+    });
+    count.textContent=shown+' demo'+(shown===1?'':'s')+' shown';
+    empty.hidden=shown>0;
+    clear.hidden=!term;
+  }
   chips.forEach(function(b){b.addEventListener('click',function(){
-    chips.forEach(function(o){o.setAttribute('aria-pressed',String(o===b));});apply(b.dataset.filter);});});
-  setCount(cards.length);
+    chips.forEach(function(o){o.setAttribute('aria-pressed',String(o===b));});
+    cat=b.dataset.filter;apply();});});
+  q.addEventListener('input',apply);
+  clear.addEventListener('click',function(){q.value='';q.focus();apply();});
+  // Escape clears rather than blurring, which is what a search box in a grid
+  // is expected to do and saves reaching for the small × on a phone.
+  q.addEventListener('keydown',function(e){if(e.key==='Escape'){q.value='';apply();}});
+  apply();
 })();
 </script>
 <script src="/assets/demo-feedback.js" defer></script>
@@ -832,7 +899,7 @@ html,body{height:100%;overflow:hidden}
       ${adminBtn}
       <button class="vb-btn vb-rate" data-demo-feedback="${demo.slug}" data-demo-title="${htmlEscape(demo.title)}">★ Rate</button>
       <a class="vb-btn" id="rawLink" href="${src}" target="_blank" rel="noopener">Open raw ↗</a>
-      <a class="vb-btn vb-order" href="${SITE.order}&amp;utm_content=${encodeURIComponent(demo.slug)}" data-order="viewer-bar" data-order-item="${htmlEscape(demo.title)}">Order this</a>
+      <a class="vb-btn vb-order" href="${SITE.order}&amp;utm_content=${encodeURIComponent(demo.slug)}" data-order-open="viewer-bar" data-order-item="${htmlEscape(demo.title)}">Order this</a>
     </span>
   </div>
   <div class="stage" id="stage"><iframe id="frame" src="${src}" title="${htmtitle(demo)}" loading="eager"></iframe></div>
@@ -869,8 +936,45 @@ html,body{height:100%;overflow:hidden}
   if(new URLSearchParams(location.search).get('view')==='mobile')mode(true);
 })();
 </script>
+<script>
+/* What assets/demo-order.js needs to know about THIS demo. The feature list is
+   the demo's own tags, so the order form offers what the demo actually has
+   rather than a generic checklist — and a client ticking three of them has
+   written half the brief without being asked a question. */
+window.DEMU_ORDER = ${JSON.stringify({
+    api: SITE.api,
+    slug: demo.slug,
+    title: demo.title,
+    price: demo.price || '',
+    whatsapp: SITE.whatsappNumber,
+    url: `${SITE.url}/d/${demo.slug}/`,
+    features: orderFeatures(demo),
+  })};
+/* A card on the hub links here with ?order=1, so the panel is already open
+   when they arrive — the click they made on the card is not spent twice. */
+if(new URLSearchParams(location.search).get('order')==='1'){
+  document.addEventListener('DOMContentLoaded',function(){window.demuOrder&&window.demuOrder.open('hub-card');});
+}
+</script>
+<script src="/assets/demo-order.js" defer></script>
 <script src="/assets/demo-feedback.js" defer></script>
 </body></html>`;
+}
+
+/**
+ * What the order form offers to tick, for one demo.
+ *
+ * The demo's own tags, plus its admin dashboard when it has one — because the
+ * dashboard is the half clients most often do not realise is included, and an
+ * unticked box they never saw is a feature that never gets quoted for.
+ *
+ * Capped, because a checklist longer than a screen is a form people close.
+ */
+function orderFeatures(demo) {
+  const features = demo.tags.slice(0, 8);
+  const adminLabel = demo.admin ? (demo.admin.label || 'Admin dashboard') : null;
+  if (adminLabel && !features.some((f) => f.toLowerCase().includes('admin'))) features.unshift(adminLabel);
+  return features.slice(0, 9);
 }
 
 function htmtitle(demo) { return htmlEscape(`${demo.title} demo`); }
