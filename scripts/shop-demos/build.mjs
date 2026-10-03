@@ -413,7 +413,7 @@ async function buildShop(id, cfg, SRC) {
     else {
       s = relImg(s);
       // "View in shop" and the other shop links open the shop demo next door.
-      s = s.replace(/href="\/(product|lp|registry|shop|journal|collections|treatments|routines|kit-builder)\//g, `href="${toShop}$1/`);
+      s = s.replace(/href="\/(product|lp|registry|shop|journal|collections|treatments|routines|kit-builder|guides|compare|finder|deals)\//g, `href="${toShop}$1/`);
       s = smsText(s);
     }
     if (s !== before) writeFileSync(f, s);

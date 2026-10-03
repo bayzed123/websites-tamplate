@@ -92,4 +92,24 @@ export const SHOPS = {
       ["Rumana", 4, "প্যাকেজিং খুব সুন্দর, তারিখ পরিষ্কার লেখা। ডেলিভারি একদিন দেরি হয়েছে।"],
     ],
   },
+  "gadget-market": {
+    repo: "gadget-market",
+    github: "bayzed123/gadget-market",
+    name: "Gadget Market",
+    shopDir: "gadget-market",
+    adminDir: "gadget-market-admin",
+    prefix: "gmk",
+    districts: ["Dhaka", "Dhaka", "Dhaka", "Dhaka", "Gazipur", "Narayanganj", "Chattogram", "Chattogram", "Sylhet", "Rajshahi"],
+    people: [
+      ["Rakib Hasan", "01711223344"], ["Tanvir Ahmed", "01819456721"], ["Sadia Islam", "01912345678"], ["Arif Hossain", "01556789012"],
+      ["Mim Chowdhury", "01678901234"], ["Fahim Rahman", "01722334455"], ["Rumana Haque", "01833445566"], ["Shakil Ahmed", "01944556677"],
+      ["Ayesha Siddika", "01355667788"], ["Nayeem Islam", "01766778899"], ["Lamia Hossain", "01877889900"], ["Imran Kabir", "01988990011"],
+      ["Sumaiya Karim", "01799001122"], ["Mahmud Hasan", "01611223355"], ["Afsana Mimi", "01512233466"], ["Zahid Hasan", "01313344577"],
+    ],
+    coupon: "GADGET100",
+    reviews: [
+      ["Shakil", 5, "Battery easily lasts the advertised playtime and the case feels solid. Delivered in Dhaka the next day."],
+      ["Rumana", 4, "চার্জার ঠিকমতো ফাস্ট চার্জ করে, প্যাকেজিংও ভালো। ডেলিভারি একদিন দেরি হয়েছে।"],
+    ],
+  },
 };

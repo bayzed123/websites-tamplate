@@ -1,6 +1,6 @@
 # Shop demos (Zamil Shop BD platform)
 
-Eight hub demos come from four real shops built on the same platform. Each shop gets a storefront
+Ten hub demos come from five real shops built on the same platform. Each shop gets a storefront
 demo and an admin demo that share their data:
 
 | Shop | Source | Storefront | Admin |
@@ -9,6 +9,7 @@ demo and an admin demo that share their data:
 | Sidra Jewellery & Fashion | [bayzed123/jewellery-and-fashion-](https://github.com/bayzed123/jewellery-and-fashion-) | `sidra-jewellery/` | `sidra-jewellery-admin/` |
 | Sidra Glow Studio — skincare & studio | [bayzed123/Skin-care-shop](https://github.com/bayzed123/Skin-care-shop) | `sidra-glow-studio/` | `sidra-glow-studio-admin/` |
 | Prakriti Herbal — herbal & natural | [bayzed123/harbal-pakriti](https://github.com/bayzed123/harbal-pakriti) | `prakriti-herbal/` | `prakriti-herbal-admin/` |
+| Gadget Market — gadgets & tech accessories | [bayzed123/gadget-market](https://github.com/bayzed123/gadget-market) | `gadget-market/` | `gadget-market-admin/` |
 
 What a visitor can try:
 - **Shop:** browse, filter, product pages, cart, and checkout with a phone check (the SMS code
@@ -65,9 +66,9 @@ real code is bundled into `demo/runtime.js` and answers every `/api/*` request i
 
 ```bash
 # from this repository's root, with the shops checked out next to it
-# (../babyshop, ../jewellery-and-fashion-, ../skin-care-shop, ../harbal-pakriti)
+# (../babyshop, ../jewellery-and-fashion-, ../skin-care-shop, ../harbal-pakriti, ../gadget-market)
 npm i --no-save esbuild sql.js
-node scripts/shop-demos/build.mjs                         # all four
+node scripts/shop-demos/build.mjs                         # all five
 node scripts/shop-demos/build.mjs prakriti-herbal          # one
 node scripts/shop-demos/build.mjs prakriti-herbal --src /path/to/harbal-pakriti
 ```
@@ -91,3 +92,39 @@ admin marker) fail loudly if a shop's code no longer matches, rather than shippi
 1. order in the shop with the admin open;
 2. see the order in the admin;
 3. open an invoice PDF.
+
+## CWB Gaming (a marketplace, not a shop)
+
+[bayzed123/cwb-gaming-and-buy](https://github.com/bayzed123/cwb-gaming-and-buy) is a multi-vendor game top-up
+marketplace with three surfaces, so it has its own builder, `cwb.mjs`, on the same engine and runtime:
+
+| Demo | Folder | Opens as |
+|---|---|---|
+| Marketplace | `cwb-gaming/` | a guest (buyer sign-in `01700000001` / `demo12345`) |
+| Platform admin | `cwb-gaming-admin/` | `demo` / `demo12345` |
+| Seller dashboard | `cwb-gaming-seller/` | `hub@demo.cwbgaming.local` / `demo12345` |
+
+**What is different from the shop demos:**
+- **Two-step sign-in stays on.** The demo build accepts the authenticator code `123456` for every account,
+  so the 2FA screens can be tried without sharing an authenticator app.
+- **Payments use the marketplace's sandbox gateway.** The runtime sets `SANDBOX_GATEWAY_SECRET` and shows the
+  gateway as a window on the page. "Approve" posts to the Worker's sandbox endpoint, which sends the signed
+  webhook to itself, and only then is a code shown or a top-up queued.
+- **R2 stand-in.** Seller KYC uploads ("Apply to sell") are kept in the visitor's IndexedDB.
+- **Exact-time shifting.** Dates move by the exact time since the build, not whole days, so the seller's
+  30-minute delivery timers are still running when a visitor arrives.
+
+**The history is made through the real API:**
+- extra `DEMO-` codes stocked for the Official Store;
+- about 38 orders paid through the signed sandbox webhook, with a few declined, a few expired and one still
+  waiting;
+- sellers deliver their queued top-ups, with the newest three left for the demo seller;
+- one held order, reviews, a dispute waiting for the seller and one waiting for the platform;
+- one payout paid and one requested;
+- a buyer account.
+
+```bash
+node scripts/shop-demos/cwb.mjs                                    # needs ../cwb-gaming-and-buy
+node scripts/shop-demos/cwb.mjs --src /path/to/cwb-gaming-and-buy
+node scripts/build-demo-hub.mjs site && node tests/cwb-gaming.mjs site
+```

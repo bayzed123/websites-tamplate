@@ -1,5 +1,5 @@
 /**
- * The four shop demos built by scripts/shop-demos/build.mjs must work as one system with no server.
+ * The five shop demos built by scripts/shop-demos/build.mjs must work as one system with no server.
  *
  * For each shop: the storefront browses to a product, checks out with the on-screen SMS code
  * and places an order; the admin demo — open in another tab the whole time — stays signed in
@@ -17,7 +17,7 @@ import { readFile } from 'node:fs/promises';
 import { join, extname } from 'node:path';
 
 const SITE = process.argv[2] ?? 'site';
-const SHOPS = ['zamil-shop-bd', 'sidra-jewellery', 'sidra-glow-studio', 'prakriti-herbal'];
+const SHOPS = ['zamil-shop-bd', 'sidra-jewellery', 'sidra-glow-studio', 'prakriti-herbal', 'gadget-market'];
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml',
   '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.jpg': 'image/jpeg',
   '.webp': 'image/webp', '.ico': 'image/x-icon', '.wasm': 'application/wasm', '.db': 'application/octet-stream' };

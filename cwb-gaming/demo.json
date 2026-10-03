@@ -1,0 +1,30 @@
+{
+  "title": "CWB Gaming — Game Top-Up Marketplace",
+  "tagline": "A multi-vendor marketplace for UC, Diamonds, CP and gift codes — pay first, delivered in minutes",
+  "description": "The buyer side of CWB Gaming, a Bangladesh marketplace for PUBG Mobile UC, Free Fire and Mobile Legends Diamonds, Call of Duty CP, Google Play and Steam codes. Every seller's offer for a pack sits on one comparison page, cheapest first, with rating and delivery speed; the player ID is checked and repeated back before you pay; and nothing is delivered until the payment is confirmed server-side. Payments here go through the marketplace's own sandbox gateway — press Approve and watch the code appear. This is the marketplace's real code running in the browser, sharing its data with the admin and seller demos.",
+  "category": "E-commerce",
+  "featured": true,
+  "tags": [
+    "Multi-vendor marketplace",
+    "Game top-ups & codes",
+    "Price comparison",
+    "Payment before delivery",
+    "Bangla / English",
+    "Cloudflare Workers"
+  ],
+  "highlights": [
+    "One page per pack (e.g. PUBG 660 UC) comparing every seller's price, rating and delivery speed",
+    "Player ID checked against the game's format and echoed back before payment",
+    "Sandbox gateway: Approve sends the signed server-side confirmation — only then is the code shown",
+    "Decline it instead and nothing is delivered",
+    "Direct top-ups go to the seller's queue with a 30-minute timer — see them in the seller demo",
+    "Invoice PDF (INV-CWB-…), disputes and seller reviews from the order page",
+    "Phone check at checkout: the SMS code appears on screen in the demo",
+    "Buyer sign-in: 01700000001 / demo12345 (past codes stay visible) — ?demo-reset starts fresh"
+  ],
+  "admin": {
+    "label": "Platform admin",
+    "path": "../cwb-gaming-admin/index.html",
+    "note": "Opens signed in (demo / demo12345, authenticator code 123456). Orders you pay here appear there. The seller dashboard is at ../cwb-gaming-seller/."
+  }
+}

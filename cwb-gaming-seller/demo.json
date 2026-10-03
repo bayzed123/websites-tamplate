@@ -1,0 +1,29 @@
+{
+  "title": "CWB Gaming — Seller Dashboard",
+  "tagline": "Where approved sellers list packs, stock codes and deliver top-ups",
+  "description": "The seller side of the CWB Gaming demo, signed in as Dhaka Top-Up Hub: today's deliveries and earnings, standing and Verified-badge progress, top-ups waiting with a live 30-minute timer (player ID, pack and quantity only — never the buyer's contact or payment details), listings with automatic SKUs, encrypted code stock with duplicate detection, payouts after the hold window, reviews and disputes to answer. \"Apply to sell\" shows the KYC gate: a new seller stays on \"Application pending\" until the platform approves them. It is the real seller dashboard running in the browser, sharing its data with the marketplace and admin demos.",
+  "category": "Admin dashboard",
+  "featured": false,
+  "tags": [
+    "Seller dashboard",
+    "KYC-gated",
+    "Delivery queue & SLA",
+    "Code stock",
+    "Payouts",
+    "Bangla / English"
+  ],
+  "highlights": [
+    "Opens signed in as a demo seller (two-step sign-in on; the demo accepts code 123456)",
+    "Mark a queued top-up delivered and the buyer's order page updates",
+    "Paste codes into a listing: they're encrypted and duplicates are skipped",
+    "A dispute waiting for the seller's answer",
+    "Request a payout of the available balance with authenticator code 123456",
+    "Apply to sell as a new seller and see the KYC checklist and the pending screen"
+  ],
+  "credentials": {
+    "label": "Seller sign-in",
+    "username": "hub@demo.cwbgaming.local",
+    "password": "demo12345",
+    "note": "Opens already signed in. Authenticator code: 123456 (demo only). Other demo sellers: point@demo.cwbgaming.local, rapid@demo.cwbgaming.local, same password. ?demo-reset starts fresh."
+  }
+}
