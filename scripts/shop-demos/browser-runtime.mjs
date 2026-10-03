@@ -8,12 +8,16 @@
  *   the shop's page URLs live in the hash (…/prakriti-herbal/#/product/ashwagandha-root-capsules).
  * - Links the Worker answers itself (invoice PDFs, the WhatsApp button) are answered here too.
  *
+ * Optional, for shops that need them (CWB Gaming): a seller dashboard surface (data-demo="seller")
+ * that opens signed in, extra Worker variables (the sandbox payment gateway), an R2 stand-in kept
+ * in IndexedDB (seller KYC uploads), and an in-page sandbox payment window.
+ *
  * Add ?demo-reset to any demo URL to start again from the original data.
  */
 import initSqlJs from "sql.js/dist/sql-wasm-browser.js";
 import { createBackend } from "./engine.mjs";
 
-const CFG = __DEMO__; // { id, adminLangKey, adminUser, adminPass, shopDir, adminDir }
+const CFG = __DEMO__; // { id, adminLangKey, adminUser, adminPass, shopDir, adminDir, adminTotp?, seller?: { user, pass, totp }, vars?, media? }
 const SEED_ID = __SEED_ID__;
 const SEED_AT = __SEED_AT__;
 
@@ -23,6 +27,7 @@ const ROOT = new URL("..", DEMO_DIR); // …/<demo>/
 const BASE = ROOT.pathname.replace(/\/$/, "");
 const realFetch = window.fetch.bind(window);
 const IS_ADMIN = document.documentElement.dataset.demo === "admin";
+const IS_SELLER = document.documentElement.dataset.demo === "seller";
 const NS = `${CFG.id}Demo`;
 const LS = { kv: `${NS}.kv`, jar: `${NS}.cookies`, ver: `${NS}.version` };
 const SIGNED_OUT = `${NS}.signedOut`;
@@ -69,18 +74,47 @@ async function idbPut(key, value) {
   } catch { /* storage blocked: keep working in memory */ }
 }
 
+/** R2 stand-in: files uploaded in the demo (seller KYC documents) stay in this browser's IndexedDB. */
+const mediaStore = {
+  get: (key) => idbGet(`r2:${key}`),
+  put: (key, value) => idbPut(`r2:${key}`, value),
+  async delete(key) {
+    try {
+      const db = await idb();
+      await new Promise((res) => { const tx = db.transaction("files", "readwrite"); tx.objectStore("files").delete(`r2:${key}`); tx.oncomplete = tx.onerror = () => res(); });
+    } catch { /* ignore */ }
+  },
+  async keys() {
+    try {
+      const db = await idb();
+      const all = await new Promise((res) => { const q = db.transaction("files").objectStore("files").getAllKeys(); q.onsuccess = () => res(q.result ?? []); q.onerror = () => res([]); });
+      return all.filter((k) => typeof k === "string" && k.startsWith("r2:")).map((k) => k.slice(3));
+    } catch { return []; }
+  },
+};
+
 const version = () => Number(localStorage.getItem(LS.ver) ?? 0);
 
 /** Move every date forward so the demo's history always ends "today" (timestamps and plain dates such as expiry). */
 function shiftDates(db) {
-  const days = Math.floor((Date.now() - Date.parse(SEED_AT)) / 86400000);
+  // Whole days keep plain dates (expiry) on the same weekday; shops with live timers (CWB's delivery deadlines)
+  // shift by the exact time instead, so "paid 10 minutes ago" is still 10 minutes ago when the visitor arrives.
+  const secs = Math.floor((Date.now() - Date.parse(SEED_AT)) / 1000);
+  if (CFG.shiftExact) {
+    if (secs > 60) shiftBy(db, `+${secs} seconds`, `+${Math.floor(secs / 86400)} days`);
+    return;
+  }
+  const days = Math.floor(secs / 86400);
   if (days <= 0) return;
+  shiftBy(db, `+${days} days`, `+${days} days`);
+}
+function shiftBy(db, stamp, day) {
   const tables = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '_cf_%' AND name NOT LIKE 'd1_%'")[0]?.values.flat() ?? [];
   for (const t of tables) {
-    const cols = db.exec(`PRAGMA table_info("${t}")`)[0]?.values.map((r) => r[1]).filter((c) => /(_at|_date|_until|_from)$/.test(c)) ?? [];
+    const cols = db.exec(`PRAGMA table_info("${t}")`)[0]?.values.map((r) => r[1]).filter((c) => /(_at|_date|_until|_from|_deadline)$/.test(c)) ?? [];
     for (const c of cols) {
-      db.exec(`UPDATE "${t}" SET "${c}" = strftime('%Y-%m-%dT%H:%M:%fZ', "${c}", '+${days} days') WHERE "${c}" LIKE '____-__-__T%'`);
-      db.exec(`UPDATE "${t}" SET "${c}" = date("${c}", '+${days} days') WHERE "${c}" LIKE '____-__-__' `);
+      db.exec(`UPDATE "${t}" SET "${c}" = strftime('%Y-%m-%dT%H:%M:%fZ', "${c}", '${stamp}') WHERE "${c}" LIKE '____-__-__T%'`);
+      db.exec(`UPDATE "${t}" SET "${c}" = date("${c}", '${day}') WHERE "${c}" LIKE '____-__-__' `);
     }
   }
 }
@@ -113,7 +147,7 @@ const ready = (async () => {
   loadedVersion = version();
   // "development" makes the shop show SMS codes on screen instead of sending them, so a visitor
   // can try the phone check at checkout and the staff phone sign-in.
-  backend = createBackend({ db, kvStore: lsStore(LS.kv), jar: lsStore(LS.jar), vars: { ENVIRONMENT: "development" } });
+  backend = createBackend({ db, kvStore: lsStore(LS.kv), jar: lsStore(LS.jar), vars: { ENVIRONMENT: "development", ...(CFG.vars ?? {}) }, media: CFG.media ? mediaStore : null });
   // The admin demo opens signed in, so a visitor lands on the dashboard. After "Sign out" the
   // sign-in screen (pre-filled with the demo account) shows for the rest of the visit.
   if (IS_ADMIN && !sessionStorage.getItem(SIGNED_OUT)) {
@@ -122,7 +156,19 @@ const ready = (async () => {
       await backend.handle(new Request(`${location.origin}/api/admin/auth/login`, {
         method: "POST",
         headers: { "content-type": "application/json", "x-requested-with": "fetch" },
-        body: JSON.stringify({ email: CFG.adminUser, password: CFG.adminPass }),
+        body: JSON.stringify({ email: CFG.adminUser, password: CFG.adminPass, ...(CFG.adminTotp ? { totp: CFG.adminTotp } : {}) }),
+      }));
+    }
+    await persist();
+  }
+  // The seller dashboard demo opens signed in as a demo seller, the same way.
+  if (IS_SELLER && CFG.seller && !sessionStorage.getItem(SIGNED_OUT)) {
+    const me = await backend.handle(new Request(`${location.origin}/api/seller/auth/me`, { headers: { "x-requested-with": "fetch" } }));
+    if (!me.ok) {
+      await backend.handle(new Request(`${location.origin}/api/seller/auth/login`, {
+        method: "POST",
+        headers: { "content-type": "application/json", "x-requested-with": "fetch" },
+        body: JSON.stringify({ email: CFG.seller.user, password: CFG.seller.pass, totp: CFG.seller.totp }),
       }));
     }
     await persist();
@@ -188,8 +234,8 @@ window.fetch = async (input, init) => {
   const path = appPath(url);
   if (path.startsWith("/api/")) {
     const method = (init?.method ?? (isReq ? input.method : "GET")).toUpperCase();
-    if (path === "/api/admin/uploads" && method === "POST") return upload(init);
-    if (path === "/api/admin/auth/logout") sessionStorage.setItem(SIGNED_OUT, "1");
+    if ((path === "/api/admin/uploads" || path === "/api/admin/media") && method === "POST") return upload(init);
+    if (path === "/api/admin/auth/logout" || path === "/api/seller/auth/logout") sessionStorage.setItem(SIGNED_OUT, "1");
     const target = location.origin + path + url.search;
     return callApi(isReq ? new Request(target, input) : new Request(target, init));
   }
@@ -237,7 +283,7 @@ document.addEventListener(
   true,
 );
 
-if (!IS_ADMIN) {
+if (!IS_ADMIN && !IS_SELLER) {
   /* ---------------- shop routing inside a folder ---------------- */
   const isHashUrl = (u) => typeof u === "string" && /#\//.test(u);
   window.__shopDemo = {
@@ -257,7 +303,55 @@ if (!IS_ADMIN) {
       for (const [k, v] of new URLSearchParams(location.search)) if (!u.searchParams.has(k)) u.searchParams.set(k, v);
       return u;
     },
+    /** Where the shop sends the buyer to pay. The sandbox gateway page opens in a window on this page. */
+    go(u) {
+      const url = new URL(String(u), location.origin);
+      if (appPath(url) === "/api/payments/sandbox/page") return sandboxWindow(url.searchParams.get("order"), url.searchParams.get("token"));
+      location.href = window.__shopDemo.toUrl(u);
+    },
   };
+
+  /**
+   * The simulated payment gateway. On the live shop this is bKash / SSLCommerz's own page; here it is a window
+   * whose buttons post to the Worker's sandbox endpoint, which sends the signed confirmation webhook — exactly
+   * the server-side path that releases a code. Nothing is charged.
+   */
+  async function sandboxWindow(orderNo, token) {
+    let order = null;
+    try {
+      const r = await callApi(new Request(`${location.origin}/api/orders/${encodeURIComponent(orderNo)}?token=${encodeURIComponent(token)}`, { headers: { "x-requested-with": "fetch" } }));
+      order = (await r.json()).order;
+    } catch { /* show the window anyway */ }
+    const wrap = document.createElement("div");
+    wrap.setAttribute("role", "dialog");
+    wrap.setAttribute("aria-label", "Sandbox payment");
+    wrap.style.cssText = "position:fixed;inset:0;z-index:2147483000;background:rgba(5,6,9,.78);display:grid;place-items:center;padding:16px;font:16px/1.5 system-ui,sans-serif";
+    const method = order?.payment_method ?? "bkash";
+    wrap.innerHTML = `<div style="max-width:420px;width:100%;background:#161821;color:#eceef6;border:1px solid #2a2d3a;padding:26px">
+      <span style="display:inline-block;background:#ff2e93;color:#fff;font-size:12px;font-weight:700;padding:2px 8px;letter-spacing:.06em">DEMO SANDBOX — NOT A REAL PAYMENT</span>
+      <h2 style="font-size:20px;margin:10px 0 4px">Simulated ${method} payment</h2>
+      <p style="color:#9aa0b4;margin:0 0 6px">Order ${orderNo}. On the live marketplace this is the real bKash / Nagad / card page.</p>
+      <div style="font-size:34px;font-weight:800;color:#22e5ff;margin:8px 0 6px">৳${order?.total ?? ""}</div>
+      <p style="color:#9aa0b4;font-size:14px;margin:0 0 14px">"Approve" sends the gateway's signed confirmation to the server — only then is the code or top-up released.</p>
+      <button type="button" data-act="approve" data-testid="sandbox-approve" style="width:100%;padding:14px;border:0;font:700 16px system-ui;cursor:pointer;background:#22e5ff;color:#0d0e12">Approve payment</button>
+      <button type="button" data-act="decline" data-testid="sandbox-decline" style="width:100%;padding:14px;margin-top:10px;font:700 16px system-ui;cursor:pointer;background:transparent;color:#ff2e93;border:1px solid #ff2e93">Decline</button>
+    </div>`;
+    document.body.appendChild(wrap);
+    wrap.addEventListener("click", async (e) => {
+      const act = e.target.closest?.("[data-act]")?.dataset.act;
+      if (!act) return;
+      for (const b of wrap.querySelectorAll("button")) b.disabled = true;
+      const res = await callApi(new Request(`${location.origin}/api/payments/sandbox/pay`, {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded", "x-requested-with": "fetch" },
+        body: new URLSearchParams({ order: orderNo, token, action: act }).toString(),
+      }));
+      wrap.remove();
+      const to = res.headers.get("location") ?? `/order/${encodeURIComponent(orderNo)}?token=${encodeURIComponent(token)}`;
+      history.pushState({}, "", to);
+      dispatchEvent(new PopStateEvent("popstate"));
+    });
+  }
   // The shop's router calls pushState / replaceState with app paths (/product/x): keep them in the hash.
   for (const m of ["pushState", "replaceState"]) {
     const orig = history[m].bind(history);
@@ -274,6 +368,17 @@ if (!IS_ADMIN) {
     },
     true,
   );
+} else if (IS_SELLER) {
+  /* Seller demo: the sign-in form arrives filled in with the published demo seller. */
+  new MutationObserver(() => {
+    const f = document.querySelector("#lf");
+    if (!f || f.dataset.filled || !CFG.seller) return;
+    f.dataset.filled = "1";
+    const user = f.querySelector('[name="email"]');
+    const pass = f.querySelector('[name="password"]');
+    if (user) user.value = CFG.seller.user;
+    if (pass) pass.value = CFG.seller.pass;
+  }).observe(document.documentElement, { childList: true, subtree: true });
 } else {
   /* Admin demo: the sign-in form arrives filled in with the published demo account. */
   new MutationObserver(() => {

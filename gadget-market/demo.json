@@ -1,0 +1,32 @@
+{
+  "title": "Gadget Market — Gadgets & Tech Accessories",
+  "tagline": "A dark, spec-first gadget shop with comparison and a gadget finder, fully working in your browser",
+  "description": "The customer side of Gadget Market, a Dhaka shop for earbuds, smartwatches, power banks, chargers, cables, gaming and smart-home gear: filter by what it works with (iPhone, Android, USB-C, PS5…), real spec sheets, a side-by-side spec comparison, a gadget finder that picks one in-stock essential per shelf for your device and budget, combo bundles with the real saving, an honest Deal of the Day countdown and a warranty badge with the terms next to it. This is the shop's real code running in the browser — orders you place here appear in the Gadget Market admin demo.",
+  "category": "E-commerce",
+  "featured": true,
+  "tags": [
+    "Storefront",
+    "Gadgets & tech",
+    "Spec comparison",
+    "Gadget finder",
+    "Bangla / English",
+    "Cloudflare Workers"
+  ],
+  "highlights": [
+    "Filter by \"works with\": iPhone, Android, USB-C, laptop, PS5, Switch and more",
+    "Spec comparison of 2–3 products, differences highlighted",
+    "Gadget finder: pick your device and a budget, get one essential from each shelf",
+    "Deal of the Day ends when it says — stock counts are the real ones",
+    "Warranty claims from an order line, checked against the serial and end date",
+    "Checkout fills Division → District → Upazila with a live delivery fee from Dhaka",
+    "Phone check at checkout: the SMS code appears on screen in the demo",
+    "Coupons GADGET100 and COMBO5 work at checkout",
+    "Orders you place show up in the admin demo — it is one working system",
+    "Optional shopper sign-in: 01700000001 / demo12345 — nothing is charged or delivered, and ?demo-reset starts fresh"
+  ],
+  "admin": {
+    "label": "Admin dashboard",
+    "path": "../gadget-market-admin/index.html",
+    "note": "Opens signed in (demo / demo12345). Orders you place in the shop appear here."
+  }
+}

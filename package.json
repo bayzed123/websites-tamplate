@@ -20,7 +20,9 @@
     "test:hub-admin-links": "node tests/hub-admin-links.mjs site",
     "build:shop-demos": "node scripts/shop-demos/build.mjs",
     "test:shop-demos": "node tests/shop-demos.mjs site",
-    "test:indexable": "node tests/indexable.mjs site"
+    "test:indexable": "node tests/indexable.mjs site",
+    "build:cwb-demo": "node scripts/shop-demos/cwb.mjs",
+    "test:cwb-gaming": "node tests/cwb-gaming.mjs site"
   },
   "devDependencies": {
     "playwright": "^1.62.1"

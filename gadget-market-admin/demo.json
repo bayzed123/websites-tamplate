@@ -1,0 +1,29 @@
+{
+  "title": "Gadget Market — Admin Dashboard",
+  "tagline": "The back office that runs the gadget shop",
+  "description": "The admin dashboard behind the Gadget Market demo: \"Needs your attention today\", the order pipeline from pending to delivered with invoice PDFs, fake-order protection (🟢 Trusted / 🟡 New / 🔴 Verify), products with auto SKUs (GAD-EB-SON-BLK-0007) and a spec-sheet editor, combo bundles, stock lots by supplier invoice and a serial-number log printed on invoices, warranty claims from submitted to resolved, coupons, banners, reviews and Q&A, delivery zones, staff roles, reports and the activity log — in Bangla and English. It is the real admin code running in the browser, sharing its data with the shop demo.",
+  "category": "Admin dashboard",
+  "featured": false,
+  "tags": [
+    "Orders & invoices",
+    "Products, specs & SKUs (GAD-…)",
+    "Serial numbers",
+    "Warranty claims",
+    "Bundles",
+    "Reports"
+  ],
+  "highlights": [
+    "Opens straight into the dashboard — no sign-in needed",
+    "COD orders can't be confirmed until the customer's call is logged — try it on a pending order",
+    "Serial numbers are picked per order line when packing and printed on the invoice",
+    "Invoice PDF, call and WhatsApp buttons on every order",
+    "Search by order no, invoice no, phone or SKU; CSV export on every list",
+    "42 fictional orders over nine weeks, so the charts and reports have something to show"
+  ],
+  "credentials": {
+    "label": "Admin dashboard sign-in",
+    "username": "demo",
+    "password": "demo12345",
+    "note": "Opens already signed in. After Sign out, sign back in with these (they are filled in for you). Staff can also sign in by phone: 01899999999 — the SMS code shows on screen. Everything is fictional demo data kept in your browser; add ?demo-reset to the address to start fresh."
+  }
+}

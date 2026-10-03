@@ -90,7 +90,7 @@ source and run its real backend code in the browser (SQLite in WebAssembly), so
 every feature works on this static host and the two share their data. See
 [`scripts/lks-attire-demo/README.md`](scripts/lks-attire-demo/README.md) to rebuild them.
 
-Four more shops built on the Zamil Shop BD platform get the same treatment, a storefront and an
+Five more shops built on the Zamil Shop BD platform get the same treatment, a storefront and an
 admin demo each, sharing their data:
 
 | Shop | Storefront | Admin |
@@ -99,11 +99,19 @@ admin demo each, sharing their data:
 | Sidra Jewellery & Fashion | `sidra-jewellery/` | `sidra-jewellery-admin/` |
 | Sidra Glow Studio — skincare & studio bookings | `sidra-glow-studio/` | `sidra-glow-studio-admin/` |
 | Prakriti Herbal — herbal & natural products | `prakriti-herbal/` | `prakriti-herbal-admin/` |
+| Gadget Market — gadgets & tech accessories | `gadget-market/` | `gadget-market-admin/` |
 
 They run each shop's real Worker in the browser: checkout with an on-screen SMS code, invoice PDFs,
 and an admin that opens signed in as `demo` / `demo12345`. See
 [`scripts/shop-demos/README.md`](scripts/shop-demos/README.md) to rebuild them. `tests/shop-demos.mjs`
 checks each pair end to end in CI.
+
+**CWB Gaming**, a multi-vendor game top-up marketplace, gets three demos that share one in-browser
+database: the marketplace (`cwb-gaming/`), the platform admin (`cwb-gaming-admin/`) and the seller
+dashboard (`cwb-gaming-seller/`). Payments go through the marketplace's own sandbox gateway, shown as a
+window on the page: nothing is delivered until "Approve" sends the signed confirmation, exactly the
+server-side path the live site uses. `scripts/shop-demos/cwb.mjs` rebuilds them; `tests/cwb-gaming.mjs`
+walks all three in CI.
 
 ## What never reaches the public site
 

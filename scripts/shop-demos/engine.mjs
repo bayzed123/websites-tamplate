@@ -7,7 +7,9 @@
  * aliases to "shop-worker". The bindings get in-browser stand-ins:
  *   DB → SQLite compiled to WebAssembly (sql.js) behind the D1 API
  *   KV → a small key/value store kept in localStorage
- *   MEDIA (R2) → absent, as on a shop that hasn't turned R2 on
+ *   MEDIA (R2) → absent, as on a shop that hasn't turned R2 on — or, when a `media` store is
+ *                passed (the CWB Gaming marketplace keeps seller KYC files there), a small R2
+ *                stand-in over that store
  * so every screen of the demo runs the same code as the live shop, with no server.
  */
 import { Hono } from "hono";
@@ -165,6 +167,46 @@ export class KV {
   }
 }
 
+/* ---------------- R2 (optional) ---------------- */
+/**
+ * `store` is { get(key), put(key, value), delete(key), keys() } — IndexedDB in the browser, memory at build time.
+ * Values are { bytes: Uint8Array, type, meta, uploaded }.
+ */
+export class R2 {
+  constructor(store) {
+    this.store = store;
+  }
+  async put(key, value, opts = {}) {
+    const bytes = typeof value === "string" ? new TextEncoder().encode(value) : new Uint8Array(value instanceof ArrayBuffer ? value : await new Response(value).arrayBuffer());
+    await this.store.put(key, { bytes, type: opts.httpMetadata?.contentType ?? "application/octet-stream", meta: opts.customMetadata ?? {}, uploaded: new Date().toISOString() });
+    return { key, size: bytes.byteLength };
+  }
+  async get(key) {
+    const v = await this.store.get(key);
+    if (!v) return null;
+    const bytes = v.bytes;
+    return {
+      key,
+      size: bytes.byteLength,
+      httpEtag: `"${bytes.byteLength}-${key.length}"`,
+      customMetadata: v.meta,
+      uploaded: new Date(v.uploaded),
+      get body() { return new Blob([bytes], { type: v.type }).stream(); },
+      writeHttpMetadata(h) { h.set("content-type", v.type); },
+      arrayBuffer: async () => bytes.slice().buffer,
+      text: async () => new TextDecoder().decode(bytes),
+      json: async () => JSON.parse(new TextDecoder().decode(bytes)),
+    };
+  }
+  async delete(keys) {
+    for (const k of Array.isArray(keys) ? keys : [keys]) await this.store.delete(k);
+  }
+  async list({ prefix = "" } = {}) {
+    const keys = (await this.store.keys()).filter((k) => k.startsWith(prefix));
+    return { objects: keys.map((key) => ({ key })), truncated: false };
+  }
+}
+
 /* ---------------- Cookie jar ---------------- */
 function applySetCookies(cookies, list) {
   for (const line of list) {
@@ -186,8 +228,9 @@ function applySetCookies(cookies, list) {
  *   kvStore — { load, save } for KV
  *   jar     — { load, save } for cookies
  *   vars    — environment variables, e.g. { ENVIRONMENT: "development" }
+ *   media   — optional { get, put, delete, keys } store that turns on the R2 stand-in
  */
-export function createBackend({ db, kvStore, jar, vars = {} }) {
+export function createBackend({ db, kvStore, jar, vars = {}, media = null }) {
   const d1 = new D1(db);
   const env = {
     DB: d1,
@@ -195,6 +238,7 @@ export function createBackend({ db, kvStore, jar, vars = {} }) {
     ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) },
     ENVIRONMENT: "demo",
     PUBLIC_URL: "",
+    ...(media ? { MEDIA: new R2(media) } : {}),
     ...vars,
   };
   let cookies = jar.load() ?? {};

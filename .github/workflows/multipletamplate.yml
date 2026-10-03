@@ -81,10 +81,15 @@ jobs:
         # the path a visitor takes: card link, then what the link opens.
         run: node tests/hub-admin-links.mjs site
 
-      - name: Check the four shop demos work as one system
-        # Zamil Shop BD, Sidra Jewellery, Sidra Glow Studio, Prakriti Herbal: order in the shop with
-        # the admin open in another tab, see it in the admin, open an invoice PDF — all with no server.
+      - name: Check the five shop demos work as one system
+        # Zamil Shop BD, Sidra Jewellery, Sidra Glow Studio, Prakriti Herbal, Gadget Market: order in the
+        # shop with the admin open in another tab, see it in the admin, open an invoice PDF — all with no server.
         run: node tests/shop-demos.mjs site
+
+      - name: Check the CWB Gaming marketplace demos work as one system
+        # Marketplace, platform admin and seller dashboard: no code before the sandbox payment is approved,
+        # the code after; a paid top-up lands in the seller's queue and in the admin.
+        run: node tests/cwb-gaming.mjs site
 
       - name: Check every demo screen can be found in search
         # The failure this catches never shows on the page: a demo renders, the
